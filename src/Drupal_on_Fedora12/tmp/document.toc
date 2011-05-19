@@ -1,0 +1,139 @@
+\select@language {dutch}
+\contentsline {part}{I\hspace {1em}Inleiding}{1}
+\contentsline {chapter}{\numberline {1}CMS}{3}
+\contentsline {section}{\numberline {1.1}Contentmanagementsysteem}{3}
+\contentsline {subsection}{\numberline {1.1.1}Onderdelen}{3}
+\contentsline {section}{\numberline {1.2}Waarom Drupal}{4}
+\contentsline {subsection}{\numberline {1.2.1}Voor managers}{4}
+\contentsline {subsection}{\numberline {1.2.2}Voor beheerders}{4}
+\contentsline {subsection}{\numberline {1.2.3}Voor ontwikkelaars}{4}
+\contentsline {subsection}{\numberline {1.2.4}Voor grafische vormgevers}{4}
+\contentsline {section}{\numberline {1.3}PHP}{4}
+\contentsline {subsection}{\numberline {1.3.1}Geschiedenis}{5}
+\contentsline {subsection}{\numberline {1.3.2}Gebruik}{5}
+\contentsline {subsection}{\numberline {1.3.3}Voorbeeld}{5}
+\contentsline {subsection}{\numberline {1.3.4}OOP }{5}
+\contentsline {section}{\numberline {1.4}SQL}{6}
+\contentsline {subsection}{\numberline {1.4.1}geschiedenis}{6}
+\contentsline {subsection}{\numberline {1.4.2}Werking}{6}
+\contentsline {subsection}{\numberline {1.4.3}MySQL}{6}
+\contentsline {section}{\numberline {1.5}Fedora}{7}
+\contentsline {subsection}{\numberline {1.5.1}Waarom Fedora 12}{7}
+\contentsline {part}{II\hspace {1em}Beheren}{9}
+\contentsline {chapter}{\numberline {2}Inhoudelijk beheer}{11}
+\contentsline {section}{\numberline {2.1}Boeken}{11}
+\contentsline {subsection}{\numberline {2.1.1}Book-module}{11}
+\contentsline {subsection}{\numberline {2.1.2}Toegangsrechten instellen}{11}
+\contentsline {subsection}{\numberline {2.1.3}Instellingen}{11}
+\contentsline {section}{\numberline {2.2}Inhoud}{11}
+\contentsline {subsection}{\numberline {2.2.1}Node}{12}
+\contentsline {section}{\numberline {2.3}Inhoudstypen}{12}
+\contentsline {subsection}{\numberline {2.3.1}Lijst}{12}
+\contentsline {subsection}{\numberline {2.3.2}Inhoudstype toevoegen}{13}
+\contentsline {subsection}{\numberline {2.3.3}Fields}{13}
+\contentsline {subsection}{\numberline {2.3.4}Exporteren}{13}
+\contentsline {subsection}{\numberline {2.3.5}Importeren}{14}
+\contentsline {section}{\numberline {2.4}Instellingen voor inzendingen}{14}
+\contentsline {subsection}{\numberline {2.4.1}Node toegangsstatus}{14}
+\contentsline {subsection}{\numberline {2.4.2}Aantal berichten op de hoofdpagina}{14}
+\contentsline {subsection}{\numberline {2.4.3}Lengte van ingekorte berichten}{15}
+\contentsline {subsection}{\numberline {2.4.4}Voorbeeldweergave bericht}{15}
+\contentsline {section}{\numberline {2.5}RSS-publicatie}{15}
+\contentsline {section}{\numberline {2.6}Reacties}{15}
+\contentsline {subsection}{\numberline {2.6.1}Comment-module}{15}
+\contentsline {subsection}{\numberline {2.6.2}Gepubliceerde reacties}{15}
+\contentsline {subsection}{\numberline {2.6.3}Goedkeuringsrij}{16}
+\contentsline {section}{\numberline {2.7}Taxonomie}{16}
+\contentsline {subparagraph}{Taxonomy-module}{16}
+\contentsline {subsection}{\numberline {2.7.1}Lijst}{17}
+\contentsline {subsection}{\numberline {2.7.2}Woordenlijst toevoegen}{17}
+\contentsline {subsubsection}{Woordenlijst-identificatie}{17}
+\contentsline {subsubsection}{Woordenlijst-inhoudstypen}{18}
+\contentsline {subsubsection}{Woordenlijst-instellingen}{18}
+\contentsline {chapter}{\numberline {3}Site-constructie}{19}
+\contentsline {section}{\numberline {3.1}Blokken}{19}
+\contentsline {subsection}{\numberline {3.1.1}Blokkenlijst}{19}
+\contentsline {subsection}{\numberline {3.1.2}Blok toevoegen}{19}
+\contentsline {subsubsection}{Blokspecifieke instellingen}{20}
+\contentsline {subsubsection}{Gebruikersspecifieke zichtbaarheidsinstellingen}{20}
+\contentsline {subsubsection}{Rol-specifieke zichtbaarheidsinstellingen}{21}
+\contentsline {subsubsection}{Pagina-specifieke zichtbaarheidsinstellingen}{21}
+\contentsline {section}{\numberline {3.2}Interface vertalen}{22}
+\contentsline {subsection}{\numberline {3.2.1}Interface vertalen - zoeken}{22}
+\contentsline {subsection}{\numberline {3.2.2}Importeren}{22}
+\contentsline {subsection}{\numberline {3.2.3}Exporteren}{23}
+\contentsline {section}{\numberline {3.3}Menu's}{23}
+\contentsline {subsection}{\numberline {3.3.1}Menu-module}{23}
+\contentsline {subsection}{\numberline {3.3.2}Menu's weergeven}{24}
+\contentsline {subsection}{\numberline {3.3.3}Menu toevoegen}{24}
+\contentsline {subsection}{\numberline {3.3.4}Instellingen}{24}
+\contentsline {subsection}{\numberline {3.3.5}Navigation}{24}
+\contentsline {section}{\numberline {3.4}Modules}{25}
+\contentsline {subsection}{\numberline {3.4.1}Module lijst}{25}
+\contentsline {subsection}{\numberline {3.4.2}Modules de-installeren}{25}
+\contentsline {section}{\numberline {3.5}Templates}{26}
+\contentsline {subsection}{\numberline {3.5.1}Templates lijst}{26}
+\contentsline {subsection}{\numberline {3.5.2}Configureren globale instellingen}{27}
+\contentsline {subsection}{\numberline {3.5.3}Configureren specifieke template instellingen}{27}
+\contentsline {section}{\numberline {3.6}URL-aliassen}{27}
+\contentsline {subsection}{\numberline {3.6.1}URL-aliassen lijst}{27}
+\contentsline {subsection}{\numberline {3.6.2}Alias toevoegen}{28}
+\contentsline {subsection}{\numberline {3.6.3}Path-module}{28}
+\contentsline {chapter}{\numberline {4}Site-instellingen}{29}
+\contentsline {section}{\numberline {4.1}Actions}{29}
+\contentsline {section}{\numberline {4.2}Administratiemenu}{29}
+\contentsline {section}{\numberline {4.3}Beeldverwerkingstoolkit}{30}
+\contentsline {section}{\numberline {4.4}Beheertemplate}{30}
+\contentsline {section}{\numberline {4.5}Bestandssysteem}{31}
+\contentsline {section}{\numberline {4.6}Datum en tijd }{31}
+\contentsline {section}{\numberline {4.7}Foutrapportage}{31}
+\contentsline {section}{\numberline {4.8}Invoerformaten}{32}
+\contentsline {section}{\numberline {4.9}Loggen en waarschuwingen }{32}
+\contentsline {section}{\numberline {4.10}Prestatie}{32}
+\contentsline {subsection}{\numberline {4.10.1}Pagina-cache}{32}
+\contentsline {subsection}{\numberline {4.10.2}Blok-cache}{33}
+\contentsline {subsection}{\numberline {4.10.3}Bandbreedte-optimalisaties}{33}
+\contentsline {subsection}{\numberline {4.10.4}Cache-data opschonen}{33}
+\contentsline {section}{\numberline {4.11}Schone URL's}{34}
+\contentsline {section}{\numberline {4.12}Site-onderhoud}{34}
+\contentsline {section}{\numberline {4.13}Talen}{34}
+\contentsline {section}{\numberline {4.14} Websitegegevens}{35}
+\contentsline {section}{\numberline {4.15}Zoekinstellingen}{35}
+\contentsline {chapter}{\numberline {5}Gebruikersbeheer}{37}
+\contentsline {section}{\numberline {5.1}Gebruikers}{37}
+\contentsline {section}{\numberline {5.2}Gebruikersinstellingen}{38}
+\contentsline {subsection}{\numberline {5.2.1}Instellingen gebruikersregistratie}{38}
+\contentsline {subsection}{\numberline {5.2.2}Gebruikersinstellingen e-mail}{38}
+\contentsline {section}{\numberline {5.3}Rollen}{38}
+\contentsline {section}{\numberline {5.4}Toegangsrechten}{39}
+\contentsline {section}{\numberline {5.5}Toegangsregels}{39}
+\contentsline {chapter}{\numberline {6}Rapporten}{41}
+\contentsline {section}{\numberline {6.1}Recente logs}{41}
+\contentsline {subsection}{\numberline {6.1.1}Database logging}{41}
+\contentsline {subsection}{\numberline {6.1.2}Database logging beheerpagina's}{41}
+\contentsline {section}{\numberline {6.2}Meest populaire zoekwoorden}{42}
+\contentsline {section}{\numberline {6.3}Meest voorkomende fouten 'Geen toegang'}{42}
+\contentsline {section}{\numberline {6.4}Meest voorkomende fouten 'pagina niet gevonden'}{42}
+\contentsline {section}{\numberline {6.5}Beschikbare updates}{43}
+\contentsline {section}{\numberline {6.6}Status rapportage}{43}
+\contentsline {part}{III\hspace {1em}Inhoud aanmaken}{45}
+\contentsline {chapter}{\numberline {7}Standaard inhoudtypen}{47}
+\contentsline {section}{\numberline {7.1}Inhoud aanmaken}{47}
+\contentsline {subsection}{\numberline {7.1.1}pagina}{47}
+\contentsline {subsection}{\numberline {7.1.2}verhaal}{47}
+\contentsline {subsection}{\numberline {7.1.3}Boek}{47}
+\contentsline {section}{\numberline {7.2}Inhoudtypen}{47}
+\contentsline {subsection}{\numberline {7.2.1}Menu-instellingen}{48}
+\contentsline {subsection}{\numberline {7.2.2}Invoerformaat}{49}
+\contentsline {subsection}{\numberline {7.2.3}Boekstructuur}{49}
+\contentsline {subsection}{\numberline {7.2.4}Revisie-informatie}{49}
+\contentsline {subsection}{\numberline {7.2.5}URL-pad-instellingen}{50}
+\contentsline {subsection}{\numberline {7.2.6}Reactie-instellingen}{50}
+\contentsline {subsection}{\numberline {7.2.7}Auteursinformatie}{50}
+\contentsline {subsection}{\numberline {7.2.8}Publicatie-opties}{50}
+\contentsline {part}{IV\hspace {1em}Bijlagen}{51}
+\contentsline {chapter}{\numberline {8}Bijlagen}{53}
+\contentsline {section}{\numberline {8.1}Drupal druppelt het Witte Huis binnen }{53}
+\contentsline {section}{\numberline {8.2}GNU General Public License}{53}
+\contentsline {section}{\numberline {8.3}De Drupal Association}{54}
+\contentsline {chapter}{\numberline {9}Installatie Drupal}{55}

@@ -1,0 +1,4 @@
+\beamer@endinputifotherversion {3.06pt}
+\select@language {dutch}
+\beamer@sectionintoc {1}{Opgave}{3}{0}{1}
+\beamer@sectionintoc {2}{Drupal}{6}{0}{2}

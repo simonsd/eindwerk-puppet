@@ -1,0 +1,80 @@
+#############
+# inleiding #
+#############
+
+De keuze voor mijn eindwerk is gevallen op puppet, een configuration management tool. Configuration management zorgt ervoor dat je centraal configuraties kunt definieren en deze dan kan distribueren van je server naar een of meerdere clients.
+
+
+###########
+# theorie #
+###########
+
+Het concept van configuration management is in weze simpel: het centraal beheren van configuraties zodat deze herbruikt kunnen worden op meerdere clients en zodat het gemakkelijker word dit allemaal te beheren.
+Stel het je maar eens voor, je bent een operator en je job bestaat uit het beheren van een netwerk of zelfs meerdere netwerken van machines.
+Dit kan gaan over een simpel thuisnetwerk ( 5-10 pc's ), over een iets geavanceerder kmo-netwerk ( 50-100 pc's ), tot zelfs een bedrijfsnetwerk van een multinational ( +1000 pc's ).
+Wat als jij de enige beheerder bent van laatstgenoemde? Er komt een nieuwe software-update uit voor een bepaald programma of een kwetsbaarheid in je besturingssysteem, en jij mag lekker elke pc in je netwerk gaan aflopen om manueel deze updates te doen.
+Tegen de tijd dat je rond bent kan je opnieuw beginnen en dan hebben we het enkel over onderhoud, de rest van je job dient dan ook nog gedaan te worden.
+
+een configuration management tool kan je dan helpen om dit immense aantal servers en clients te beheren op een min of meer geautomatiseerde manier.
+Bij puppet is het de bedoeling dat je "manifests" schrijft. Dit zijn configuratie-files waarin je bijvoorbeeld kan specifieren welke services, software-paketten en bestanden aanwezig of juist afwezig moeten zijn op een bepaald systeem en hoe deze ingesteld moeten worden. via een speciale node-definitie kan je dan aangeven welke classes een bepaald systeem moet meekrijgen. Een simpel voorbeeld is een webserver: hierop moet een applicatie draaien die het serven van web-pagina's mogelijk maakt, zoals apache. Met puppet kunnen we niet alleen verzekeren dat dit pakket aanwezig en geinstalleerd is op het doelsysteem, maar ook dat apache automatisch mee opstart en dat de configuratie ervan volgens een bepaalde template verloopt of van een andere server word gedownload.
+
+Om dit alles te automatiseren is op zich niet zo'n groot probleem, het grootste probleem erbij is de beveiliging. Je kan uiteraard zonder beveiliging de configuraties ook beheren maar dan kunnen derden ook jouw configuraties bekijken en zien waar er eventuele zwakke punten zijn, om nog maar te zwijgen over eventuele reverse engineering tactieken waarmee ze via je configuration management systeem op je centrale server binnen geraken.
+Om dit alles te voorkomen maakt puppet gebruik van ssl-certificaten. SSL staat voor Secure Socket Layer, en zorgt ervoor dat er een beveligde verbinding gemaakt kan worden tussen jouw server en de clients die je wilt bedienen. De authenticatie verloopt de eerste keer (standaard) manueel. Vanaf dan gebeurt de gehele authenticatie-fase op de achtergrond. De authenticatie gebeurt via certificaten, namelijk een privaat en een publiek certificaat. Het private certificaat is enkel bekend door jouw server. Het publieke certificaat is zowel gekend door de client als de server. Bij de initiele configuratie van de beveiliging, stuurt de client zijn publieke certificaat naar de server, de server tekent dat certificaat met zijn private sleutel en stuurt het dan terug naar de client. Vanaf nu kan de client configuraties downloaden van de server op basis van zijn hostnaam, en de bijgeleverde publieke sleutel. De server kan dan het publieke certificaat met zijn private sleutel ontcijferen en kijken of deze geldig is of niet.
+
+
+############
+# praktijk #
+############
+
+In dit hoodstuk zullen we bekijken hoe je een puppet server en client opzet, waarna we aan de hand van enkele simpele voorbeelden een manifest zullen samenstellen om de client en zelfs de server zelf te beheren.
+
+Allereerst enkele concessies: Deze tutorial is in principe enkel gegarandeerd te werken op Fedora 14, de linux-distributie die ik zelf gebruik. Het meeste ervan zal echter wel overdraagbaar zijn naar toekomstige versies en/of andere distributies. Als je niet weet wat een linux-distributie is raad ik je aan om het even op te zoeken op het internet, er is genoeg informatie voorhanden en het is niet het doel van dit eindwerk om je dat allemaal uit te leggen dus doe ik dat ook niet.
+
+Ik ga er vanuit dat je voor je hieraan begint een werkend Fedora 14 (of vergelijkbare) distributie al geinstalleerd hebt. Moest dit niet het geval zijn kan je altijd even kijken op de website www.howtoforge.com . Die website is een rijke bron van informatie in verband met installatie van een veelvoud aan paketten op linux en heeft dan ook al een grote hoeveelheid bijgedragen aan mijn kennis.
+
+
+Installatie
+###########
+De eerste stap die we zetten is het installeren van de puppet client en de puppet server, deze noemen in de package manager van Fedora respectievelijk puppet en puppet-server. In het algemeen word echter voor de puppet server de term puppetmaster gebruikt. Het installeren gebeurt door middel van het commando: "sudo yum -y install puppet puppet-server". Als we even de tijd nemen om dit commando te ontleden zien we dat het bestaat uit meerdere onderdelen, namelijk: sudo => sudo is de afkorting van "switch user do", en doet zoveel als van gebruiker veranderen om dan een bepaald commando uit te voeren. We gebruiken dit omdat je als gewone gebruiker normaal gezien niet zomaar paketten mag installeren, dit is voorbehouden voor de root-gebruiker. de root-gebruiker is de unix-variant van de administrator account onder windows, maar dan echt almachtig. zijn wil is wet en daar is geen weg rond, dus ook niet als je per ongeluk als root de helft van je data weg vaagt, pas dus op wanneer en vooral hoe je de root-account gebruikt. De reactie van dit commando hangt echter ook af van de configuratie ervan, standaard zal deze bij gebruik een paswoord vragen, het paswoord van de root-account. Er is echter ook de mogelijk dat je volledige rechten hebt gekregen op dit programma en dat je zelfs zonder paswoord de kracht van de root-account kan gebruiken. Dit is enorm gevaarlijk en dan ook enkel aan te raden wanneer je weet met wat je bezig bent.
+
+het tweede deel is "yum": yum is de standaard package manager van Fedora 14 en is de afkorting van "yellowdog updater, modified". De naam is afkomstig van de linux-distributie die deze front-end ontwikkeld heeft, namelijk "yellowdog linux" oftewel "ydl". Deze word gebruikt om paketten te installeren en deinstalleren, en uiteraard om bij te houden welke paketten al geinstalleerd zijn en welke beschikbaar zijn voor jouw systeem. In weze is yum slechts een front-end voor rpm, de "redhat package manager". Het grootste probleem met rpm was dat er geen dependency resolving plaatsvond en dat zorgt er dus voor dat als het paketje dat jij wilt installeren afhankelijk is van een of meerdere andere paketten, je eerst manueel deze andere paketten moest gaan installeren. Niet  echt een leuk karweitje als je er even over nadenkt. yum zorgt ervoor dat dit dus wel automatisch gedaan word en voegt daarnaast nog enkele handige mogelijkheden toe zoals plugins. door middel van deze plugins kan je extra functionaliteit toevoegen aan yum, denk bijvoorbeeld aan de plugin fastestmirror. Deze plugin zorgt ervoor dat eerst word vastgesteld welke mirror op dit moment het snelst aan jouw behoeften kan voorzien en zorgt ervoor dat jij van deze mirror gebruik maakt, zonder dat je daarvoor iets hoeft te doen. Bij fedora 14 is deze plugin trouwens standaard al aanwezig.
+
+Daarna komt de schakeloptie "-y": deze specifieert dat yum op alle vragen die hij normaal gezien zou stellen, simpelweg "ja" antwoord. Dit is uiteraard handig, maar pas er wel een beetje mee op, zeker bij het verwijderen van paketten. Zoals ik zelf al hardhandig heb mogen ondervinden verwijderd hij dan bijvoorbeeld ook de dependencies van het paketje dat je probeert te verwijderen, en uiteraard ook alle paketten die daar ook afhankelijk van zijn. 
+
+Het vierde deel van het commando is "install": dit is een actie binnenin het programma yum. Deze actie zorgt ervoor, zoals het woord al insinueert, dat er iets geinstalleerd moet worden. yum zorgt zelf voor de rest, zoals de keuze van welke repository gebruikt word, de opties bij het installeren, etc ..
+
+Last but not least hebben we "puppet puppet-server": Dit zijn simpelweg de namen van de paketten die je wenst te installeren. Je kan er meerdere specifieren, zolang ze gescheiden zijn door een spatie. In het geval jouw pakketje een naam zou hebben met een spatie erin, dien je dus haakjes te gebruiken om de pakketnaam te "quoten" < ja inderdaad zoals dit.
+
+In zijn geheel zorgt dit commando er dus voor dat de pakketten "puppet" en "puppet-server" geinstalleerd worden op jouw systeem zonder al te veel gemor over dependencies en dergelijke. Als het commando de command line terugkeert, zijn de pakketten geinstalleerd en kunnen we beginnen met de configuratie van de puppetmaster en daarna de puppet client.
+
+
+configuratie
+############
+
+configuratie gebeurt aan de hand van manifests en modules. om even kort samen te vatten, modules zijn pakketjes modulaire manifests, die op een bepaalde manier in een map geplaatst worden, en daarna kunnen worden herbruikt door bijvoorbeeld andere mensen.
+manifests zijn scriptjes waarin je declareert wat je wilt doen. Dit gaat van het beheren van bestanden, over mappen en links naar software pakketten en services.
+Ook kan je in manifests en modules onderlinge relaties vastleggen, bijvoorbeeld tussen een configuratiebestand van een webserver en de service van de webserver.
+Op deze manier kan de webserver automatisch herstart worden als dit bestand word aangepast, moest dit niet ingebouwd zijn.
+
+
+file structure
+##############
+
+Zoals alle andere programma's heeft ook puppet enkele configuratie-bestanden nodig. Deze bestanden vinden we in de meeste linux-distributies terug in de map /etc/puppet/ . Hier worden niet enkel de configuraties van puppet zelf opgeslagen, maar ook de manifests die hij zal aanbieden aan clients. Per definitie zal puppet eerst zoeken naar een bestand genaamd site.pp . Dit bestand is het beginpunt van alle aangeboden manifests. vanuit dit bestand kan je ook andere bestanden aanhalen, zodat je een mooie, overzichtelijke mappenstructuur kan aanleggen waar je zelf nog aan uit kan.
+
+
+puppet
+######
+
+Puppet is de naam van de standalone tool om puppetruns te maken. Dit wil zeggen dat deze applicatie geen verbinding maakt met een puppetmaster om zijn configuratie op te halen. Omdat het puppet programma geen verbinding maakt met een server om zijn configuratie op te halen, dien je wel als argument het pad naar een manifest mee te geven. Deze manifest heeft dezelfde opmaak als een gewone manifest, en word dan ook hetzelfde geïnterpreteerd.
+
+puppetd
+#######
+
+Puppetd is de puppet daemon. daemon is de UNIX naam voor een service, en zoals verwacht is deze puppetd dan ook een service die op geregelde tijdstippen zijn configuratie binnenhaalt van een puppetmaster en uitvoert.
+
+puppetmaster
+############
+
+puppetmaster is de naam van de puppet-server daemon. Dit wil zeggen dat we hier te maken hebben met een service die als server een dienst aanbied. In dit geval is die dienst het aanbieden van manifests aan clients, en hierbij gebruik te maken van een beveiligd kanaal.
+Dit beveiligd kanaal word toegepast door een ssl-verbinding aan te leggen, meer info hierover later.

@@ -1,0 +1,1014 @@
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.11.7)  14 DEC 2010 12:47
+entering extended mode
+ Source specials enabled.
+ %&-line parsing enabled.
+**document.tex
+(./document.tex
+LaTeX2e <2005/12/01>
+Babel <v3.8h> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, arabic, basque, bulgarian, coptic, welsh, czech, slovak, german, ng
+erman, danish, esperanto, spanish, catalan, galician, estonian, farsi, finnish,
+ french, greek, monogreek, ancientgreek, croatian, hungarian, interlingua, ibyc
+us, indonesian, icelandic, italian, latin, mongolian, dutch, norsk, polish, por
+tuguese, pinyin, romanian, russian, slovenian, uppersorbian, serbian, swedish, 
+turkish, ukenglish, ukrainian, loaded.
+(/usr/share/texmf/tex/latex/base/book.cls
+Document Class: book 2005/09/16 v1.4f Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/bk11.clo
+File: bk11.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/geometry/geometry.sty
+Package: geometry 2002/07/08 v3.2 Page Geometry
+
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+\Gm@cnth=\count88
+\Gm@cntv=\count89
+\c@Gm@tempcnt=\count90
+\Gm@bindingoffset=\dimen103
+\Gm@wd@mp=\dimen104
+\Gm@odd@mp=\dimen105
+\Gm@even@mp=\dimen106
+\Gm@dimlist=\toks15
+)
+(/usr/share/texmf/tex/latex/base/inputenc.sty
+Package: inputenc 2006/05/05 v1.1b Input encoding file
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
+
+(/usr/share/texmf/tex/latex/base/latin1.def
+File: latin1.def 2006/05/05 v1.1b Input encoding file
+))
+(/usr/share/texmf/tex/generic/babel/babel.sty
+Package: babel 2005/11/23 v3.8h The Babel package
+
+(/usr/share/texmf/tex/generic/babel/dutch.ldf
+Language: dutch 2005/03/30 v3.8i Dutch support from the babel system
+
+(/usr/share/texmf/tex/generic/babel/babel.def
+File: babel.def 2005/11/23 v3.8h Babel common definitions
+\babel@savecnt=\count91
+\U@D=\dimen107
+)
+Package babel Info: Making " an active character on input line 132.
+))
+(/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 90.
+
+(/usr/share/texmf/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2007/01/08 v0.04d Graphics/color for pdfTeX
+\Gread@gobject=\count92
+))
+\Gin@req@height=\dimen108
+\Gin@req@width=\dimen109
+)
+(/usr/share/texmf/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+(/usr/share/texmf/tex/latex/fancyhdr/fancyhdr.sty
+\fancy@headwidth=\skip43
+\f@ncyO@elh=\skip44
+\f@ncyO@erh=\skip45
+\f@ncyO@olh=\skip46
+\f@ncyO@orh=\skip47
+\f@ncyO@elf=\skip48
+\f@ncyO@erf=\skip49
+\f@ncyO@olf=\skip50
+\f@ncyO@orf=\skip51
+)
+(/usr/share/texmf/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip52
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks18
+\ex@=\dimen110
+))
+(/usr/share/texmf/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen111
+)
+(/usr/share/texmf/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count93
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count94
+\leftroot@=\count95
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count96
+\DOTSCASE@=\count97
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen112
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count98
+\c@MaxMatrixCols=\count99
+\dotsspace@=\muskip10
+\c@parentequation=\count100
+\dspbrk@lvl=\count101
+\tag@help=\toks19
+\row@=\count102
+\column@=\count103
+\maxfields@=\count104
+\andhelp@=\toks20
+\eqnshift@=\dimen113
+\alignsep@=\dimen114
+\tagshift@=\dimen115
+\tagwidth@=\dimen116
+\totwidth@=\dimen117
+\lineht@=\dimen118
+\@envbody=\toks21
+\multlinegap=\skip53
+\multlinetaggap=\skip54
+\mathdisplay@stack=\toks22
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/usr/share/texmf/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+)
+(/usr/share/texmf/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+)
+\@indexfile=\write3
+\openout3 = `document.idx'.
+
+
+Writing index file document.idx
+(./document.aux
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `white' multiply defined.
+
+
+LaTeX Warning: Label `MySQL' multiply defined.
+
+
+LaTeX Warning: Label `PHP' multiply defined.
+
+)
+\openout1 = `document.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+-------------------- Geometry parameters
+paper: a4paper
+landscape: --
+twocolumn: --
+twoside: true
+asymmetric: --
+h-parts: 71.13188pt, 469.47049pt, 56.9055pt
+v-parts: 56.9055pt, 731.23584pt, 56.9055pt
+hmarginratio: --
+vmarginratio: --
+lines: --
+heightrounded: --
+bindingoffset: 0.0pt
+truedimen: --
+includehead: --
+includefoot: --
+includemp: --
+driver: pdftex
+-------------------- Page layout dimensions and switches
+\paperwidth  597.50787pt
+\paperheight 845.04684pt
+\textwidth  469.47049pt
+\textheight 731.23584pt
+\oddsidemargin  -1.1381pt
+\evensidemargin -15.36449pt
+\topmargin  -47.23828pt
+\headheight 12.0pt
+\headsep    19.8738pt
+\footskip   27.46295pt
+\marginparwidth 116.0pt
+\marginparsep   7.0pt
+\columnsep  10.0pt
+\skip\footins  10.0pt plus 4.0pt minus 2.0pt
+\hoffset 0.0pt
+\voffset 0.0pt
+\mag 1000
+\@twosidetrue \@mparswitchtrue 
+(1in=72.27pt, 1cm=28.45pt)
+-----------------------
+ <drupal_on_F12_login.pdf, id=1, 958.58125pt x 616.3025pt>
+File: drupal_on_F12_login.pdf Graphic file (type pdf)
+
+<use drupal_on_F12_login.pdf>
+Overfull \hbox (28.33978pt too wide) in paragraph at lines 72--72
+ [][]\OT1/cmtt/m/n/12 mitchell.huyssen@donboscowilrijk.be 
+ []
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 78.
+(/usr/share/texmf/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 78.
+
+(/usr/share/texmf/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+) [1
+
+
+
+{/usr/share/texmf/fonts/map/pdftex/updmap/pdftex.map} <./drupal_on_F12_login.pd
+f>]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[2
+
+] (./document.toc [3] [4])
+\tf@toc=\write4
+\openout4 = `document.toc'.
+
+ [5] [6
+
+] (./document.lof [7])
+\tf@lof=\write5
+\openout5 = `document.lof'.
+
+ [8] (./voorwoord.tex
+Underfull \hbox (badness 10000) in paragraph at lines 1--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--23
+
+ []
+
+) [9
+
+] [10
+
+] [1
+
+] [2] (./inleiding.tex
+Hoofdstuk 1.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 20.
+(/usr/share/texmf/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 20.
+ [3
+
+] [4]
+Overfull \hbox (19.16797pt too wide) in paragraph at lines 128--128
+[]  \OT1/cmtt/m/n/10.95 // hier zal dan uiteindelijk "Dit is GEEN Drupal websit
+e" op de site komen te staan[] 
+ []
+
+[5] [6]) [7] [8
+
+] [9] [10] (./inhoudelijk_beheer.tex
+Hoofdstuk 2.
+<inhoud.png, id=81, 1032.85875pt x 364.36125pt>
+File: inhoud.png Graphic file (type png)
+ <use inhoud.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[11
+
+] <inhoudstypen-lijst.png, id=85, 1058.95625pt x 440.64626pt>
+File: inhoudstypen-lijst.png Graphic file (type png)
+
+<use inhoudstypen-lijst.png>
+<inhoudstypen-invoegen.png, id=86, 1059.96pt x 699.61375pt>
+File: inhoudstypen-invoegen.png Graphic file (type png)
+
+<use inhoudstypen-invoegen.png> [12 <./inhoud.png (PNG copy)> <./inhoudstypen-l
+ijst.png (PNG copy)>]
+<inhoudstypen-fields.png, id=90, 1057.9525pt x 154.5775pt>
+File: inhoudstypen-fields.png Graphic file (type png)
+
+<use inhoudstypen-fields.png>
+<inhoudstypen-exporteren.png, id=91, 1057.9525pt x 342.27875pt>
+File: inhoudstypen-exporteren.png Graphic file (type png)
+
+<use inhoudstypen-exporteren.png>
+<inhoudstypen-importeren.png, id=92, 1054.94125pt x 453.695pt>
+File: inhoudstypen-importeren.png Graphic file (type png)
+
+<use inhoudstypen-importeren.png> [13 <./inhoudstypen-invoegen.png (PNG copy)> 
+<./inhoudstypen-fields.png (PNG copy)> <./inhoudstypen-exporteren.png (PNG copy
+)>] <instellingen-inzendingen.png, id=96, 1035.87pt x 337.26pt>
+File: instellingen-inzendingen.png Graphic file (type png)
+
+<use instellingen-inzendingen.png> [14 <./inhoudstypen-importeren.png (PNG copy
+)> <./instellingen-inzendingen.png (PNG copy)>]
+<rss-publicatie.png, id=100, 1027.84pt x 246.9225pt>
+File: rss-publicatie.png Graphic file (type png)
+ <use rss-publicatie.png>
+<reacties-geplubliceerd.png, id=101, 1046.91125pt x 307.1475pt>
+File: reacties-geplubliceerd.png Graphic file (type png)
+
+<use reacties-geplubliceerd.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<reacties-goedkeuringsrij.png, id=102, 1049.9225pt x 331.2375pt>
+File: reacties-goedkeuringsrij.png Graphic file (type png)
+
+<use reacties-goedkeuringsrij.png> [15 <./rss-publicatie.png (PNG copy)>]
+[16 <./reacties-geplubliceerd.png (PNG copy)> <./reacties-goedkeuringsrij.png (
+PNG copy)>] <woordenlijst-toevoegen.png, id=110, 1052.93375pt x 341.275pt>
+File: woordenlijst-toevoegen.png Graphic file (type png)
+
+<use woordenlijst-toevoegen.png>
+<woordenlijst-identificatie.png, id=111, 1045.9075pt x 395.4775pt>
+File: woordenlijst-identificatie.png Graphic file (type png)
+
+<use woordenlijst-identificatie.png> [17 <./woordenlijst-toevoegen.png (PNG cop
+y)>] <woordenlijst-inhoudstypen.png, id=115, 1049.9225pt x 233.87375pt>
+File: woordenlijst-inhoudstypen.png Graphic file (type png)
+
+<use woordenlijst-inhoudstypen.png>
+<woordenlijst-instellingen.png, id=116, 1047.915pt x 304.13625pt>
+File: woordenlijst-instellingen.png Graphic file (type png)
+
+<use woordenlijst-instellingen.png>) (./site_constructie.tex [18 <./woordenlijs
+t-identificatie.png (PNG copy)> <./woordenlijst-inhoudstypen.png (PNG copy)> <.
+/woordenlijst-instellingen.png (PNG copy)>]
+Hoofdstuk 3.
+<blokken-lijst.png, id=120, 1373.13pt x 717.68124pt>
+File: blokken-lijst.png Graphic file (type png)
+ <use blokken-lijst.png>
+<blok-toevoegen.png, id=121, 1052.93375pt x 379.4175pt>
+File: blok-toevoegen.png Graphic file (type png)
+
+<use blok-toevoegen.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \vbox (badness 1014) has occurred while \output is active []
+
+ [19
+
+ <./blokken-lijst.png (PNG copy)>]
+<blok-specifieke-instellingen.png, id=125, 1056.94875pt x 605.26125pt>
+File: blok-specifieke-instellingen.png Graphic file (type png)
+
+<use blok-specifieke-instellingen.png>
+<blok-gebruikers-specifieke.png, id=126, 1052.93375pt x 238.8925pt>
+File: blok-gebruikers-specifieke.png Graphic file (type png)
+
+<use blok-gebruikers-specifieke.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[20 <./blok-toevoegen.png (PNG copy)> <./blok-specifieke-instellingen.png (PNG 
+copy)>] <blok-rol-specifieke.png, id=130, 1052.93375pt x 202.7575pt>
+File: blok-rol-specifieke.png Graphic file (type png)
+
+<use blok-rol-specifieke.png>
+<blok-pagina-specifieke.png, id=131, 1047.915pt x 376.40625pt>
+File: blok-pagina-specifieke.png Graphic file (type png)
+
+<use blok-pagina-specifieke.png>
+<interfacevertalen-overzicht.png, id=132, 1046.91125pt x 289.08pt>
+File: interfacevertalen-overzicht.png Graphic file (type png)
+
+<use interfacevertalen-overzicht.png> [21 <./blok-gebruikers-specifieke.png (PN
+G copy)> <./blok-rol-specifieke.png (PNG copy)> <./blok-pagina-specifieke.png (
+PNG copy)>] <interfacevertalen-zoeken.png, id=138, 1054.94125pt x 604.2575pt>
+File: interfacevertalen-zoeken.png Graphic file (type png)
+
+<use interfacevertalen-zoeken.png>
+<interfacevertalen-importeren.png, id=139, 1051.93pt x 644.4075pt>
+File: interfacevertalen-importeren.png Graphic file (type png)
+
+<use interfacevertalen-importeren.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<interfacevertalen-exporteren.png, id=140, 1048.91875pt x 539.01375pt>
+File: interfacevertalen-exporteren.png Graphic file (type png)
+
+<use interfacevertalen-exporteren.png> [22 <./interfacevertalen-overzicht.png (
+PNG copy)> <./interfacevertalen-zoeken.png (PNG copy)>] [23 <./interfacevertale
+n-importeren.png (PNG copy)> <./interfacevertalen-exporteren.png (PNG copy)>]
+<menu-weergeven.png, id=147, 1052.93375pt x 308.15125pt>
+File: menu-weergeven.png Graphic file (type png)
+
+<use menu-weergeven.png>
+<menu-toevoegen.png, id=148, 1047.915pt x 482.80376pt>
+File: menu-toevoegen.png Graphic file (type png)
+
+<use menu-toevoegen.png>
+<menu-instellingen-01.png, id=149, 1049.9225pt x 409.53pt>
+File: menu-instellingen-01.png Graphic file (type png)
+
+<use menu-instellingen-01.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<nav-onderdelen-weergeven.png, id=150, 1053.9375pt x 628.3475pt>
+File: nav-onderdelen-weergeven.png Graphic file (type png)
+
+<use nav-onderdelen-weergeven.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[24 <./menu-weergeven.png (PNG copy)> <./menu-toevoegen.png (PNG copy)>]
+<modules-lijst.png, id=154, 1042.89626pt x 726.715pt>
+File: modules-lijst.png Graphic file (type png)
+ <use modules-lijst.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<modules-deinstalleren.png, id=155, 1051.93pt x 276.03125pt>
+File: modules-deinstalleren.png Graphic file (type png)
+
+<use modules-deinstalleren.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \vbox (badness 2846) has occurred while \output is active []
+
+ [25 <./menu-instellingen-01.png (PNG copy)> <./nav-onderdelen-weergeven.png (P
+NG copy)>]
+<templates-lijst.png, id=159, 1051.93pt x 482.80376pt>
+File: templates-lijst.png Graphic file (type png)
+
+<use templates-lijst.png>
+<templates-globale-instellingen.png, id=160, 1049.9225pt x 609.27625pt>
+File: templates-globale-instellingen.png Graphic file (type png)
+
+<use templates-globale-instellingen.png> [26 <./modules-lijst.png (PNG copy)> <
+./modules-deinstalleren.png (PNG copy)> <./templates-lijst.png (PNG copy)>]
+<templates-garland.png, id=164, 1045.9075pt x 590.205pt>
+File: templates-garland.png Graphic file (type png)
+
+<use templates-garland.png>
+<url-aliassen-lijst.png, id=165, 1048.91875pt x 354.32375pt>
+File: url-aliassen-lijst.png Graphic file (type png)
+
+<use url-aliassen-lijst.png> [27 <./templates-globale-instellingen.png (PNG cop
+y)> <./templates-garland.png (PNG copy)>]
+<url-alias-toevoegen.png, id=170, 1047.915pt x 412.54124pt>
+File: url-alias-toevoegen.png Graphic file (type png)
+
+<use url-alias-toevoegen.png>) (./site_instellingen.tex [28 <./url-aliassen-lij
+st.png (PNG copy)> <./url-alias-toevoegen.png (PNG copy)>]
+Hoofdstuk 4.
+<Actions.png, id=174, 1045.9075pt x 464.73625pt>
+File: Actions.png Graphic file (type png)
+ <use Actions.png>
+<administratiemenu.png, id=175, 1053.9375pt x 605.26125pt>
+File: administratiemenu.png Graphic file (type png)
+
+<use administratiemenu.png> [29
+
+ <./Actions.png (PNG copy)>]
+<beeldverwerkingstoolkit.png, id=179, 1052.93375pt x 193.72375pt>
+File: beeldverwerkingstoolkit.png Graphic file (type png)
+
+<use beeldverwerkingstoolkit.png>
+<beheertemplate.png, id=180, 1052.93375pt x 209.78375pt>
+File: beheertemplate.png Graphic file (type png)
+
+<use beheertemplate.png>
+<bestandssysteem.png, id=181, 1047.915pt x 387.4475pt>
+File: bestandssysteem.png Graphic file (type png)
+
+<use bestandssysteem.png> [30 <./administratiemenu.png (PNG copy)> <./beeldverw
+erkingstoolkit.png (PNG copy)> <./beheertemplate.png (PNG copy)>]
+<datum-tijd.png, id=185, 1047.915pt x 427.5975pt>
+File: datum-tijd.png Graphic file (type png)
+ <use datum-tijd.png>
+<foutrapportage.png, id=186, 1049.9225pt x 318.18875pt>
+File: foutrapportage.png Graphic file (type png)
+
+<use foutrapportage.png>
+<invoerformaten.png, id=187, 1052.93375pt x 379.4175pt>
+File: invoerformaten.png Graphic file (type png)
+
+<use invoerformaten.png> [31 <./bestandssysteem.png (PNG copy)> <./datum-tijd.p
+ng (PNG copy)> <./foutrapportage.png (PNG copy)>]
+<database-loggen.png, id=191, 1051.93pt x 164.615pt>
+File: database-loggen.png Graphic file (type png)
+ <use database-loggen.png>
+<prestatie-pagina.png, id=192, 1039.885pt x 218.8175pt>
+File: prestatie-pagina.png Graphic file (type png)
+
+<use prestatie-pagina.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<prestatie-blok.png, id=193, 1041.8925pt x 206.7725pt>
+File: prestatie-blok.png Graphic file (type png)
+
+<use prestatie-blok.png> [32 <./invoerformaten.png (PNG copy)> <./database-logg
+en.png (PNG copy)>]
+<prestatie-bandbreedte.png, id=197, 1034.86626pt x 358.33875pt>
+File: prestatie-bandbreedte.png Graphic file (type png)
+
+<use prestatie-bandbreedte.png>
+<prestatie-cache.png, id=198, 1047.915pt x 137.51375pt>
+File: prestatie-cache.png Graphic file (type png)
+
+<use prestatie-cache.png>
+<schone-urls.png, id=199, 1048.91875pt x 227.85126pt>
+File: schone-urls.png Graphic file (type png)
+ <use schone-urls.png>
+[33 <./prestatie-pagina.png (PNG copy)> <./prestatie-blok.png (PNG copy)> <./pr
+estatie-bandbreedte.png (PNG copy)> <./prestatie-cache.png (PNG copy)>]
+<site-onderhoud.png, id=204, 1048.91875pt x 394.47375pt>
+File: site-onderhoud.png Graphic file (type png)
+
+<use site-onderhoud.png> <talen.png, id=205, 1039.885pt x 474.77374pt>
+File: talen.png Graphic file (type png)
+
+<use talen.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<website-gegevens.png, id=206, 1035.87pt x 242.9075pt>
+File: website-gegevens.png Graphic file (type png)
+
+<use website-gegevens.png> [34 <./schone-urls.png (PNG copy)> <./site-onderhoud
+.png (PNG copy)>] <zoekinstellingen.png, id=210, 1044.90375pt x 386.44376pt>
+File: zoekinstellingen.png Graphic file (type png)
+
+<use zoekinstellingen.png>) (./gebruikersbeheer.tex [35 <./talen.png (PNG copy)
+> <./website-gegevens.png (PNG copy)> <./zoekinstellingen.png (PNG copy)>]
+[36
+
+]
+Hoofdstuk 5.
+<gebruikers.png, id=217, 1047.915pt x 504.88625pt>
+File: gebruikers.png Graphic file (type png)
+ <use gebruikers.png>
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [37 <./gebruikers.png (PNG copy)>]
+<publieke-registraties.png, id=221, 1044.90375pt x 426.59375pt>
+File: publieke-registraties.png Graphic file (type png)
+
+<use publieke-registraties.png>
+<gebruikersinstellingen-email.png, id=222, 1043.9pt x 379.4175pt>
+File: gebruikersinstellingen-email.png Graphic file (type png)
+
+<use gebruikersinstellingen-email.png>
+<rollen.png, id=223, 1042.89626pt x 345.29pt>
+File: rollen.png Graphic file (type png)
+ <use rollen.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<toegangsrechten.png, id=224, 1044.90375pt x 394.47375pt>
+File: toegangsrechten.png Graphic file (type png)
+
+<use toegangsrechten.png> [38 <./publieke-registraties.png (PNG copy)> <./gebru
+ikersinstellingen-email.png (PNG copy)>]
+<toegangsregels.png, id=228, 1046.91125pt x 240.9pt>
+File: toegangsregels.png Graphic file (type png)
+ <use toegangsregels.png>)
+(./rapporten.tex [39 <./rollen.png (PNG copy)> <./toegangsrechten.png (PNG copy
+)> <./toegangsregels.png (PNG copy)>] [40
+
+]
+Hoofdstuk 6.
+<recente-logs1.png, id=236, 1049.9225pt x 512.91624pt>
+File: recente-logs1.png Graphic file (type png)
+ <use recente-logs1.png>
+<recente-logs2.png, id=237, 1135.24126pt x 366.36874pt>
+File: recente-logs2.png Graphic file (type png)
+
+<use recente-logs2.png>
+Underfull \hbox (badness 10000) in paragraph at lines 19--35
+
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[41 <./recente-logs1.png (PNG copy)>]
+<populaire-zoekwoorden.png, id=241, 1050.92625pt x 119.44624pt>
+File: populaire-zoekwoorden.png Graphic file (type png)
+
+<use populaire-zoekwoorden.png>
+<geen-toegang.png, id=242, 1048.91875pt x 119.44624pt>
+File: geen-toegang.png Graphic file (type png)
+ <use geen-toegang.png>
+<pagina-niet-gevonden.png, id=243, 1049.9225pt x 121.45375pt>
+File: pagina-niet-gevonden.png Graphic file (type png)
+
+<use pagina-niet-gevonden.png>
+<updates.png, id=244, 1050.92625pt x 589.20125pt>
+File: updates.png Graphic file (type png)
+ <use updates.png> [42 <./recente-logs2.png (PNG copy)> <./populaire-zoekwoorde
+n.png (PNG copy)> <./geen-toegang.png (PNG copy)> <./pagina-niet-gevonden.png (
+PNG copy)>]
+<status_rapportage.png, id=248, 1146.2825pt x 672.5125pt>
+File: status_rapportage.png Graphic file (type png)
+
+<use status_rapportage.png>)
+Underfull \hbox (badness 10000) in paragraph at lines 95--103
+
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[43 <./updates.png (PNG copy)>] [44 <./status_rapportage.png (PNG copy)>]
+[45
+
+] [46] (./inhoud_aanmaken.tex
+Hoofdstuk 7.
+<book_page_aanmaken.png, id=262, 1037.8775pt x 708.6475pt>
+File: book_page_aanmaken.png Graphic file (type png)
+
+<use book_page_aanmaken.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<menu-instellingen.png, id=263, 1029.8475pt x 300.12125pt>
+File: menu-instellingen.png Graphic file (type png)
+
+<use menu-instellingen.png> [47
+
+]
+<bovenliggend-onderdeel.png, id=267, 289.08pt x 360.34625pt>
+File: bovenliggend-onderdeel.png Graphic file (type png)
+
+<use bovenliggend-onderdeel.png>
+<invoerformaat.png, id=268, 1031.855pt x 264.99pt>
+File: invoerformaat.png Graphic file (type png)
+ <use invoerformaat.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[48 <./book_page_aanmaken.png (PNG copy)> <./menu-instellingen.png (PNG copy)> 
+<./bovenliggend-onderdeel.png>]
+<boekstructuur.png, id=273, 1038.88126pt x 214.8025pt>
+File: boekstructuur.png Graphic file (type png)
+ <use boekstructuur.png>
+<revisie-informatie.png, id=274, 1035.87pt x 227.85126pt>
+File: revisie-informatie.png Graphic file (type png)
+
+<use revisie-informatie.png>
+<url-pad-instellingen.png, id=275, 1032.85875pt x 141.52875pt>
+File: url-pad-instellingen.png Graphic file (type png)
+
+<use url-pad-instellingen.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[49 <./invoerformaat.png (PNG copy)> <./boekstructuur.png (PNG copy)> <./revisi
+e-informatie.png (PNG copy)>]
+<reactie-instellingen.png, id=279, 1032.85875pt x 140.525pt>
+File: reactie-instellingen.png Graphic file (type png)
+
+<use reactie-instellingen.png>
+<auteursinformatie.png, id=280, 1032.85875pt x 214.8025pt>
+File: auteursinformatie.png Graphic file (type png)
+
+<use auteursinformatie.png>
+<publicatie-opties.png, id=281, 1036.87375pt x 177.66376pt>
+File: publicatie-opties.png Graphic file (type png)
+
+<use publicatie-opties.png>) [50 <./url-pad-instellingen.png (PNG copy)> <./rea
+ctie-instellingen.png (PNG copy)> <./auteursinformatie.png (PNG copy)> <./publi
+catie-opties.png (PNG copy)>] [51
+
+] [52]
+Hoofdstuk 8.
+(./bijlagen.tex [53
+
+])
+Underfull \hbox (badness 10000) in paragraph at lines 53--112
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--112
+
+ []
+
+[54]
+Hoofdstuk 9.
+[55
+
+] [56
+
+]
+Underfull \hbox (badness 1365) in paragraph at lines 132--133
+[][]\OT1/cmr/m/n/10.95 Tim Con-ver-se en Joy-ce Park: PHP het com-ple-te hand-b
+oek (2001),Aca-de-mic Ser-vi-
+ []
+
+(./document.ind [57] [58
+
+] [59
+
+]) (./document.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 2802 strings out of 256216
+ 38549 string characters out of 1917072
+ 91174 words of memory out of 1500000
+ 5949 multiletter control sequences out of 10000+200000
+ 14466 words of font info for 55 fonts, out of 1200000 for 2000
+ 645 hyphenation exceptions out of 8191
+ 29i,10n,43p,291b,349s stack positions out of 5000i,500n,6000p,200000b,15000s
+</usr/share/texmf/fonts/type1/bluesky/cm/cmbx10.pfb></usr/share/texmf/fonts/t
+ype1/bluesky/cm/cmbx12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmcsc10.pfb
+></usr/share/texmf/fonts/type1/bluesky/cm/cmmi10.pfb></usr/share/texmf/fonts/ty
+pe1/bluesky/cm/cmr10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr12.pfb></u
+sr/share/texmf/fonts/type1/bluesky/cm/cmr6.pfb></usr/share/texmf/fonts/type1/bl
+uesky/cm/cmr8.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr9.pfb></usr/share
+/texmf/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/bluesky/
+cm/cmtt10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmtt12.pfb>
+Output written on document.pdf (69 pages, 2565582 bytes).
+PDF statistics:
+ 354 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 131072)
+ 386 words of extra memory for PDF output out of 10000 (max. 10000000)
+
