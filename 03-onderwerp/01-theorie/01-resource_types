@@ -3,7 +3,8 @@ Er zijn een aantal resource types die man kan gebruiken om dingen te definieren 
 Deze resource types variëren van het beheren van een bestand of map, tot het beheren van software-pakketten en services.
 
 
-cron:
+# +++++ cron +++++
+
 	Deze resource type beheert cron jobs, de manier om op *NIX systemen een taak op bepaalde tijdstippen te laten uitvoeren.
 	Hiermee heb je de mogelijkheid om bepaalde taken automatisch te laten uitvoeren op vooraf gedefiniëerde tijdstippen.
 	Alle parameter met uizondering van de gebruiker en het uit te voeren commando zijn optioneel.
@@ -93,3 +94,132 @@ cron:
 		De gebruiker waarmee men het commando dient uit te voeren.
 		Deze valt terug op de huidige gebruiker indien geen gebruiker word meegegeven.
 
+# +++++ exec +++++
+
+	Exec is een resource type die toestaat externe commando's te gebruiken.
+	Het belangrijkste waarbij je hier moet opletten is dat zo'n commando elke keer word uitgevoerd wanneer puppet zijn manifests uitvoert, het is dus belangrijk dat men geen commando's specifiëert die elkaar later overschrijven.
+	Uiteraard zijn er ook wel manieren om te zorgen dat een commando slechts word uitgevoerd indien aan een bepaalde conditie vvoldaan word.
+	Een andere manier om dit in te perken is de refreshonly parameter, die ervoor zorgt dat een commando enkel word uitgevoerd als reactie op een andere resource definitie binnen de manifests. Meer daarover later.
+
+	Zoals te verwachten is word de exec resource veelal gebruikt om dingen te doen die (nog) niet in puppet ingebakken zijn.
+	Alhoewel dit op korte termijn een vaak onoverkomelijk fenomeen zal zijn, word er toch sterk aangeraden om geëngageerd te geraken in de community rondom puppet en te helpen pushen voor een native resource type die de functies die jij nodig hebt kan uitvoeren.
+	Natuurlijk is een eigen contributie van code ook altijd welkom.
+
+	Je zal vaak bepaalde software-pakketten nodig hebben om commando's uit te voeren, en daar houd puppet rekening mee:
+	puppet zal indien je in een commando een programma aanroept, kijken of dat programma door jou beheerd word en dit automatisch 'requiren'.
+	Dit wil zeggen dat puppet bij het dynamisch opstellen van de volgorde waarin alles uitgevoerd word, rekening zal houden met het feit dat dit programma eerst geïnstalleerd moet worden en dan pas uitgevoerd kan worden.
+	Hetzelfde word gedaan voor bijvoorbeeld de gebruiker waarmee men het commando uitvoert:
+	Als deze door puppet beheerd word en nog niet bestaat, zorgt men ervoor dat deze gecreëerd word prior het commando uit te voeren.
+	Deze functionaliteit noemt men ook wel 'auto-require'.
+
+	Men kan ofwel de programma's aanroepen via hun absolute pad of een 'PATH' variable opgeven, die de paden bevat waarin puppet moet zoeken om het commando te vinden.
+	Als alles goed gaat en het commando uitgevoerd word zonder fouten zal de output van het commando op het normale log-level gelogd worden, indien er een fout optreed zal puppet echter een melding weergeven en de eventuele output voordat de fout optrad.
+
+
+	Parameters:
+		command:
+		Het commando dat uitgevoerd moet worden.
+
+		creates:
+		Een bestand dat dit commando creëert.
+		Als hier een waarde opgegeven word zal het commando enkel uitgevoerd worden als dit bestand niet bestaat.
+
+			exec { "tar xf /my/tar/file.tar":
+				cwd => "/var/tmp",
+				creates => "/var/tmp/myfile",
+				path => ["/usr/bin", "/usr/sbin"]
+			}
+
+		In dit voorbeeld word het commando 'tar xf /my/tar/file.tar' uitgevoerd.
+		Dit commando pakt een archief uit dat gecompresseerd is volgens het tar-protocol, in de map /var/tmp.
+		De inhoud van dit archief zal een bestand 'myfile' bevatten, en wanneer dit uitgepakt word zal dit bestand zich in de map '/var/tmp' bevinden.
+		Doordat puppet bij de volgende run gaat kijken of dit bestand bestaat zal het commando slechts één keer uitgevoerd worden, tenzij dit bestand verwijderd of verplaatst word.
+
+		cwd:
+		De map waarin het commando dient uitgevoerd te worden, als de map niet bestaat zal het commando falen.
+
+		environment:
+		Met deze parameter kan je omgevingsvariabelen meegeven aan het commando.
+
+		group:
+		De groep die gebruikt dient te worden om het commando uit te voeren.
+
+		logoutput:
+		Deze waarde specifiëert of men de output dient te loggen, gebruik hier de waarde on_failure om ervoor te zorgen dat er enkel gelogd word als het commando faalt.
+
+Whether to log output. Defaults to logging output at the loglevel for the exec resource. Use on_failure to only log the output when the command reports an error. Values are true, false, on_failure, and any legal log level. Valid values are true, false, on_failure.
+onlyif
+
+If this parameter is set, then this exec will only run if the command returns 0. For example:
+
+exec { "logrotate":
+  path => "/usr/bin:/usr/sbin:/bin",
+  onlyif => "test `du /var/log/messages | cut -f1` -gt 100000"
+}
+
+This would run logrotate only if that test returned true.
+
+Note that this command follows the same rules as the main command, which is to say that it must be fully qualified if the path is not set.
+
+Also note that onlyif can take an array as its value, e.g.:
+
+onlyif => ["test -f /tmp/file1", "test -f /tmp/file2"]
+
+This will only run the exec if /all/ conditions in the array return true.
+path
+
+The search path used for command execution. Commands must be fully qualified if no path is specified. Paths can be specified as an array or as a colon separated list.
+provider
+
+The specific backend for provider to use. You will seldom need to specify this – Puppet will usually discover the appropriate provider for your platform. Available providers are:
+
+    posix: Execute external binaries directly, on POSIX systems. This does not pass through a shell, or perform any interpolation, but only directly calls the command with the arguments given. Default for feature == posix.
+    shell: Execute external binaries directly, on POSIX systems. passing through a shell so that shell built ins are available.
+
+refresh
+
+How to refresh this command. By default, the exec is just called again when it receives an event from another resource, but this parameter allows you to define a different command for refreshing.
+refreshonly
+
+The command should only be run as a refresh mechanism for when a dependent object is changed. It only makes sense to use this option when this command depends on some other object; it is useful for triggering an action:
+
+# Pull down the main aliases file
+file { "/etc/aliases":
+  source => "puppet://server/module/aliases"
+}
+
+# Rebuild the database, but only when the file changes
+exec { newaliases:
+  path => ["/usr/bin", "/usr/sbin"],
+  subscribe => File["/etc/aliases"],
+  refreshonly => true
+}
+
+Note that only subscribe and notify can trigger actions, not require, so it only makes sense to use refreshonly with subscribe or notify. Valid values are true, false.
+returns
+
+The expected return code(s). An error will be returned if the executed command returns something else. Defaults to 0. Can be specified as an array of acceptable return codes or a single value.
+timeout
+
+The maximum time the command should take. If the command takes longer than the timeout, the command is considered to have failed and will be stopped. Use 0 to disable the timeout. The time is specified in seconds.
+tries
+
+The number of times execution of the command should be tried. Defaults to ‘1’. This many attempts will be made to execute the command until an acceptable return code is returned. Note that the timeout paramater applies to each try rather than to the complete set of tries.
+try_sleep
+
+The time to sleep in seconds between ‘tries’.
+unless
+
+If this parameter is set, then this exec will run unless the command returns 0. For example:
+
+exec { "/bin/echo root >> /usr/lib/cron/cron.allow":
+  path => "/usr/bin:/usr/sbin:/bin",
+  unless => "grep root /usr/lib/cron/cron.allow 2>/dev/null"
+}
+
+This would add root to the cron.allow file (on Solaris) unless grep determines it’s already there.
+
+Note that this command follows the same rules as the main command, which is to say that it must be fully qualified if the path is not set.
+user
+
+The user to run the command as. Note that if you use this then any error output is not currently captured. This is because of a bug within Ruby. If you are using Puppet to create this user, the exec will automatically require the user, as long as it is specified by name.
