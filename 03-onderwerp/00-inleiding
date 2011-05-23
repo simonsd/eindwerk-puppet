@@ -1,5 +1,22 @@
-#############
-# inleiding #
-#############
+# +++++ inleiding +++++
 
 De keuze voor mijn eindwerk is gevallen op puppet, een configuration management tool. Configuration management zorgt ervoor dat je centraal configuraties kunt definieren en deze dan kan distribueren van je server naar een of meerdere clients.
+
+
+# +++++ history +++++
+
+De geschiedenis van configuration management kan men traceren naar de jaren '50, toen het ontwikkeld werd door de Amerikaanse luchtmacht als een soort inventory systeem, zodat ze konden bijhouden waar onderdelen zich bevinden.
+Over de jaren is dit getransformeerd in iets aanzienlijk groter dan slechts een inventory systeem,
+namelijk een systeem om niet alleen te controleren wat waar is, maar om dit ook te controleren.
+
+Sommige mensen discussieren dat configuration management nog steeds enkel het inventariseren van zaken omvat,
+en dat het controleren en manipuleren van configuraties een compleet andere discipline is, zoals bv.: change management.
+Uiteraard is dit allemaal slecht een hoop marketing termen die verder niet veel betekenis hebben.
+
+De term configuration management omvat op de dag van vandaag zowel het inventariseren als het aanpassen van configuraties, en dan  voornamelijk op computersystemen.
+
+Oorspronkelijk werd configuration management manueel gedaan, later begon men software tools te schrijven om dit meer te kunnen automatiseren.
+Enkele voorbeelden van zulke tools zijn:
+	- cfengine
+	- chef
+	- puppet
