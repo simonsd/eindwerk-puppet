@@ -147,79 +147,68 @@ Deze resource types variëren van het beheren van een bestand of map, tot het be
 		logoutput:
 		Deze waarde specifiëert of men de output dient te loggen, gebruik hier de waarde on_failure om ervoor te zorgen dat er enkel gelogd word als het commando faalt.
 
-Whether to log output. Defaults to logging output at the loglevel for the exec resource. Use on_failure to only log the output when the command reports an error. Values are true, false, on_failure, and any legal log level. Valid values are true, false, on_failure.
-onlyif
+		onlyif:
+		Deze parameter kan men beschouwen als een test, indien de test slaagt zal het commando uitgevoerd worden, anders niet.
+		De waarde van deze parameter is ook steeds een commando, wat zorgt voor een grote keuze uit testmogelijkheden.
 
-If this parameter is set, then this exec will only run if the command returns 0. For example:
+			exec { "logrotate":
+				path => "/usr/bin:/usr/sbin:/bin",
+				onlyif => "test `du /var/log/messages | cut -f1` -gt 100000"
+			}
 
-exec { "logrotate":
-  path => "/usr/bin:/usr/sbin:/bin",
-  onlyif => "test `du /var/log/messages | cut -f1` -gt 100000"
-}
+		Dit voorbeeld voert het commando logrotate uit, dat hij zal gaan zoeken in '/usr/bin:/usr/sbin:/bin', enkel als 'test `du /vara/log/messages|cut -f1` -gt 100000' waar is.
+		Dit wil zeggen dat dit commando kijkt of de centrale logmap groter is dan 100Mb en zal dan op basis daarvan beslissen of hij de logs gaat omwisselen of niet.
 
-This would run logrotate only if that test returned true.
+		path:
+		Dit is de 'PATH' omgevingsvariable die gebruikt zal worden om te zoeken naar programma's, indien deze niet aanwezig is dient men bij een commando steeds de volledige padnaam naar een programma op te geven.
 
-Note that this command follows the same rules as the main command, which is to say that it must be fully qualified if the path is not set.
+		provider:
+		hiermee kan je specifiëren hoe je commando's wil uitvoeren: rechtstreeks (posix) of via een shell zodat de ingebouwde commando's van de shell beschikbaar zijn.
 
-Also note that onlyif can take an array as its value, e.g.:
+		refresh:
+		Deze parameter zorgt ervoor dat als de exec aangeroepen word vanuit een andere resource, terwijl de parameter refreshonly ook is toegevoegd, er eventueel een ander commando in de plaats uitgevoerd kan worden.
+		Normaal gezien zal het reguliere commando worden uitgevoerd, maar als hier een alternatief commando word opgegeven zal dit in de plaats worden gebruikt.
 
-onlyif => ["test -f /tmp/file1", "test -f /tmp/file2"]
+		refreshonly:
+		Deze parameter zorgt ervoor dat het commando enkel uitgevoerd zal worden als een ander object waarvan dit object afhankelijk is verandert of uitgevoerd word.
 
-This will only run the exec if /all/ conditions in the array return true.
-path
+			file { "/etc/aliases":
+				source => "puppet://server/module/aliases"
+			}
 
-The search path used for command execution. Commands must be fully qualified if no path is specified. Paths can be specified as an array or as a colon separated list.
-provider
+			exec { newaliases:
+				path => ["/usr/bin", "/usr/sbin"],
+				subscribe => File["/etc/aliases"],
+				refreshonly => true
+			}
 
-The specific backend for provider to use. You will seldom need to specify this – Puppet will usually discover the appropriate provider for your platform. Available providers are:
+		In dit voorbeeld zie je dat door middel van een subscribe parameter (meer info hier over later) dit commando enkel zal uitvoeren wanneer het object '/etc/aliases' gewijzigd word.
 
-    posix: Execute external binaries directly, on POSIX systems. This does not pass through a shell, or perform any interpolation, but only directly calls the command with the arguments given. Default for feature == posix.
-    shell: Execute external binaries directly, on POSIX systems. passing through a shell so that shell built ins are available.
+		returns:
+		Hier kan je opgeven wat de verwachte return codes van het commando zijn, waardoor je bijvoorbeeld bepaalde fouten kan filteren.
+		De standaardwaarde is enkel 0, dus enkel als een commando compleet foutloos uitgevoerd word.
 
-refresh
+		timeout:
+		De maximum tijd die dit exec object in beslag zou mogen nemen.
+		Als het commando langer duurt word er vanuit gegaan dat het commando gefaald heeft en zal dus gestopt worden.
 
-How to refresh this command. By default, the exec is just called again when it receives an event from another resource, but this parameter allows you to define a different command for refreshing.
-refreshonly
+		tries:
+		Het aantal keren dat men dient te proberen het commando uit te voeren, met als standaardwaarde 1.
+		Let wel dat de timeout parameter geld voor elk van deze tries apart, en dus niet als geheel.
 
-The command should only be run as a refresh mechanism for when a dependent object is changed. It only makes sense to use this option when this command depends on some other object; it is useful for triggering an action:
+		try_sleep:
+		De pauze tussen opvolgende 'tries'.
 
-# Pull down the main aliases file
-file { "/etc/aliases":
-  source => "puppet://server/module/aliases"
-}
+		unless:
+		Het omgekeerde van onlyif, namelijk dat het exec object enkel uitgevoerd zal worden indien dit commando wel faalt.
 
-# Rebuild the database, but only when the file changes
-exec { newaliases:
-  path => ["/usr/bin", "/usr/sbin"],
-  subscribe => File["/etc/aliases"],
-  refreshonly => true
-}
+			exec { "/bin/echo root >> /usr/lib/cron/cron.allow":
+				path => "/usr/bin:/usr/sbin:/bin",
+				unless => "grep root /usr/lib/cron/cron.allow 2>/dev/null"
+			}
 
-Note that only subscribe and notify can trigger actions, not require, so it only makes sense to use refreshonly with subscribe or notify. Valid values are true, false.
-returns
+		Dit voorbeeld laat zien hoe je een unless parameter specifiëert.
+		Het exec object dat in dit voorbeeld gehanteerd word zal root toevoegen aan het '/usr/lib/cron/cron.allow' tenzij het woord 'root' er al in teruggevonden werd.
 
-The expected return code(s). An error will be returned if the executed command returns something else. Defaults to 0. Can be specified as an array of acceptable return codes or a single value.
-timeout
-
-The maximum time the command should take. If the command takes longer than the timeout, the command is considered to have failed and will be stopped. Use 0 to disable the timeout. The time is specified in seconds.
-tries
-
-The number of times execution of the command should be tried. Defaults to ‘1’. This many attempts will be made to execute the command until an acceptable return code is returned. Note that the timeout paramater applies to each try rather than to the complete set of tries.
-try_sleep
-
-The time to sleep in seconds between ‘tries’.
-unless
-
-If this parameter is set, then this exec will run unless the command returns 0. For example:
-
-exec { "/bin/echo root >> /usr/lib/cron/cron.allow":
-  path => "/usr/bin:/usr/sbin:/bin",
-  unless => "grep root /usr/lib/cron/cron.allow 2>/dev/null"
-}
-
-This would add root to the cron.allow file (on Solaris) unless grep determines it’s already there.
-
-Note that this command follows the same rules as the main command, which is to say that it must be fully qualified if the path is not set.
-user
-
-The user to run the command as. Note that if you use this then any error output is not currently captured. This is because of a bug within Ruby. If you are using Puppet to create this user, the exec will automatically require the user, as long as it is specified by name.
+		user:
+		De gebruiker die dit commando dient uit te voeren.
