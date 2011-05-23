@@ -1,11 +1,15 @@
-titelblad
-voorwoord
-index
-onderwerp:
-	- inleiding
-	- theorie
-	- praktijk
-slotwoord
-bijlages
-bibliografie
-achterflap
+titelblad				|
+voorwoord				|
+index					|
+onderwerp:				|
+	- inleiding			|
+	- theorie:			|
+		- resource types	|
+		- defines		|
+		- templates		|
+		- modules		|
+	- praktijk			|
+slotwoord				|
+bijlages				|
+bibliografie				|
+achterflap				|
