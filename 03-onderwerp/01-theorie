@@ -13,3 +13,103 @@ Bij puppet is het de bedoeling dat je "manifests" schrijft. Dit zijn configurati
 
 Om dit alles te automatiseren is op zich niet zo'n groot probleem, het grootste probleem erbij is de beveiliging. Je kan uiteraard zonder beveiliging de configuraties ook beheren maar dan kunnen derden ook jouw configuraties bekijken en zien waar er eventuele zwakke punten zijn, om nog maar te zwijgen over eventuele reverse engineering tactieken waarmee ze via je configuration management systeem op je centrale server binnen geraken.
 Om dit alles te voorkomen maakt puppet gebruik van ssl-certificaten. SSL staat voor Secure Socket Layer, en zorgt ervoor dat er een beveligde verbinding gemaakt kan worden tussen jouw server en de clients die je wilt bedienen. De authenticatie verloopt de eerste keer (standaard) manueel. Vanaf dan gebeurt de gehele authenticatie-fase op de achtergrond. De authenticatie gebeurt via certificaten, namelijk een privaat en een publiek certificaat. Het private certificaat is enkel bekend door jouw server. Het publieke certificaat is zowel gekend door de client als de server. Bij de initiele configuratie van de beveiliging, stuurt de client zijn publieke certificaat naar de server, de server tekent dat certificaat met zijn private sleutel en stuurt het dan terug naar de client. Vanaf nu kan de client configuraties downloaden van de server op basis van zijn hostnaam, en de bijgeleverde publieke sleutel. De server kan dan het publieke certificaat met zijn private sleutel ontcijferen en kijken of deze geldig is of niet.
+
+# +++++ resource types +++++
+Er zijn een aantal resource types die man kan gebruiken om dingen te definieren in puppet manifests.
+Deze resource types variëren van het beheren van een bestand of map, tot het beheren van software-pakketten en services.
+
+
+cron:
+	Deze resource type beheert cron jobs, de manier om op *NIX systemen een taak op bepaalde tijdstippen te laten uitvoeren.
+	Hiermee heb je de mogelijkheid om bepaalde taken automatisch te laten uitvoeren op vooraf gedefiniëerde tijdstippen.
+	Alle parameter met uizondering van de gebruiker en het uit te voeren commando zijn optioneel.
+
+	De naam die aan een cron job meegeeft heeft enkel als identificatie als doel, voor de rest is deze naam compleet zonder mening.
+	Als je bijvoorbeeld een tweede cron job specifieert die exact hetzelfde is als de eerste, dan zal puppet dit herkennen en deze twee namen simpelweg aan elkaar gelijkstellen zonder een tweede job toe te voegen.
+
+	Enkele voorbeelden:
+
+	cron { logrotate:
+		command => "/usr/sbin/logrotate",
+		user => root,
+		hour => 2,
+		minute => 0
+	}
+
+	Dit voorbeeld zou ervoor zorgen dat de gebruiker met naam 'root' om stipt 2u elke dag het commando '/usr/sbin/logrotate' uitvoert.
+	Als extraatje kan je ook meerdere waardes doorgeven, dit doe je door middel van een array.
+
+	cron { logrotate:
+		command => "/usr/sbin/logrotate",
+		user => root,
+		hour => [2, 4]
+	}
+
+	Dit voorbeeld doet net hetzelfde als het vorige voorbeeld, met als enige verandering dat deze definitie zowel om 2 als om 4u het gespecifiëerde commando zal uitvoeren.
+	Meer dan twee waardes zijn ook geen probleem, zolang ze netjes gescheiden zijn door een comma en binnen de vierkante haakjes zitten.
+
+	Een laatste mogelijkheid om waardes mee te geven is via ranges, dit wil zeggen dat je alle waardes tussen waarde1 en waarde2 wil meegeven.
+
+	cron { logrotate:
+		command => "/usr/sbin/logrotate",
+		user => root,
+		hour => ['2-4'],
+	}
+
+	Met dit laatste voorbeeld voer je wederom het commando '/usr/sbin/logrotate' uit, maar nu zowel om 2, 3 als 4u.
+
+
+	Parameters:
+
+		command:
+		Deze parameter specifiëert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vind.
+		De 'PATH' variabele word niet vanzelf overgedragen van de gebruiker dus als je een bepaalde 'path' wilt specifiëren dien je dit manueel te doen.
+
+		ensure:
+		Met deze parameter kan je specifiëren of iets aanwezig moet zijn, mag zijn, of juist niet mag zijn.
+		Aanvaardbare waardes zijn bv.: present of absent.
+		Als je present specifiëert zal de cron job aanwezig zijn, als je absent ingeeft zorgt puppet ervoor dat de cron job zeker niet aanwezig is.
+
+		environment:
+		Met deze parameter kan je omgevingswaarden meegeven. Let wel dat puppet deze niet automatisch reset, dus zullen deze omgevingsvariablen behouden blijven totdat puppet afsluit.
+
+		hour:
+		Het uur waarop de cron job dient te lopen.
+		Aanvaardbare waardes: 1-23
+
+		minute:
+		De minuut waarop puppet de job zal starten.
+		Aanvaardbare waardes: 1-59
+
+		weekday:
+		De dag van de week waarop men het commando uitvoert.
+		Aanvaardbare waardes: 0-7 of de dagnaam ( Tuesday, Friday ).
+
+		month:
+		De maand waarop men het commando uitvoert.
+		Aanvaardbare waardes: 1-12 of de maandnaam ( December, Januari )
+
+		monthday:
+		De dag van de maand waarop het commando uitgevoerd zal worden.
+		Aanvaardbare waardes: 1-31
+
+		name:
+		De symbolische naam voor de cron job.
+		word enkel gebruikt zodat mensen snel kunnen herkennen om welke job het juist gaat.
+		
+		provider:
+		Het gewenste programma dat gebruikt word.
+		Dit dient zelden gespecifiëerd te worden, puppet zal dit normaal gezien zelf herkennen.
+
+		target:
+		Waar de cron job opgeslagen dient te worden.
+		Standaard is dit de crontab entry van de gebruiker zelf.
+
+		user:
+		De gebruiker waarmee men het commando dient uit te voeren.
+		Deze valt terug op de huidige gebruiker indien geen gebruiker word meegegeven.
+
+
+# +++++ defines +++++
+# +++++ templates +++++
+# +++++ modules +++++
