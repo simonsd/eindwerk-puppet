@@ -1,122 +1,130 @@
-% +++++ resource types +++++
-Er zijn een aantal resource types die man kan gebruiken om dingen te definieren in puppet manifests.
-Deze resource types variëren van het beheren van een bestand of map, tot het beheren van software-pakketten en services.
+\chapter{Resource Types}
+
+Er zijn een aantal ingebouwde resource types die men kan gebruiken om dingen te definieren in puppet manifests.\\
+Deze resource types variëren van het beheren van een bestand of map, tot het beheren van complete software-pakketten en services.\\
 
 
-% +++++ cron +++++
+\section{Cron}
+Cron:\\
+\subsection{Doel}
+Doel:\\
+	Het beheren van cron jobs, de manier om op *NIX systemen een taak op bepaalde tijdstippen te laten uitvoeren.\\
+	Hiermee heb je de mogelijkheid om bepaalde taken automatisch te laten uitvoeren op vooraf gedefiniëerde tijdstippen.\\
+	Alle parameter met uizondering van de gebruiker en het uit te voeren commando zijn optioneel.\\
 
-	Deze resource type beheert cron jobs, de manier om op *NIX systemen een taak op bepaalde tijdstippen te laten uitvoeren.
-	Hiermee heb je de mogelijkheid om bepaalde taken automatisch te laten uitvoeren op vooraf gedefiniëerde tijdstippen.
-	Alle parameter met uizondering van de gebruiker en het uit te voeren commando zijn optioneel.
-
-	De naam die aan een cron job meegeeft heeft enkel als identificatie als doel, voor de rest is deze naam compleet zonder mening.
-	Als je bijvoorbeeld een tweede cron job specifieert die exact hetzelfde is als de eerste, dan zal puppet dit herkennen en deze twee namen simpelweg aan elkaar gelijkstellen zonder een tweede job toe te voegen.
-
-	Enkele voorbeelden:
-
-	cron { logrotate:
-		command => "/usr/sbin/logrotate",
-		user => root,
-		hour => 2,
-		minute => 0
-	}
-
-	Dit voorbeeld zou ervoor zorgen dat de gebruiker met naam 'root' om stipt 2u elke dag het commando '/usr/sbin/logrotate' uitvoert.
-	Als extraatje kan je ook meerdere waardes doorgeven, dit doe je door middel van een array.
-
-	cron { logrotate:
-		command => "/usr/sbin/logrotate",
-		user => root,
-		hour => [2, 4]
-	}
-
-	Dit voorbeeld doet net hetzelfde als het vorige voorbeeld, met als enige verandering dat deze definitie zowel om 2 als om 4u het gespecifiëerde commando zal uitvoeren.
-	Meer dan twee waardes zijn ook geen probleem, zolang ze netjes gescheiden zijn door een comma en binnen de vierkante haakjes zitten.
-
-	Een laatste mogelijkheid om waardes mee te geven is via ranges, dit wil zeggen dat je alle waardes tussen waarde1 en waarde2 wil meegeven.
-
-	cron { logrotate:
-		command => "/usr/sbin/logrotate",
-		user => root,
-		hour => ['2-4'],
-	}
-
-	Met dit laatste voorbeeld voer je wederom het commando '/usr/sbin/logrotate' uit, maar nu zowel om 2, 3 als 4u.
+	De naam die aan een cron job meegeeft heeft enkel als identificatie als doel, voor de rest is deze naam compleet zonder mening.\\
+	Als je bijvoorbeeld een tweede cron job specifieert die exact hetzelfde is als de eerste, dan zal puppet dit herkennen en deze twee namen simpelweg aan elkaar gelijkstellen zonder een tweede job toe te voegen.\\
 
 
-	Parameters:
 
-		command:
-		Deze parameter specifiëert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vind.
-		De 'PATH' variabele word niet vanzelf overgedragen van de gebruiker dus als je een bepaalde 'path' wilt specifiëren dien je dit manueel te doen.
+\subsection{Parameters}
+Parameters:\\
 
-		ensure:
-		Met deze parameter kan je specifiëren of iets aanwezig moet zijn, mag zijn, of juist niet mag zijn.
-		Aanvaardbare waardes zijn bv.: present of absent.
-		Als je present specifiëert zal de cron job aanwezig zijn, als je absent ingeeft zorgt puppet ervoor dat de cron job zeker niet aanwezig is.
+		command:\\
+		Deze parameter specifiëert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vind.\\
+		De 'PATH' variabele word niet vanzelf overgedragen van de gebruiker dus als je een bepaalde 'path' wilt specifiëren dien je dit manueel te doen.\\
 
-		environment:
-		Met deze parameter kan je omgevingswaarden meegeven. Let wel dat puppet deze niet automatisch reset, dus zullen deze omgevingsvariablen behouden blijven totdat puppet afsluit.
+		ensure:\\
+		Met deze parameter kan je specifiëren of iets aanwezig moet zijn, mag zijn, of juist niet mag zijn.\\
+		Aanvaardbare waardes zijn bv.: present of absent.\\
+		Als je present specifiëert zal de cron job aanwezig zijn, als je absent ingeeft zorgt puppet ervoor dat de cron job zeker niet aanwezig is.\\
 
-		hour:
-		Het uur waarop de cron job dient te lopen.
-		Aanvaardbare waardes: 1-23
+		environment:\\
+		Met deze parameter kan je omgevingswaarden meegeven. Let wel dat puppet deze niet automatisch reset, dus zullen deze omgevingsvariablen behouden blijven totdat puppet afsluit.\\
 
-		minute:
-		De minuut waarop puppet de job zal starten.
-		Aanvaardbare waardes: 1-59
+		hour:\\
+		Het uur waarop de cron job dient te lopen.\\
+		Aanvaardbare waardes: 1-23\\
 
-		weekday:
-		De dag van de week waarop men het commando uitvoert.
-		Aanvaardbare waardes: 0-7 of de dagnaam ( Tuesday, Friday ).
+		minute:\\
+		De minuut waarop puppet de job zal starten.\\
+		Aanvaardbare waardes: 1-59\\
 
-		month:
-		De maand waarop men het commando uitvoert.
-		Aanvaardbare waardes: 1-12 of de maandnaam ( December, Januari )
+		weekday:\\
+		De dag van de week waarop men het commando uitvoert.\\
+		Aanvaardbare waardes: 0-7 of de dagnaam ( Tuesday, Friday ).\\
 
-		monthday:
-		De dag van de maand waarop het commando uitgevoerd zal worden.
-		Aanvaardbare waardes: 1-31
+		month:\\
+		De maand waarop men het commando uitvoert.\\
+		Aanvaardbare waardes: 1-12 of de maandnaam ( December, Januari )\\
 
-		name:
-		De symbolische naam voor de cron job.
-		word enkel gebruikt zodat mensen snel kunnen herkennen om welke job het juist gaat.
+		monthday:\\
+		De dag van de maand waarop het commando uitgevoerd zal worden.\\
+		Aanvaardbare waardes: 1-31\\
+
+		name:\\
+		De symbolische naam voor de cron job.\\
+		word enkel gebruikt zodat mensen snel kunnen herkennen om welke job het juist gaat.\\
 		
-		provider:
-		Het gewenste programma dat gebruikt word.
-		Dit dient zelden gespecifiëerd te worden, puppet zal dit normaal gezien zelf herkennen.
+		provider:\\
+		Het gewenste programma dat gebruikt word.\\
+		Dit dient zelden gespecifiëerd te worden, puppet zal dit normaal gezien zelf herkennen.\\
 
-		target:
-		Waar de cron job opgeslagen dient te worden.
-		Standaard is dit de crontab entry van de gebruiker zelf.
+		target:\\
+		Waar de cron job opgeslagen dient te worden.\\
+		Standaard is dit de crontab entry van de gebruiker zelf.\\
 
-		user:
-		De gebruiker waarmee men het commando dient uit te voeren.
-		Deze valt terug op de huidige gebruiker indien geen gebruiker word meegegeven.
+		user:\\
+		De gebruiker waarmee men het commando dient uit te voeren.\\
+		Deze valt terug op de huidige gebruiker indien geen gebruiker word meegegeven.\\
 
-% +++++ exec +++++
+\subsection{Voorbeelden}
+Voorbeelden:
 
-	Exec is een resource type die toestaat externe commando's te gebruiken.
-	Het belangrijkste waarbij je hier moet opletten is dat zo'n commando elke keer word uitgevoerd wanneer puppet zijn manifests uitvoert, het is dus belangrijk dat men geen commando's specifiëert die elkaar later overschrijven.
-	Uiteraard zijn er ook wel manieren om te zorgen dat een commando slechts word uitgevoerd indien aan een bepaalde conditie vvoldaan word.
-	Een andere manier om dit in te perken is de refreshonly parameter, die ervoor zorgt dat een commando enkel word uitgevoerd als reactie op een andere resource definitie binnen de manifests. Meer daarover later.
+	cron \{ logrotate:\\
+		command => "/usr/sbin/logrotate",\\
+		user => root,\\
+		hour => 2,\\
+		minute => 0\\
+	\}\\
 
-	Zoals te verwachten is word de exec resource veelal gebruikt om dingen te doen die (nog) niet in puppet ingebakken zijn.
-	Alhoewel dit op korte termijn een vaak onoverkomelijk fenomeen zal zijn, word er toch sterk aangeraden om geëngageerd te geraken in de community rondom puppet en te helpen pushen voor een native resource type die de functies die jij nodig hebt kan uitvoeren.
-	Natuurlijk is een eigen contributie van code ook altijd welkom.
+	Dit voorbeeld zou ervoor zorgen dat de gebruiker met naam 'root' om stipt 2u elke dag het commando '/usr/sbin/logrotate' uitvoert.\\
+	Als extraatje kan je ook meerdere waardes doorgeven, dit doe je door middel van een array.\\
 
-	Je zal vaak bepaalde software-pakketten nodig hebben om commando's uit te voeren, en daar houd puppet rekening mee:
-	puppet zal indien je in een commando een programma aanroept, kijken of dat programma door jou beheerd word en dit automatisch 'requiren'.
-	Dit wil zeggen dat puppet bij het dynamisch opstellen van de volgorde waarin alles uitgevoerd word, rekening zal houden met het feit dat dit programma eerst geïnstalleerd moet worden en dan pas uitgevoerd kan worden.
-	Hetzelfde word gedaan voor bijvoorbeeld de gebruiker waarmee men het commando uitvoert:
-	Als deze door puppet beheerd word en nog niet bestaat, zorgt men ervoor dat deze gecreëerd word prior het commando uit te voeren.
-	Deze functionaliteit noemt men ook wel 'auto-require'.
+	cron \{ logrotate:\\
+		command => "/usr/sbin/logrotate",\\
+		user => root,\\
+		hour => [2, 4]\\
+	\}\\
 
-	Men kan ofwel de programma's aanroepen via hun absolute pad of een 'PATH' variable opgeven, die de paden bevat waarin puppet moet zoeken om het commando te vinden.
-	Als alles goed gaat en het commando uitgevoerd word zonder fouten zal de output van het commando op het normale log-level gelogd worden, indien er een fout optreed zal puppet echter een melding weergeven en de eventuele output voordat de fout optrad.
+	Dit voorbeeld doet net hetzelfde als het vorige voorbeeld, met als enige verandering dat deze definitie zowel om 2 als om 4u het gespecifiëerde commando zal uitvoeren.\\
+	Meer dan twee waardes zijn ook geen probleem, zolang ze netjes gescheiden zijn door een comma en binnen de vierkante haakjes zitten.\\
+
+	Een laatste mogelijkheid om waardes mee te geven is via ranges, dit wil zeggen dat je alle waardes tussen waarde1 en waarde2 wil meegeven.\\
+
+	cron \{ logrotate:\\
+		command => "/usr/sbin/logrotate",\\
+		user => root,\\
+		hour => ['2-4'],\\
+	\}\\
+
+	Met dit laatste voorbeeld voer je wederom het commando '/usr/sbin/logrotate' uit, maar nu zowel om 2, 3 als 4u.\\
+
+\section{Exec}
+Exec:\\
+Doel:\\
+	Het uitvoeren van externe commando's, wat zorgt voor een ongelofelijke flexibiliteit.\\
+	Het belangrijkste waarbij je hier moet opletten is dat zo'n commando elke keer word uitgevoerd wanneer puppet zijn manifests uitvoert, het is dus belangrijk dat men geen commando's specifiëert die elkaar later overschrijven.\\
+	Uiteraard zijn er ook wel manieren om te zorgen dat een commando slechts word uitgevoerd indien aan een bepaalde conditie vvoldaan word.\\
+	Een andere manier om dit in te perken is de refreshonly parameter, die ervoor zorgt dat een commando enkel word uitgevoerd als reactie op een andere resource definitie binnen de manifests. Meer daarover later.\\
+
+	Zoals te verwachten is word de exec resource veelal gebruikt om dingen te doen die (nog) niet in puppet ingebakken zijn.\\
+	Alhoewel dit op korte termijn een vaak onoverkomelijk fenomeen zal zijn, word er toch sterk aangeraden om geëngageerd te geraken in de community rondom puppet en te helpen pushen voor een native resource type die de functies die jij nodig hebt kan uitvoeren.\\
+	Natuurlijk is een eigen contributie van code ook altijd welkom.\\
+
+	Je zal vaak bepaalde software-pakketten nodig hebben om commando's uit te voeren, en daar houd puppet rekening mee:\\
+	puppet zal indien je in een commando een programma aanroept, kijken of dat programma door jou beheerd word en dit automatisch 'requiren'.\\
+	Dit wil zeggen dat puppet bij het dynamisch opstellen van de volgorde waarin alles uitgevoerd word, rekening zal houden met het feit dat dit programma eerst geïnstalleerd moet worden en dan pas uitgevoerd kan worden.\\
+	Hetzelfde word gedaan voor bijvoorbeeld de gebruiker waarmee men het commando uitvoert:\\
+	Als deze door puppet beheerd word en nog niet bestaat, zorgt men ervoor dat deze gecreëerd word prior het commando uit te voeren.\\
+	Deze functionaliteit noemt men ook wel 'auto-require'.\\
+
+	Men kan ofwel de programma's aanroepen via hun absolute pad of een 'PATH' variable opgeven, die de paden bevat waarin puppet moet zoeken om het commando te vinden.\\
+	Als alles goed gaat en het commando uitgevoerd word zonder fouten zal de output van het commando op het normale log-level gelogd worden, indien er een fout optreed zal puppet echter een melding weergeven en de eventuele output voordat de fout optrad.\\
 
 
-	Parameters:
+\subsection{Parameters}
+Parameters:\\
 		command:
 		Het commando dat uitgevoerd moet worden.
 
@@ -124,11 +132,11 @@ Deze resource types variëren van het beheren van een bestand of map, tot het be
 		Een bestand dat dit commando creëert.
 		Als hier een waarde opgegeven word zal het commando enkel uitgevoerd worden als dit bestand niet bestaat.
 
-			exec { "tar xf /my/tar/file.tar":
+			exec \{ "tar xf /my/tar/file.tar":
 				cwd => "/var/tmp",
 				creates => "/var/tmp/myfile",
 				path => ["/usr/bin", "/usr/sbin"]
-			}
+			\}
 
 		In dit voorbeeld word het commando 'tar xf /my/tar/file.tar' uitgevoerd.
 		Dit commando pakt een archief uit dat gecompresseerd is volgens het tar-protocol, in de map /var/tmp.
@@ -145,16 +153,16 @@ Deze resource types variëren van het beheren van een bestand of map, tot het be
 		De groep die gebruikt dient te worden om het commando uit te voeren.
 
 		logoutput:
-		Deze waarde specifiëert of men de output dient te loggen, gebruik hier de waarde on_failure om ervoor te zorgen dat er enkel gelogd word als het commando faalt.
+		Deze waarde specifiëert of men de output dient te loggen, gebruik hier de waarde on\_failure om ervoor te zorgen dat er enkel gelogd word als het commando faalt.
 
 		onlyif:
 		Deze parameter kan men beschouwen als een test, indien de test slaagt zal het commando uitgevoerd worden, anders niet.
 		De waarde van deze parameter is ook steeds een commando, wat zorgt voor een grote keuze uit testmogelijkheden.
 
-			exec { "logrotate":
+			exec \{ "logrotate":
 				path => "/usr/bin:/usr/sbin:/bin",
 				onlyif => "test `du /var/log/messages | cut -f1` -gt 100000"
-			}
+			\}
 
 		Dit voorbeeld voert het commando logrotate uit, dat hij zal gaan zoeken in '/usr/bin:/usr/sbin:/bin', enkel als 'test `du /vara/log/messages|cut -f1` -gt 100000' waar is.
 		Dit wil zeggen dat dit commando kijkt of de centrale logmap groter is dan 100Mb en zal dan op basis daarvan beslissen of hij de logs gaat omwisselen of niet.
@@ -172,15 +180,15 @@ Deze resource types variëren van het beheren van een bestand of map, tot het be
 		refreshonly:
 		Deze parameter zorgt ervoor dat het commando enkel uitgevoerd zal worden als een ander object waarvan dit object afhankelijk is verandert of uitgevoerd word.
 
-			file { "/etc/aliases":
+			file \{ "/etc/aliases":
 				source => "puppet://server/module/aliases"
-			}
+			\}
 
-			exec { newaliases:
+			exec \{ newaliases:
 				path => ["/usr/bin", "/usr/sbin"],
 				subscribe => File["/etc/aliases"],
 				refreshonly => true
-			}
+			\}
 
 		In dit voorbeeld zie je dat door middel van een subscribe parameter (meer info hier over later) dit commando enkel zal uitvoeren wanneer het object '/etc/aliases' gewijzigd word.
 
@@ -196,19 +204,228 @@ Deze resource types variëren van het beheren van een bestand of map, tot het be
 		Het aantal keren dat men dient te proberen het commando uit te voeren, met als standaardwaarde 1.
 		Let wel dat de timeout parameter geld voor elk van deze tries apart, en dus niet als geheel.
 
-		try_sleep:
+		try\_sleep:
 		De pauze tussen opvolgende 'tries'.
 
 		unless:
 		Het omgekeerde van onlyif, namelijk dat het exec object enkel uitgevoerd zal worden indien dit commando wel faalt.
 
-			exec { "/bin/echo root >> /usr/lib/cron/cron.allow":
+			exec \{ "/bin/echo root >> /usr/lib/cron/cron.allow":
 				path => "/usr/bin:/usr/sbin:/bin",
 				unless => "grep root /usr/lib/cron/cron.allow 2>/dev/null"
-			}
+			\}
 
 		Dit voorbeeld laat zien hoe je een unless parameter specifiëert.
 		Het exec object dat in dit voorbeeld gehanteerd word zal root toevoegen aan het '/usr/lib/cron/cron.allow' tenzij het woord 'root' er al in teruggevonden werd.
 
 		user:
 		De gebruiker die dit commando dient uit te voeren.
+
+\subsection{Voorbeelden}
+Voorbeelden:
+
+\section{File}
+File:\\
+\subsection{Doel}
+Doel:\\
+	Beheert locale bestanden, inclusief permissies, het creëren van zowel bestanden als mappen, en het downloaden van bestanden van remote servers.\\
+	Het is de bedoeling dat naarmate Puppet verder ontwikkeld, deze resource minder nodig zal zijn, en alles beheerd zal kunnenn worden met nieuwe resource types.\\
+
+	Wanneer Puppet de eigenaar en groep van het bestand ook beheerd, zal deze automatisch 'required' worden.\\
+
+\subsection{Parameters}
+	Parameters\\
+
+	backup:
+	Of er een backup van bestanden dient gemaakt te worden voordat ze vervangen worden. De manier bij voorkeur is om hierbij de filebucket te gebruiken.\\
+	De filebucket slaat bestanden op en herkent ze via hun md5-som, en zorgt voor een simpele overdraginsgmethode, alsook een opgeruimde mapenstructuur.\\
+%
+%	Whether files should be backed up before being replaced. The preferred method of backing files up is via a filebucket, which stores files by their MD5 sums and allows easy retrieval without littering directories with backups. You can specify a local filebucket or a network-accessible server-based filebucket by setting backup => bucket-name. Alternatively, if you specify any value that begins with a . (e.g., .puppet-bak), then Puppet will use copy the file in the same directory with that value as the extension of the backup. Setting backup => false disables all backups of the file in question.
+%
+%	Puppet automatically creates a local filebucket named puppet and defaults to backing up there. To use a server-based filebucket, you must specify one in your configuration
+%
+%	  filebucket \{ main:
+%	    server => puppet
+%	  \}
+%
+%	The puppet master daemon creates a filebucket by default, so you can usually back up to your main server with this configuration. Once you've described the bucket in your configuration, you can use it in any file
+%
+%	  file \{ "/my/file":
+%	    source => "/path/in/nfs/or/something",
+%	    backup => main
+%	  \}
+%
+%	This will back the file up to the central server.
+%
+%	At this point, the benefits of using a filebucket are that you do not have backup files lying around on each of your machines, a given version of a file is only backed up once, and you can restore any given file manually, no matter how old. Eventually, transactional support will be able to automatically restore filebucketed files.
+%	checksum
+%
+%	The checksum type to use when checksumming a file.
+%
+%	The default checksum parameter, if checksums are enabled, is md5. Valid values are md5, md5lite, mtime, ctime, none.
+%	content
+%
+%	Specify the contents of a file as a string. Newlines, tabs, and spaces can be specified using the escaped syntax (e.g., \\n for a newline). The primary purpose of this parameter is to provide a kind of limited templating:
+
+%	define resolve(nameserver1, nameserver2, domain, search) \{
+%	    $str = "search $search
+%		domain $domain
+%		nameserver $nameserver1
+%		nameserver $nameserver2
+%		"
+%
+%	    file \{ "/etc/resolv.conf":
+%	      content => $str
+%	    \}
+%	\}
+%
+%	This attribute is especially useful when used with templating.
+%	ctime
+%
+%	A read-only state to check the file ctime.
+%	ensure
+%
+%	Whether to create files that don't currently exist. Possible values are absent, present, file, and directory. Specifying present will match any form of file existence, and if the file is missing will create an empty file. Specifying absent will delete the file (and directory if recurse => true).
+%
+%	Anything other than those values will create a symlink. In the interest of readability and clarity, you should use ensure => link and explicitly specify a target; however, if a target attribute isn't provided, the value of the ensure attribute will be used as the symlink target:
+%
+%	(Useful on Solaris)
+%	Less maintainable: 
+%	file \{ "/etc/inetd.conf":
+%	  ensure => "/etc/inet/inetd.conf",
+%	\%}
+%
+%	More maintainable:
+%	file \{ "/etc/inetd.conf":
+%	  ensure => link,
+%	  target => "/etc/inet/inetd.conf",
+%	\}
+%
+%	These two declarations are equivalent. Valid values are absent (also called false), file, present, directory, link. Values can match /./.
+%	force
+%
+%	Force the file operation. Currently only used when replacing directories with links. Valid values are true, false.
+%	group
+%
+%	Which group should own the file. Argument can be either group name or group ID.
+%	ignore
+%
+%	A parameter which omits action on files matching specified patterns during recursion. Uses Ruby’s builtin globbing engine, so shell metacharacters are fully supported, e.g. [a-z]*. Matches that would descend into the directory structure are ignored, e.g., */*.
+%	links
+%
+%	How to handle links during file actions. During file copying, follow will copy the target file instead of the link, manage will copy the link itself, and ignore will just pass it by. When not copying, manage and ignore behave equivalently (because you cannot really ignore links entirely during local recursion), and follow will manage the file to which the link points. Valid values are follow, manage.
+%	mode
+%
+%	Mode the file should be. Currently relatively limited: you must specify the exact mode the file should be.
+%
+%	Note that when you set the mode of a directory, Puppet always sets the search/traverse (1) bit anywhere the read (4) bit is set. This is almost always what you want: read allows you to list the entries in a directory, and search/traverse allows you to access (read/write/execute) those entries.) Because of this feature, you can recursively make a directory and all of the files in it world-readable by setting e.g.:
+%
+%	file \{ '/some/dir':
+%	  mode => 644,
+%	  recurse => true,
+%	\}
+%
+%	In this case all of the files underneath /some/dir will have mode 644, and all of the directories will have mode 755.
+%	mtime
+%
+%	A read-only state to check the file mtime.
+%	owner
+%
+%	To whom the file should belong. Argument can be user name or user ID.
+%	path
+%
+%	    namevar
+%
+%	The path to the file to manage. Must be fully qualified.
+%	provider
+%
+%	The specific backend for provider to use. You will seldom need to specify this – Puppet will usually discover the appropriate provider for your platform. Available providers are:
+%
+%	    microsoft\_windows: Uses Microsoft Windows functionality to manage file’s users and rights.
+%	    posix: Uses POSIX functionality to manage file’s users and rights.
+%
+%	purge
+%
+%	Whether unmanaged files should be purged. If you have a filebucket configured the purged files will be uploaded, but if you do not, this will destroy data. Only use this option for generated files unless you really know what you are doing. This option only makes sense when recursively managing directories.
+%
+%	Note that when using purge with source, Puppet will purge any files that are not on the remote system. Valid values are true, false.
+%	recurse
+%
+%	Whether and how deeply to do recursive management. Options are:
+%
+%	    inf,true — Regular style recursion on both remote and local directory structure.
+%	    remote — Descends recursively into the remote directory but not the local directory. Allows copying of a few files into a directory containing many unmanaged files without scanning all the local files.
+%	    false — Default of no recursion.
+%	    [0-9]+ — Same as true, but limit recursion. Warning: this syntax has been deprecated in favor of the recurselimit attribute. Valid values are true, false, inf, remote. Values can match /^[0-9]+$/.
+%
+%	recurselimit
+%
+%	How deeply to do recursive management. Values can match /^[0-9]+$/.
+%	replace
+%
+%	Whether or not to replace a file that is sourced but exists. This is useful for using file sources purely for initialization. Valid values are true (also called yes), false (also called no).
+%	selinux\_ignore\_defaults
+%
+%	If this is set then Puppet will not ask SELinux (via matchpathcon) to supply defaults for the SELinux attributes (seluser, selrole, seltype, and selrange). In general, you should leave this set at its default and only set it to true when you need Puppet to not try to fix SELinux labels automatically. Valid values are true, false.
+%	selrange
+%
+%	What the SELinux range component of the context of the file should be. Any valid SELinux range component is accepted. For example s0 or SystemHigh. If not specified it defaults to the value returned by matchpathcon for the file, if any exists. Only valid on systems with SELinux support enabled and that have support for MCS (Multi-Category Security).
+%	selrole
+%
+%	What the SELinux role component of the context of the file should be. Any valid SELinux role component is accepted. For example role\_r. If not specified it defaults to the value returned by matchpathcon for the file, if any exists. Only valid on systems with SELinux support enabled.
+%	seltype
+%
+%	What the SELinux type component of the context of the file should be. Any valid SELinux type component is accepted. For example tmp\_t. If not specified it defaults to the value returned by matchpathcon for the file, if any exists. Only valid on systems with SELinux support enabled.
+%	seluser
+%
+%	What the SELinux user component of the context of the file should be. Any valid SELinux user component is accepted. For example user\_u. If not specified it defaults to the value returned by matchpathcon for the file, if any exists. Only valid on systems with SELinux support enabled.
+%	source
+%
+%	Copy a file over the current file. Uses checksum to determine when a file should be copied. Valid values are either fully qualified paths to files, or URIs. Currently supported URI types are puppet and file.
+%
+%	This is one of the primary mechanisms for getting content into applications that Puppet does not directly support and is very useful for those configuration files that don’t change much across sytems. For instance:
+%
+%	class sendmail \{
+%	  file \{ "/etc/mail/sendmail.cf":
+%	    source => "puppet://server/modules/module\_name/sendmail.cf"
+%	  \}
+%	\}
+%
+%	You can also leave out the server name, in which case puppet agent will fill in the name of its configuration server and puppet apply will use the local filesystem. This makes it easy to use the same configuration in both local and centralized forms.
+%
+%	Currently, only the puppet scheme is supported for source URL’s. Puppet will connect to the file server running on server to retrieve the contents of the file. If the server part is empty, the behavior of the command-line interpreter (puppet apply) and the client demon (puppet agent) differs slightly: apply will look such a file up on the module path on the local host, whereas agent will connect to the puppet server that it received the manifest from.
+%
+%	See the fileserver configuration documentation for information on how to configure and use file services within Puppet.
+%
+%	If you specify multiple file sources for a file, then the first source that exists will be used. This allows you to specify what amount to search paths for files:
+%
+%	file \{ "/path/to/my/file":
+%	  source => [
+%	    "/modules/nfs/files/file.$host",
+%	    "/modules/nfs/files/file.$operatingsystem",
+%	    "/modules/nfs/files/file"
+%	  ]
+%	\}
+%
+%	This will use the first found file as the source.
+%
+%	You cannot currently copy links using this mechanism; set links to follow if any remote sources are links.
+%	sourceselect
+%
+%	Whether to copy all valid sources, or just the first one. This parameter is only used in recursive copies; by default, the first valid source is the only one used as a recursive source, but if this parameter is set to all, then all valid sources will have all of their contents copied to the local host, and for sources that have the same file, the source earlier in the list will be used. Valid values are first, all.
+%	target
+%
+%	The target for creating a link. Currently, symlinks are the only type supported.
+%
+%	You can make relative links:
+%
+%	(Useful on Solaris)
+%	file \{ "/etc/inetd.conf":
+%	  ensure => link,
+%	  target => "inet/inetd.conf",
+%	\}
+%
+%	You can also make recursive symlinks, which will create a directory structure that maps to the target directory, with directories corresponding to each directory and links corresponding to each file. Valid values are notlink. Values can match /./.
+%	type
+%
+%	A read-only state to check the file type.

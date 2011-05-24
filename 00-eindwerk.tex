@@ -1,0 +1,55 @@
+\documentclass[titlepage,openbib]{book}
+\usepackage[latin1]{inputenc}
+\usepackage[dutch]{babel}
+\usepackage[pdftex]{graphicx}
+\usepackage[T1]{fontenc}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\begin{document}
+
+
+\frontmatter
+% -----------------------------------------------
+\input{01-titelblad.tex}
+
+\tableofcontents
+\listoffigures
+\newpage
+
+\input{02-voorwoord.tex}
+% -----------------------------------------------
+
+
+
+\mainmatter
+% -----------------------------------------------
+\part{Inleiding}
+\input{03-onderwerp/00-inleiding.tex}
+
+\part{Theorie}
+\input{03-onderwerp/01-theorie/00-concept.tex}
+\input{03-onderwerp/01-theorie/01-resource_types.tex}
+\input{03-onderwerp/01-theorie/02-templates.tex}
+\input{03-onderwerp/01-theorie/03-modules.tex}
+
+\part{Praktijk}
+%\input{03-onderwerp/02-praktijk}
+% -----------------------------------------------
+
+
+\appendix
+% -----------------------------------------------
+\part{Bijlages}
+\input{05-bijlages/bijlages.tex}
+\input{05-bijlages/latex.tex}
+% -----------------------------------------------
+
+
+\backmatter
+% -----------------------------------------------
+\input{06-bibliografie.tex}
+%\printindex
+% -----------------------------------------------
+
+\end{document}
