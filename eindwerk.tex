@@ -9,9 +9,33 @@
 
 \begin{document}
 
-% precursor
+% frontpage
 \frontmatter
 \input{00-titelblad.tex}
 
+% table of contents
+\tableofcontents
+\listoffigures
+
+% precursor
+\chapter{Voorwoord}
+\input{01-voorwoord.tex}
+
 % main content
+\mainmatter
+\chapter{onderwerp}
+\input{03-onderwerp/00-inleiding.tex}
+
+% theory
+\chapter{theorie}
+\input{03-onderwerp/01-theorie/00-concept.tex}
+\input{03-onderwerp/01-theorie/01-resource_types.tex}
+\input{03-onderwerp/01-theorie/02-templates.tex}
+\input{03-onderwerp/01-theorie/03-modules.tex}
+
+% practical
+\chapter{praktijk}
+\input{03-onderwerp/02-praktijk}
+
+
 \end{document}

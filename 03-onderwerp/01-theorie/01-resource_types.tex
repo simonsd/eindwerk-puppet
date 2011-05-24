@@ -1,9 +1,9 @@
-# +++++ resource types +++++
+% +++++ resource types +++++
 Er zijn een aantal resource types die man kan gebruiken om dingen te definieren in puppet manifests.
 Deze resource types variëren van het beheren van een bestand of map, tot het beheren van software-pakketten en services.
 
 
-# +++++ cron +++++
+% +++++ cron +++++
 
 	Deze resource type beheert cron jobs, de manier om op *NIX systemen een taak op bepaalde tijdstippen te laten uitvoeren.
 	Hiermee heb je de mogelijkheid om bepaalde taken automatisch te laten uitvoeren op vooraf gedefiniëerde tijdstippen.
@@ -94,7 +94,7 @@ Deze resource types variëren van het beheren van een bestand of map, tot het be
 		De gebruiker waarmee men het commando dient uit te voeren.
 		Deze valt terug op de huidige gebruiker indien geen gebruiker word meegegeven.
 
-# +++++ exec +++++
+% +++++ exec +++++
 
 	Exec is een resource type die toestaat externe commando's te gebruiken.
 	Het belangrijkste waarbij je hier moet opletten is dat zo'n commando elke keer word uitgevoerd wanneer puppet zijn manifests uitvoert, het is dus belangrijk dat men geen commando's specifiëert die elkaar later overschrijven.
