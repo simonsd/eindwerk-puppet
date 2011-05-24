@@ -1,15 +1,18 @@
-titelblad				|
-voorwoord				|
-index					|
-onderwerp:				|
-	- inleiding			|
-	- theorie:			|
-		- resource types	|
-		- defines		|
-		- templates		|
-		- modules		|
-	- praktijk			|
-slotwoord				|
-bijlages				|
-bibliografie				|
-achterflap				|
+titelblad				[X]
+voorwoord				[ ]
+index					[ ]
+onderwerp:				[ ]
+	- inleiding			[ ]
+	- theorie:			[ ]
+		- resource types	[ ]
+		- defines		[ ]
+		- templates		[ ]
+		- modules		[ ]
+	- praktijk			[ ]
+slotwoord				[ ]
+bijlages				[ ]
+bibliografie				[ ]
+achterflap				[ ]
+
+[x]: content finished
+[X]: content + latex finished
