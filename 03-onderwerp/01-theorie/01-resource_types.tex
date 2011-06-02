@@ -1,7 +1,6 @@
 \chapter{Resource Types}
 
-Er zijn een aantal ingebouwde resource types die men kan gebruiken om dingen te definieren in puppet manifests.\\
-Deze resource types variëren van het beheren van een bestand of map, tot het beheren van complete software-pakketten en services.\\
+Er zijn een aantal ingebouwde resource types die men kan gebruiken om dingen te defini\"{e}ren in puppet manifests. Deze resource types vari\"{e}ren van het beheren van een bestand of map, tot het beheren van complete software-pakketten en services.\\
 
 
 \section{Cron}
@@ -9,7 +8,7 @@ Cron:\\
 \subsection{Doel}
 Doel:\\
 	Het beheren van cron jobs, de manier om op *NIX systemen een taak op bepaalde tijdstippen te laten uitvoeren.\\
-	Hiermee heb je de mogelijkheid om bepaalde taken automatisch te laten uitvoeren op vooraf gedefiniëerde tijdstippen.\\
+	Hiermee heb je de mogelijkheid om bepaalde taken automatisch te laten uitvoeren op vooraf gedefini\"{e}erde tijdstippen.\\
 	Alle parameter met uizondering van de gebruiker en het uit te voeren commando zijn optioneel.\\
 
 	De naam die aan een cron job meegeeft heeft enkel als identificatie als doel, voor de rest is deze naam compleet zonder mening.\\
@@ -21,13 +20,13 @@ Doel:\\
 Parameters:\\
 
 		command:\\
-		Deze parameter specifiëert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vind.\\
-		De 'PATH' variabele word niet vanzelf overgedragen van de gebruiker dus als je een bepaalde 'path' wilt specifiëren dien je dit manueel te doen.\\
+		Deze parameter specifi\"{e}ert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vind.\\
+		De 'PATH' variabele word niet vanzelf overgedragen van de gebruiker dus als je een bepaalde 'path' wilt specifi\"{e}ren dien je dit manueel te doen.\\
 
 		ensure:\\
-		Met deze parameter kan je specifiëren of iets aanwezig moet zijn, mag zijn, of juist niet mag zijn.\\
+		Met deze parameter kan je specifi\"{e}ren of iets aanwezig moet zijn, mag zijn, of juist niet mag zijn.\\
 		Aanvaardbare waardes zijn bv.: present of absent.\\
-		Als je present specifiëert zal de cron job aanwezig zijn, als je absent ingeeft zorgt puppet ervoor dat de cron job zeker niet aanwezig is.\\
+		Als je present specifi\"{e}ert zal de cron job aanwezig zijn, als je absent ingeeft zorgt puppet ervoor dat de cron job zeker niet aanwezig is.\\
 
 		environment:\\
 		Met deze parameter kan je omgevingswaarden meegeven. Let wel dat puppet deze niet automatisch reset, dus zullen deze omgevingsvariablen behouden blijven totdat puppet afsluit.\\
@@ -58,7 +57,7 @@ Parameters:\\
 		
 		provider:\\
 		Het gewenste programma dat gebruikt word.\\
-		Dit dient zelden gespecifiëerd te worden, puppet zal dit normaal gezien zelf herkennen.\\
+		Dit dient zelden gespecifi\"{e}erd te worden, puppet zal dit normaal gezien zelf herkennen.\\
 
 		target:\\
 		Waar de cron job opgeslagen dient te worden.\\
@@ -87,7 +86,7 @@ Voorbeelden:
 		hour => [2, 4]\\
 	\}\\
 
-	Dit voorbeeld doet net hetzelfde als het vorige voorbeeld, met als enige verandering dat deze definitie zowel om 2 als om 4u het gespecifiëerde commando zal uitvoeren.\\
+	Dit voorbeeld doet net hetzelfde als het vorige voorbeeld, met als enige verandering dat deze definitie zowel om 2 als om 4u het gespecifi\"{e}erde commando zal uitvoeren.\\
 	Meer dan twee waardes zijn ook geen probleem, zolang ze netjes gescheiden zijn door een comma en binnen de vierkante haakjes zitten.\\
 
 	Een laatste mogelijkheid om waardes mee te geven is via ranges, dit wil zeggen dat je alle waardes tussen waarde1 en waarde2 wil meegeven.\\
@@ -104,19 +103,19 @@ Voorbeelden:
 Exec:\\
 Doel:\\
 	Het uitvoeren van externe commando's, wat zorgt voor een ongelofelijke flexibiliteit.\\
-	Het belangrijkste waarbij je hier moet opletten is dat zo'n commando elke keer word uitgevoerd wanneer puppet zijn manifests uitvoert, het is dus belangrijk dat men geen commando's specifiëert die elkaar later overschrijven.\\
+	Het belangrijkste waarbij je hier moet opletten is dat zo'n commando elke keer word uitgevoerd wanneer puppet zijn manifests uitvoert, het is dus belangrijk dat men geen commando's specifi\"{e}ert die elkaar later overschrijven.\\
 	Uiteraard zijn er ook wel manieren om te zorgen dat een commando slechts word uitgevoerd indien aan een bepaalde conditie vvoldaan word.\\
 	Een andere manier om dit in te perken is de refreshonly parameter, die ervoor zorgt dat een commando enkel word uitgevoerd als reactie op een andere resource definitie binnen de manifests. Meer daarover later.\\
 
 	Zoals te verwachten is word de exec resource veelal gebruikt om dingen te doen die (nog) niet in puppet ingebakken zijn.\\
-	Alhoewel dit op korte termijn een vaak onoverkomelijk fenomeen zal zijn, word er toch sterk aangeraden om geëngageerd te geraken in de community rondom puppet en te helpen pushen voor een native resource type die de functies die jij nodig hebt kan uitvoeren.\\
+	Alhoewel dit op korte termijn een vaak onoverkomelijk fenomeen zal zijn, word er toch sterk aangeraden om ge\"{e}ngageerd te geraken in de community rondom puppet en te helpen pushen voor een native resource type die de functies die jij nodig hebt kan uitvoeren.\\
 	Natuurlijk is een eigen contributie van code ook altijd welkom.\\
 
 	Je zal vaak bepaalde software-pakketten nodig hebben om commando's uit te voeren, en daar houd puppet rekening mee:\\
 	puppet zal indien je in een commando een programma aanroept, kijken of dat programma door jou beheerd word en dit automatisch 'requiren'.\\
 	Dit wil zeggen dat puppet bij het dynamisch opstellen van de volgorde waarin alles uitgevoerd word, rekening zal houden met het feit dat dit programma eerst geïnstalleerd moet worden en dan pas uitgevoerd kan worden.\\
 	Hetzelfde word gedaan voor bijvoorbeeld de gebruiker waarmee men het commando uitvoert:\\
-	Als deze door puppet beheerd word en nog niet bestaat, zorgt men ervoor dat deze gecreëerd word prior het commando uit te voeren.\\
+	Als deze door puppet beheerd word en nog niet bestaat, zorgt men ervoor dat deze gecre\"{e}erd word prior het commando uit te voeren.\\
 	Deze functionaliteit noemt men ook wel 'auto-require'.\\
 
 	Men kan ofwel de programma's aanroepen via hun absolute pad of een 'PATH' variable opgeven, die de paden bevat waarin puppet moet zoeken om het commando te vinden.\\
@@ -129,7 +128,7 @@ Parameters:\\
 		Het commando dat uitgevoerd moet worden.
 
 		creates:
-		Een bestand dat dit commando creëert.
+		Een bestand dat door dit commando word gecre\"{e}erd.
 		Als hier een waarde opgegeven word zal het commando enkel uitgevoerd worden als dit bestand niet bestaat.
 
 			exec \{ "tar xf /my/tar/file.tar":
@@ -153,7 +152,7 @@ Parameters:\\
 		De groep die gebruikt dient te worden om het commando uit te voeren.
 
 		logoutput:
-		Deze waarde specifiëert of men de output dient te loggen, gebruik hier de waarde on\_failure om ervoor te zorgen dat er enkel gelogd word als het commando faalt.
+		Deze waarde specifi\"{e}ert of men de output dient te loggen, gebruik hier de waarde on\_failure om ervoor te zorgen dat er enkel gelogd word als het commando faalt.
 
 		onlyif:
 		Deze parameter kan men beschouwen als een test, indien de test slaagt zal het commando uitgevoerd worden, anders niet.
@@ -171,7 +170,7 @@ Parameters:\\
 		Dit is de 'PATH' omgevingsvariable die gebruikt zal worden om te zoeken naar programma's, indien deze niet aanwezig is dient men bij een commando steeds de volledige padnaam naar een programma op te geven.
 
 		provider:
-		hiermee kan je specifiëren hoe je commando's wil uitvoeren: rechtstreeks (posix) of via een shell zodat de ingebouwde commando's van de shell beschikbaar zijn.
+		hiermee kan je specifi\"{e}ren hoe je commando's wil uitvoeren: rechtstreeks (posix) of via een shell zodat de ingebouwde commando's van de shell beschikbaar zijn.
 
 		refresh:
 		Deze parameter zorgt ervoor dat als de exec aangeroepen word vanuit een andere resource, terwijl de parameter refreshonly ook is toegevoegd, er eventueel een ander commando in de plaats uitgevoerd kan worden.
@@ -215,7 +214,7 @@ Parameters:\\
 				unless => "grep root /usr/lib/cron/cron.allow 2>/dev/null"
 			\}
 
-		Dit voorbeeld laat zien hoe je een unless parameter specifiëert.
+		Dit voorbeeld laat zien hoe je een unless parameter specifi\"{e}ert.
 		Het exec object dat in dit voorbeeld gehanteerd word zal root toevoegen aan het '/usr/lib/cron/cron.allow' tenzij het woord 'root' er al in teruggevonden werd.
 
 		user:
@@ -228,7 +227,7 @@ Voorbeelden:
 File:\\
 \subsection{Doel}
 Doel:\\
-	Beheert locale bestanden, inclusief permissies, het creëren van zowel bestanden als mappen, en het downloaden van bestanden van remote servers.\\
+	Beheert locale bestanden, inclusief permissies, het cre\"{e}ren van zowel bestanden als mappen, en het downloaden van bestanden van remote servers.\\
 	Het is de bedoeling dat naarmate Puppet verder ontwikkeld, deze resource minder nodig zal zijn, en alles beheerd zal kunnenn worden met nieuwe resource types.\\
 
 	Wanneer Puppet de eigenaar en groep van het bestand ook beheerd, zal deze automatisch 'required' worden.\\
