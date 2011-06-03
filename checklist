@@ -1,5 +1,5 @@
 titelblad				[X]
-voorwoord				[ ]
+voorwoord				[l]
 onderwerp:				[ ]
 	- inleiding			[ ]
 	- theorie:			[ ]
@@ -10,8 +10,9 @@ onderwerp:				[ ]
 	- praktijk			[ ]
 slotwoord				[ ]
 bijlages				[ ]
-bibliografie				[ ]
+bibliografie				[l]
 achterflap				[ ]
 
-[x]: content finished
+[c]: content finished
+[l]: latex finished
 [X]: content + latex finished
