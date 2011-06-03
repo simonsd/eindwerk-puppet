@@ -1,14 +1,13 @@
-% praktijk
-\chapter{praktijk}
+\chapter{Praktijk}
 
-In dit hoodstuk zullen we bekijken hoe je een puppet server en client opzet, waarna we aan de hand van enkele simpele voorbeelden een manifest zullen samenstellen om de client en zelfs de server zelf te beheren.
+in dit hoodstuk zullen we bekijken hoe je een puppet server en client opzet, waarna we aan de hand van enkele simpele voorbeelden een manifest zullen samenstellen om de client en zelfs de server zelf te beheren.
 
 Allereerst enkele concessies: Deze tutorial is in principe enkel gegarandeerd te werken op Fedora 14, de linux-distributie die ik zelf gebruik. Het meeste ervan zal echter wel overdraagbaar zijn naar toekomstige versies en/of andere distributies. Als je niet weet wat een linux-distributie is raad ik je aan om het even op te zoeken op het internet, er is genoeg informatie voorhanden en het is niet het doel van dit eindwerk om je dat allemaal uit te leggen dus doe ik dat ook niet.
 
 Ik ga er vanuit dat je voor je hieraan begint een werkend Fedora 14 (of vergelijkbare) distributie al geinstalleerd hebt. Moest dit niet het geval zijn kan je altijd even kijken op de website www.howtoforge.com . Die website is een rijke bron van informatie in verband met installatie van een veelvoud aan paketten op linux en heeft dan ook al een grote hoeveelheid bijgedragen aan mijn kennis.
 
 
-% Installatie
+\section{Installatie}
 
 De eerste stap die we zetten is het installeren van de puppet client en de puppet server, deze noemen in de package manager van Fedora respectievelijk puppet en puppet-server. In het algemeen word echter voor de puppet server de term puppetmaster gebruikt. Het installeren gebeurt door middel van het commando: "sudo yum -y install puppet puppet-server". Als we even de tijd nemen om dit commando te ontleden zien we dat het bestaat uit meerdere onderdelen, namelijk: sudo => sudo is de afkorting van "switch user do", en doet zoveel als van gebruiker veranderen om dan een bepaald commando uit te voeren. We gebruiken dit omdat je als gewone gebruiker normaal gezien niet zomaar paketten mag installeren, dit is voorbehouden voor de root-gebruiker. de root-gebruiker is de unix-variant van de administrator account onder windows, maar dan echt almachtig. zijn wil is wet en daar is geen weg rond, dus ook niet als je per ongeluk als root de helft van je data weg vaagt, pas dus op wanneer en vooral hoe je de root-account gebruikt. De reactie van dit commando hangt echter ook af van de configuratie ervan, standaard zal deze bij gebruik een paswoord vragen, het paswoord van de root-account. Er is echter ook de mogelijk dat je volledige rechten hebt gekregen op dit programma en dat je zelfs zonder paswoord de kracht van de root-account kan gebruiken. Dit is enorm gevaarlijk en dan ook enkel aan te raden wanneer je weet met wat je bezig bent.
 
@@ -23,43 +22,33 @@ Last but not least hebben we "puppet puppet-server": Dit zijn simpelweg de namen
 In zijn geheel zorgt dit commando er dus voor dat de pakketten "puppet" en "puppet-server" geinstalleerd worden op jouw systeem zonder al te veel gemor over dependencies en dergelijke. Als het commando de command line terugkeert, zijn de pakketten geinstalleerd en kunnen we beginnen met de configuratie van de puppetmaster en daarna de puppet client.
 
 
-configuratie
-%############
-
-configuratie gebeurt aan de hand van manifests en modules. om even kort samen te vatten, modules zijn pakketjes modulaire manifests, die op een bepaalde manier in een map geplaatst worden, en daarna kunnen worden herbruikt door bijvoorbeeld andere mensen.
-manifests zijn scriptjes waarin je declareert wat je wilt doen. Dit gaat van het beheren van bestanden, over mappen en links naar software pakketten en services.
-Ook kan je in manifests en modules onderlinge relaties vastleggen, bijvoorbeeld tussen een configuratiebestand van een webserver en de service van de webserver.
-Op deze manier kan de webserver automatisch herstart worden als dit bestand word aangepast, moest dit niet ingebouwd zijn.
+\section{Configuratie}
+configuratie gebeurt aan de hand van manifests en modules. om even kort samen te vatten, modules zijn pakketjes modulaire manifests, die op een bepaalde manier in een map geplaatst worden, en daarna kunnen worden herbruikt door bijvoorbeeld andere mensen. Manifests zijn scriptjes waarin je declareert wat je wilt doen. Dit gaat van het beheren van bestanden, over mappen en links naar software pakketten en services.
+Ook kan je in manifests en modules onderlinge relaties vastleggen, bijvoorbeeld tussen een configuratiebestand van een webserver en de service van de webserver. Op deze manier kan de webserver automatisch herstart worden als dit bestand word aangepast, moest dit niet vanzelf gebeuren.
 
 
-file structure
-%##############
-
-Zoals alle andere programma's heeft ook puppet enkele configuratie-bestanden nodig. Deze bestanden vinden we in de meeste linux-distributies terug in de map /etc/puppet/ . Hier worden niet enkel de configuraties van puppet zelf opgeslagen, maar ook de manifests die hij zal aanbieden aan clients. Per definitie zal puppet eerst zoeken naar een bestand genaamd site.pp . Dit bestand is het beginpunt van alle aangeboden manifests. vanuit dit bestand kan je ook andere bestanden aanhalen, zodat je een mooie, overzichtelijke mappenstructuur kan aanleggen waar je zelf nog aan uit kan.
+\section{File Structure}
+Zoals alle andere programma's heeft ook puppet enkele configuratie-bestanden nodig. Deze bestanden vinden we voor puppet op de meeste linux-distributies terug in de map /etc/puppet. Hier worden niet enkel de configuraties van puppet zelf opgeslagen, maar ook de manifests die hij zal aanbieden aan clients. Per definitie zal puppet eerst zoeken naar een bestand genaamd site.pp . Dit bestand is het beginpunt van alle aangeboden manifests. vanuit dit bestand kan je ook andere bestanden aanhalen, zodat je een mooie, overzichtelijke mappenstructuur kan aanleggen waar je zelf nog aan uit kan.
 
 
-puppet
-%######
+\section{Puppet}
 
-Puppet is de naam van de standalone tool om puppetruns te maken. Dit wil zeggen dat deze applicatie geen verbinding maakt met een puppetmaster om zijn configuratie op te halen. Omdat het puppet programma geen verbinding maakt met een server om zijn configuratie op te halen, dien je wel als argument het pad naar een manifest mee te geven. Deze manifest heeft dezelfde opmaak als een gewone manifest, en word dan ook hetzelfde geïnterpreteerd.
+Puppet is de naam van het commando dat men gebruikt om puppetruns te maken. Dit wil zeggen dat deze applicatie geen verbinding maakt met een puppetmaster om zijn configuratie op te halen. Omdat het puppet programma geen verbinding maakt met een server om zijn configuratie op te halen, dien je wel als argument het pad naar een manifest mee te geven. Deze manifest heeft dezelfde opmaak als een gewone manifest, en word dan ook hetzelfde geïnterpreteerd.
 
-puppetd
-%#######
+\section{Puppetd}
 
 Puppetd is de puppet daemon. daemon is de UNIX naam voor een service, en zoals verwacht is deze puppetd dan ook een service die op geregelde tijdstippen zijn configuratie binnenhaalt van een puppetmaster en uitvoert.
 
-puppetmaster
-%############
+\section{Puppetmaster}
 
 puppetmaster is de naam van de puppet-server daemon. Dit wil zeggen dat we hier te maken hebben met een service die als server een dienst aanbied. In dit geval is die dienst het aanbieden van manifests aan clients, en hierbij gebruik te maken van een beveiligd kanaal.
 Dit beveiligd kanaal word toegepast door een ssl-verbinding aan te leggen, meer info hierover later.
 
-voorbeelden:
+\section{Voorbeelden}
 hier volgen een aantal voorbeelden van puppet manifests die ik heb geschreven, en die de mogelijkheid hebben om steeds een applicatie volledig te deployen.
 Het gaat hier dan om iets uitgebreidere applicaties, die meestal veel configuratie en aanpassingen vereisen alsook veel moeite om ze op te zetten.
 
-
-redmine:
+\subsection{Redmine}
 Dit is een voorbeeld van een puppet manifest die als doel heeft de web-applicatie redmine op te zetten.
 Redmine is een ruby on rails applicatie die vooral dient voor project management,
 Hiermee kan je dus projecten aanmaken, opvolgen, taken toewijzen, bugs toewijzen, etc ..
@@ -67,6 +56,7 @@ De manifests werken zowel op RedHat gebaseerde systemen als op Debian gebaseerde
 
 manifests/init.pp:
 
+\begin{verbatim}
 	node redmine {
 		include apache\_packages
 		include apache\_mod\_passenger
@@ -76,10 +66,10 @@ manifests/init.pp:
 		include redmine\_install
 		include redmine\_config
 	}
-
+\end{verbatim}
 
 modules/apache/manifests/init.pp:
-
+\begin{verbatim}
 	class apache\_packages {
 		package { apache:
 			ensure => installed,
@@ -166,10 +156,10 @@ modules/apache/manifests/init.pp:
 			require => Class["repos\_centos"],
 		}
 	}
-
+\end{verbatim}
 
 modules/mysql/init.pp:
-
+\begin{verbatim}
 	class mysql\_packages {
 		package { 'mysql-server':
 			ensure => installed,
@@ -215,9 +205,10 @@ modules/mysql/init.pp:
 			require => Class['mysql\_packages'],
 		}
 	}
+\end{verbatim}
 
 modules/redmine/manifests/init.pp:
-
+\begin{verbatim}
 	class redmine\_install {
 		case $operatingsystem {
 			Centos: { include redmine\_install\_centos }
@@ -441,3 +432,4 @@ modules/redmine/manifests/init.pp:
 			notify => Service['apache'],
 		}
 	}
+\end{verbatim}
