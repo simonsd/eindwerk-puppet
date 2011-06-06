@@ -1,0 +1,5 @@
+\chapter{Defines}
+puppet bied ook de mogelijkheid je eigen resource types te defini\"{e}ren, door middel van defines. Met een define kan je een soort backend functie schrijven, die je dan later in je manifests kan aanroepen net als alle andere resource types. Zo kan je bijvoorbeeld een define maken voor het beheren van je hosts file ("/etc/hosts"). Dit bestand staat je toe een soort van 'alias' toe te wijzen aan een bepaald ip-adres, zodat het gemakkelijker word bepaalde machines te benaderen of een speciale naam meegeven voor bepaalde web-diensten. Een ander voorbeeld is een define voor MySQL, waarmee je dan op een simpele wijze een database of gebruiker kunt aanmaken, rechten toewijzen om databases te benaderen en/of wijzigen.\\\\
+
+\section{Hosts}
+Ik zal je even een voorbeeld bieden van een define om het eerder besproken "/etc/hosts" bestand aan te passen. Tip: als je daarnet hebt opgelet bij de resource types, weet je dat er ondertussen een native resource type is voor het beheren van het hosts bestand.\\
