@@ -1,15 +1,25 @@
 \chapter{Praktijk}
-
-in dit hoodstuk zullen we bekijken hoe je een puppet server en client opzet, waarna we aan de hand van enkele simpele voorbeelden een manifest zullen samenstellen om de client en zelfs de server zelf te beheren.
-
-Allereerst enkele concessies: Deze tutorial is in principe enkel gegarandeerd te werken op Fedora 14, de linux-distributie die ik zelf gebruik. Het meeste ervan zal echter wel overdraagbaar zijn naar toekomstige versies en/of andere distributies. Als je niet weet wat een linux-distributie is raad ik je aan om het even op te zoeken op het internet, er is genoeg informatie voorhanden en het is niet het doel van dit eindwerk om je dat allemaal uit te leggen dus doe ik dat ook niet.
-
+In dit hoofdstuk zullen we bekijken hoe je een puppet server en client opzet, waarna we aan de hand van enkele simpele voorbeelden een manifest zullen samenstellen om de client en zelfs de server zelf te beheren.\\\\
+Allereerst enkele concessies: Deze tutorial is in principe enkel gegarandeerd te werken op Fedora 14, de linux-distributie die ik zelf gebruik. Het meeste ervan zal echter wel overdraagbaar zijn naar toekomstige versies en/of andere distributies. Als je niet weet wat een linux-distributie is raad ik je aan om het even op te zoeken op het internet, er is genoeg informatie voorhanden en het is niet het doel van dit eindwerk om je dat allemaal uit te leggen dus doe ik dat ook niet.\\\\
 Ik ga er vanuit dat je voor je hieraan begint een werkend Fedora 14 (of vergelijkbare) distributie al geinstalleerd hebt. Moest dit niet het geval zijn kan je altijd even kijken op de website www.howtoforge.com . Die website is een rijke bron van informatie in verband met installatie van een veelvoud aan paketten op linux en heeft dan ook al een grote hoeveelheid bijgedragen aan mijn kennis.
 
 
 \section{Installatie}
+De eerste stap die we zetten is het installeren van zowel puppet zelf (client) als de puppetmaster (server). Er zijn meerdere manieren om dit te doen, namelijk:
+\begin{itemize}
+\item source code
+\item gem
+\item native package
+\end{itemize}
 
-De eerste stap die we zetten is het installeren van de puppet client en de puppet server, deze noemen in de package manager van Fedora respectievelijk puppet en puppet-server. In het algemeen word echter voor de puppet server de term puppetmaster gebruikt. Het installeren gebeurt door middel van het commando: "sudo yum -y install puppet puppet-server". Als we even de tijd nemen om dit commando te ontleden zien we dat het bestaat uit meerdere onderdelen, namelijk: sudo => sudo is de afkorting van "switch user do", en doet zoveel als van gebruiker veranderen om dan een bepaald commando uit te voeren. We gebruiken dit omdat je als gewone gebruiker normaal gezien niet zomaar paketten mag installeren, dit is voorbehouden voor de root-gebruiker. de root-gebruiker is de unix-variant van de administrator account onder windows, maar dan echt almachtig. zijn wil is wet en daar is geen weg rond, dus ook niet als je per ongeluk als root de helft van je data weg vaagt, pas dus op wanneer en vooral hoe je de root-account gebruikt. De reactie van dit commando hangt echter ook af van de configuratie ervan, standaard zal deze bij gebruik een paswoord vragen, het paswoord van de root-account. Er is echter ook de mogelijk dat je volledige rechten hebt gekregen op dit programma en dat je zelfs zonder paswoord de kracht van de root-account kan gebruiken. Dit is enorm gevaarlijk en dan ook enkel aan te raden wanneer je weet met wat je bezig bent.
+\subsection{Source code}
+De eerste optie is het installeren vanaf source code. De source code is de onderliggende code-basis van de applicatie, in dit geval geschreven in Ruby. Het installeren van source omvat het bemachtigen van een kopie van de source, en deze dan manueel op de juiste plaatsen zetten en eventu\"{e}le installatieprocedures uitvoeren. Dit is veruit de meest omslachtige manier, maar ook de manier waarbij je jezelf ervan kan verzekeren dat wat je installeert de meest up to date, niet aangepaste code is.
+\subsection{Gem}
+De tweede optie omvat het installeren van een gem, een soort Ruby 'addon'. Dit doe je via het programma "gem", dat meestal in het standaard Ruby pakket zit of apart verkrijgbaar als het pakket "ruby-gems". Je kan gem beschouwen als een soort package manager voor Ruby addons, een programma dat deze addons kan opzoeken, installeren en up-to-date houden. Door hiervan gebruik te maken is de kans ook nog zeer groot dat je een recente versie van de benodigde pakketten zal krijgen, alhoewel hier enkele dagen of zelfs weken verschil op kan zitten. De installatie via het gem programma verloopt al een stuk simpeler in vergelijking met de installatie vanaf source code, en bestaat enkel uit het commando "gem install puppet puppetmaster" uit te voeren als de root-gebruiker (administrator).
+\subsection{Native package}
+De laatste optie bestaat uit het installeren van native packages, wat wil zeggen dat de source code verpakt is in het formaat dat gebruikelijk is voor jouw distributie. Bij Fedora/CentOS/RedHat is dit bijvoorbeeld het RPM-formaat, bij Debian/Ubuntu is dit het DEB-formaat en bij Archlinux dan weer het PKG-formaat. Het voordeel hiervan is dat je zeker kan zijn dat deze packages niet in de weg zullen liggen van andere packages, alle dependencies netjes worden opgelost en de packages veelal vanzelf up-to-date gehouden worden. Het grote nadeel daarentegen is dat je hoogstwaarschijnlijk een tijdje zal moeten wachten voor je de laatste nieuwe versies van de code kan verwachten, doordat men de code moet verpakken in vooraf gedefini\"{e}erde formaten en het dan nog even duurt voordat deze degelijk getest kunnen worden en stabiel verklaard worden. De wachttijd is een beetje afhankelijk van de bereidwilligheid van de distributie; Bij Fedora zal je hoogstwaarschijnlijk enkele weken tot zelfs maanden moeten wachten voor je de versie die vandaag uitgebracht word in je package manager zal zien verschijnen. Bij Ubuntu zal dit ook nog ettelijke weken duren, alhoewel dit door de grote community meestal snel word aangepakt. Bij Archlinux daarentegen kan je de update al een dag later verwachten maar uiteraard zonder garanties: als het nieuwe pakketje iets breekt op je systeem, is dit enkel jouw verantwoordelijkheid. Als je meer wil weten over package managers en hoe je deze gebruikt, kan je in de bijlages een "cheat sheet" terugvinden met daarop een overzicht van de meest gebruikelijke opties van grote package managers. Met wat oefening kan je daarmee in geen tijd aan de slag met het installeren van software op eender welk linux systeem.
+
+Als we even de tijd nemen om dit commando te ontleden zien we dat het bestaat uit meerdere onderdelen, namelijk: sudo => sudo is de afkorting van "switch user do", en doet zoveel als van gebruiker veranderen om dan een bepaald commando uit te voeren. We gebruiken dit omdat je als gewone gebruiker normaal gezien niet zomaar paketten mag installeren, dit is voorbehouden voor de root-gebruiker. de root-gebruiker is de unix-variant van de administrator account onder windows, maar dan echt almachtig. zijn wil is wet en daar is geen weg rond, dus ook niet als je per ongeluk als root de helft van je data weg vaagt, pas dus op wanneer en vooral hoe je de root-account gebruikt. De reactie van dit commando hangt echter ook af van de configuratie ervan, standaard zal deze bij gebruik een paswoord vragen, het paswoord van de root-account. Er is echter ook de mogelijk dat je volledige rechten hebt gekregen op dit programma en dat je zelfs zonder paswoord de kracht van de root-account kan gebruiken. Dit is enorm gevaarlijk en dan ook enkel aan te raden wanneer je weet met wat je bezig bent.
 
 het tweede deel is "yum": yum is de standaard package manager van Fedora 14 en is de afkorting van "yellowdog updater, modified". De naam is afkomstig van de linux-distributie die deze front-end ontwikkeld heeft, namelijk "yellowdog linux" oftewel "ydl". Deze word gebruikt om paketten te installeren en deinstalleren, en uiteraard om bij te houden welke paketten al geinstalleerd zijn en welke beschikbaar zijn voor jouw systeem. In weze is yum slechts een front-end voor rpm, de "redhat package manager". Het grootste probleem met rpm was dat er geen dependency resolving plaatsvond en dat zorgt er dus voor dat als het paketje dat jij wilt installeren afhankelijk is van een of meerdere andere paketten, je eerst manueel deze andere paketten moest gaan installeren. Niet  echt een leuk karweitje als je er even over nadenkt. yum zorgt ervoor dat dit dus wel automatisch gedaan word en voegt daarnaast nog enkele handige mogelijkheden toe zoals plugins. door middel van deze plugins kan je extra functionaliteit toevoegen aan yum, denk bijvoorbeeld aan de plugin fastestmirror. Deze plugin zorgt ervoor dat eerst word vastgesteld welke mirror op dit moment het snelst aan jouw behoeften kan voorzien en zorgt ervoor dat jij van deze mirror gebruik maakt, zonder dat je daarvoor iets hoeft te doen. Bij fedora 14 is deze plugin trouwens standaard al aanwezig.
 
@@ -32,15 +42,12 @@ Zoals alle andere programma's heeft ook puppet enkele configuratie-bestanden nod
 
 
 \section{Puppet}
-
 Puppet is de naam van het commando dat men gebruikt om puppetruns te maken. Dit wil zeggen dat deze applicatie geen verbinding maakt met een puppetmaster om zijn configuratie op te halen. Omdat het puppet programma geen verbinding maakt met een server om zijn configuratie op te halen, dien je wel als argument het pad naar een manifest mee te geven. Deze manifest heeft dezelfde opmaak als een gewone manifest, en word dan ook hetzelfde geïnterpreteerd.
 
 \section{Puppetd}
-
 Puppetd is de puppet daemon. daemon is de UNIX naam voor een service, en zoals verwacht is deze puppetd dan ook een service die op geregelde tijdstippen zijn configuratie binnenhaalt van een puppetmaster en uitvoert.
 
 \section{Puppetmaster}
-
 puppetmaster is de naam van de puppet-server daemon. Dit wil zeggen dat we hier te maken hebben met een service die als server een dienst aanbied. In dit geval is die dienst het aanbieden van manifests aan clients, en hierbij gebruik te maken van een beveiligd kanaal.
 Dit beveiligd kanaal word toegepast door een ssl-verbinding aan te leggen, meer info hierover later.
 
@@ -49,387 +56,10 @@ hier volgen een aantal voorbeelden van puppet manifests die ik heb geschreven, e
 Het gaat hier dan om iets uitgebreidere applicaties, die meestal veel configuratie en aanpassingen vereisen alsook veel moeite om ze op te zetten.
 
 \subsection{Redmine}
-Dit is een voorbeeld van een puppet manifest die als doel heeft de web-applicatie redmine op te zetten.
-Redmine is een ruby on rails applicatie die vooral dient voor project management,
-Hiermee kan je dus projecten aanmaken, opvolgen, taken toewijzen, bugs toewijzen, etc ..
+Dit is een voorbeeld van een puppet manifest die als doel heeft de web-applicatie redmine op te zetten. Redmine is een ruby on rails applicatie die vooral dient voor project management, waarmee je dus projecten kan aanmaken, opvolgen, taken toewijzen, bugs toewijzen, etc ..
 De manifests werken zowel op RedHat gebaseerde systemen als op Debian gebaseerde systemen.
 
 manifests/init.pp:
-
-\begin{verbatim}
-	node redmine {
-		include apache\_packages
-		include apache\_mod\_passenger
-		include mysql\_packages
-		include repos\_centos
-		include ruby
-		include redmine\_install
-		include redmine\_config
-	}
-\end{verbatim}
-
 modules/apache/manifests/init.pp:
-\begin{verbatim}
-	class apache\_packages {
-		package { apache:
-			ensure => installed,
-			name => $operatingsystem ? {
-				archlinux => "apache",
-				/Debian|Ubuntu/ => "apache2",
-				/Centos|Fedora/ => "httpd",
-			},
-		}
-
-		service { apache\_daemon:
-			ensure => running,
-			enable => true,
-			name => $operatingsystem ? {
-				/Debian|Ubuntu/ => 'apache2',
-				/Centos|Fedora/ => 'httpd',
-			},
-			require => Package['apache'],
-		}
-
-		package { 'apache-dev':
-			ensure => installed,
-			name => $operatingsystem ? {
-				/Debian|Ubuntu/ => 'apache2-threaded-dev',
-				/Centos|Fedora/ => 'httpd-devel',
-			},
-		}
-	}
-
-	class apache\_config {
-		file { 'apache.conf':
-			ensure => present,
-			owner => root,
-			group => root,
-			mode => 0644,
-			name => $operatingsystem ? {
-				/Debian|Ubuntu/ => '/etc/apache2/apache2.conf',
-				/Centos|Fedora/ => '/etc/httpd/conf/httpd.conf',
-			},
-			source => 'puppet:///config/httpd',
-			notify => Service['apache'],
-		}
-	}
-
-	class apache\_mod\_passenger {
-		package { passenger:
-			ensure => installed,
-			name => $operatingsystem ? {
-				/Debian|Ubuntu/ => "libapache2-mod-passenger",
-				/Centos|Fedora/ => "passenger",
-			},
-			provider => $operatingsystem ? {
-				/Debian|Ubuntu/ => 'apt',
-				/Centos|Fedora/ => 'gem',
-			},
-			require => Package['apache'],
-		}
-	}
-
-	class apache\_mod\_php {
-		package { "apache\_mod\_php":
-			ensure => installed,
-			name => $operatingsystem ? {
-				/Debian|Ubuntu/ => "libapache2-mod-php",
-			},
-			require => Package["apache"],
-			notify => Service["apache"],
-		}
-	}
-
-	class apache\_prefork {
-		package { "apache2-prefork-dev":
-			ensure => installed,
-		}
-	}
-
-	class apache\_mod\_xsendfile {
-		package { "mod-xsendfile":
-			ensure => installed,
-			name => $operatingsystem ? {
-				/Debian|Ubuntu/ => "libapache2-mod-xsendfile",
-				/Centos|Fedora/ => "mod\_xsendfile",
-			},
-			require => Class["repos\_centos"],
-		}
-	}
-\end{verbatim}
-
 modules/mysql/init.pp:
-\begin{verbatim}
-	class mysql\_packages {
-		package { 'mysql-server':
-			ensure => installed,
-			name => $operatingsystem ? {
-				Debian => 'mysql-server',
-				Centos => 'mysql-server',
-			},
-		}
-
-		service { 'mysqld':
-			ensure => running,
-			enable => true,
-			name => $operatingsystem ? {
-				Centos => 'mysqld',
-				Debian => 'mysql',
-			},
-			require => Package['mysql-server'],
-		}
-
-		package { 'mysql-client':
-			ensure => installed,
-			name => $operatingsystem ? {
-				Debian => 'mysql-client',
-				Centos => 'mysql',
-			},
-			require => Package['mysql-server'],
-		}
-
-		package { 'mysql-dev':
-			ensure => installed,
-			name => $operatingsystem ? {
-				Debian => 'libmysqlclient15-dev',
-				Centos => 'mysql-devel',
-			},
-			require => Package['mysql-server'],
-		}
-	}
-
-	class mysql\_config {
-		exec { 'setup\_mysql\_pass\_root':
-			command => '/usr/bin/mysqladmin -uroot -h localhost password "penguins"',
-			unless => '/usr/bin/mysql -uroot -h localhost',
-			require => Class['mysql\_packages'],
-		}
-	}
-\end{verbatim}
-
 modules/redmine/manifests/init.pp:
-\begin{verbatim}
-	class redmine\_install {
-		case $operatingsystem {
-			Centos: { include redmine\_install\_centos }
-			Debian: { include redmine\_install\_debian }
-		}
-
-		$redmine\_id = $operatingsystem ? {
-			/Debian|Ubuntu/ => 'www-data',
-			/Centos|Fedora/ => 'apache',
-		}
-
-		group { redmine:
-			ensure => present,
-			name => $redmine\_id,
-		}	
-
-		user { redmine:
-			ensure => present,
-			name => $redmine\_id,
-			gid => $redmine\_id,
-			require => Group["$redmine\_id"],
-		}
-
-		package { redmine:
-			ensure => installed,
-			name => $operatingsystem ? {
-				Centos => 'redmine\_client',
-				Debian => 'redmine',
-			},
-			provider => $operatingsystem ? {
-				Centos => "gem",
-				Debian => "apt",
-			},
-			before => Exec["config\_redmine\_mysql\_bootstrap"],
-			require => [ User['redmine'], Class['apache\_packages', 'mysql\_packages'] ],
-		}
-	}
-
-	class redmine\_install\_debian {
-		package { 'redmine-mysql':
-			ensure => installed,
-			require => Package['redmine'],
-		}
-
-		file { '/etc/apache2/sites-available/redmine':
-			ensure => present,
-			owner => root,
-			group => root,
-			mode => 0644,
-			content => 'RailsBaseURI /redmine',
-			require => Package['redmine'],
-		}
-
-		exec { 'config\_redmine\_link\_apache':
-			command => '/usr/sbin/a2ensite redmine',
-			require => File['/etc/apache2/sites-available/redmine'],
-			unless => '/usr/bin/test -f /etc/apache2/sites-enabled/redmine',
-		}
-	}
-
-	class redmine\_install\_centos {
-		file { '$HOME/.netrc':
-			content => 'machine ftp.ruby-lang.org login anonymous password anonymous\nmacdef init\nprompt\ncd /pub/ruby\nget ruby-1.8.7-p334.tar.gz\nbye',
-		}
-
-	#	exec { 'ruby\_centos':
-	#		path => "/bin:/usr/bin",
-	#		command => "cd ~/Downloads;ftp ftp.ruby-lang.org;cd /pub/ruby;get ruby-1.8.7-p334.tar.gz;tar xzvf ruby-1.8.7-p334.tar.gz ruby-1.8.7-p334;cd ruby-1.8.7-p334;./configure;make;make install;ruby -v;cd `dirname \`pwd\``",
-	#		command => "/bin/sh -c 'cd ~/downloads;ftp ftp.ruby-lang.org;tar xzvf ruby-1.8.7-p334.tar.gz ruby-1.8.7-p334;cd ruby-1.8.7-p334;./configure;make;make install;ruby -v;cd `dirname 'which ruby'`'",
-	#		require => File["$HOME/.netrc"],
-	#	}
-
-	#	exec { 'redmine\_centos':
-	#		path => '/bin:/usr/bin',
-	#		command => '/bin/sh -c "cd /usr/share/;wget http://rubyforge.org/frs/download.php/74419/redmine-1.1.2.tar.gz;tar zxvf redmine-1.1.2.tar.gz;mv redmine-1.1.2 redmine;chmod -R a+rx /usr/share/redmine/public/;cd /usr/share/redmine;chmod -R 755 files log tmp"',
-	#		unless => '/usr/bin/test -d /usr/share/redmine',
-	#	}
-
-		file { '/usr/share/redmine-1.1.3.tar.gz':
-			ensure => present,
-			source => 'puppet:///modules/redmine/redmine.tar.gz',
-		}
-
-		exec { 'extract\_redmine':
-			path => '/bin:/usr/bin',
-			command => 'cd /usr/share && tar xzvf redmine-1.1.3.tar.gz redmine && touch /usr/share/redmine/redmine.puppet',
-			require => File['/usr/share/redmine-1.1.3.tar.gz'],
-			unless => '/usr/bin/test -f /usr/share/redmine/redmine.puppet',
-		}
-
-		file { '/etc/redmine':
-			ensure => directory,
-			owner => root,
-			group => root,
-			mode => 0755,
-			before => File['/etc/redmine/default'],
-		}
-
-		file { '/etc/redmine/default':
-			ensure => directory,
-			owner => $redmine\_id,
-			group => $redmine\_id,
-			mode => 0755,
-			before => Class['redmine\_config'],
-			require => Exec['redmine\_centos'],
-		}
-
-		package { 'gem\_i18n':
-			ensure => '0.4.2',
-			provider => gem,
-			before => Package['gem\_rails'],
-		}
-
-		package { 'gem\_mysql':
-			ensure => installed,
-			name => mysql,
-			provider => gem,
-			require => Package['gem\_i18n'],
-		}
-
-		package { 'gem\_rack':
-			ensure => '1.0.1',
-			name => 'rack',
-			provider => gem,
-			before => Package['gem\_rails'],
-		}
-
-		package { 'gem\_hoe':
-			ensure => installed,
-			name => 'hoe',
-			provider => gem,
-			before => Package['gem\_rails'],
-		}
-
-		package { 'gem\_rails':
-			ensure => installed,
-			name => 'rails',
-			provider => gem,
-			before => Exec['config\_redmine\_mysql\_bootstrap'],
-		}
-
-		package { 'curl-devel':
-			ensure => installed,
-		}
-
-		exec { 'build\_passenger\_modules':
-			path => '/bin:/usr/bin:/opt/ruby/bin',
-			command => 'passenger-install-apache2-module -a',
-			require => Package['$package\_apache\_mod\_passenger'],
-			unless => 'test -f /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod\_passenger.so',
-		}
-
-		exec { 'selinux\_disable':
-			path => '/bin:/usr/bin',
-			command => 'system-config-securitylevel-tui -q --selinux="disabled"',
-			unless => 'cat /etc/selinux/config|grep "SELINUX=disabled"',
-			before => Service['apache'],
-			notify => Service['apache'],
-		}
-
-		exec { 'session\_store':
-			path => '/bin:/usr/bin:/opt/ruby/bin',
-			command => '/bin/sh -c "cd /usr/share/redmine/public && rake generate\_session\_store"',
-			require => Package['gem\_rails'],
-		}
-
-		file { '/etc/httpd/conf.d/redmine.conf':
-			ensure => present,
-			content => '<VirtualHost *:80>\n\tDocumentRoot /usr/share/redmine/public\n\tErrorLog logs/redmine\_error\_log\n</VirtualHost>',
-			notify => Service['apache'],
-		}
-
-		exec { 'apache\_modules':
-			path => '/bin:/usr/bin',
-			command => 'echo -e "LoadModule passenger\_module /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod\_passenger.so\nPassengerRoot /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7\nPassengerRuby /opt/ruby/bin/ruby" >> /etc/httpd/conf/httpd.conf',
-			unless => 'cat /etc/httpd/conf/httpd.conf|grep "LoadModule passenger\_module"',
-			require => Class['apache\_mod\_passenger', 'rubygems'],
-			notify => Service['apache'],
-		}
-	}
-
-	class redmine\_config {
-		file { '/var/www/redmine':
-			ensure => link,
-			target => '/usr/share/redmine/public',
-			owner => $redmine\_id,
-			group => $redmine\_id,
-			require => Package['redmine'],
-		}
-
-		exec { 'config\_redmine\_mysql\_db':
-			command =>  '/usr/bin/mysqladmin -uroot create redmine',
-			unless => '/bin/echo "show databases"|mysql -uroot|grep redmine',
-			require => Class['mysql\_packages'],
-		}
-
-		exec { 'config\_redmine\_mysql\_user':
-			command =>  '/bin/echo "create user \'redmine\'@\'localhost\' identified by \'redmine\'"|mysql -uroot',
-			unless => '/bin/echo "select user from mysql.user where user=\'redmine\'"|mysql -uroot|grep redmine',
-			require => Exec['config\_redmine\_mysql\_db'],
-		}
-
-		exec { 'config\_redmine\_mysql\_permissions':
-			command => '/bin/echo "grant all on redmine.* to \'redmine\'@\'localhost\'"|mysql -uroot',
-			require =>  Exec["config\_redmine\_mysql\_user"],
-		}
-
-		exec { 'config\_redmine\_mysql\_bootstrap':
-			environment => 'RAILS\_ENV=production',
-			path => '/usr:/usr/bin:/opt/ruby/bin',
-			command => '/bin/sh -c "cd /usr/share/redmine && sudo /opt/ruby/bin/rake db:migrate"',
-			require => Exec['config\_redmine\_mysql\_permissions'],
-		}
-
-		exec { 'config\_redmine\_reload':
-			command => $operatingsystem ? {
-				Debian => '/etc/init.d/apache2 reload',
-				Centos => '/etc/init.d/httpd reload',
-			},
-			require => Exec['config\_redmine\_mysql\_bootstrap'],
-			notify => Service['apache'],
-		}
-	}
-\end{verbatim}
