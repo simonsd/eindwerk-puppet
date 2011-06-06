@@ -1,22 +1,18 @@
 \chapter{Modules}
 
-modules zijn een soort packaging formaat voor puppet manifests, net zoals Perl CPAN heeft, Python eggs heeft en een besturingssyteem software-pakketten kan installeren om zijn functionaliteit uit te breiden.\\
-Dit houd in dat men de manifests, templates, files en alle benodigdheden voor een bepaald project/functie in één map steekt, en het vervolgens als 'addon' kan gebruiken op andere systemen die dezelfde functionaliteit nodig hebben.\\
-\\
-Door deze functionaliteit is het mogelijk om bijvoorbeeld een mysql module te ontwikkelen waarmee je alles van een mysql server/client kan beheren, gaande van het aanmaken, wijzigen en verwijderen van databases, gebruikers en rechten tot de software-pakketten en configuraties van mysql.\\
-Vervolgens kan men deze module op een andere computer in de juiste map zetten en ze hergebruiken.\\
-Door deze functionaliteit kan men zeer snel en efficient veel voorkomende taken automatiseren, en kan men zich dus focussen op belangrijkere taken.\\
-
-Uiteraard zijn er voor de correcte werking en interoperability op verschillende systemen specificaties nodig die als richtlijnen fungeren om modules te bouwen.\\
-Zo is een correcte mappenstructuur een must, en als je die niet volgt zal je module dus ook niet werken.\\
-Allereerst heb je de root map van de module, deze word onder de 'puppet/modules' map geplaatst.\\
-Daarna heb je onderverdelingen voor manifests, templates en files. Last but not least heb je in de root map nog een README bestand staan, waarin word aangegeven wie deze module gemaakt heeft, hoe deze gebruikt dient te worden en onder welke licentie deze valt.\\
-
-Even een overzicht:\\
-
-PUPPET\_MODULE\_PATH/\\
-|\_\_\_mysql/\\
-	|\_\_\_\_files/\\
-	|\_\_\_\_manifests/\\
-	|\_\_\_\_templates/\\
-	|\_\_\_\_README\\
+Modules zijn een soort packaging formaat voor puppet manifests, net zoals Perl CPAN heeft, Python eggs heeft en een besturingssyteem software-pakketten kan installeren om zijn functionaliteit uit te breiden. Dit houd in dat men de manifests, templates, files en alle benodigdheden voor een bepaald project/functie in \'{e}\'{e}n map steekt, en het vervolgens als 'addon' kan gebruiken op andere systemen die dezelfde functionaliteit nodig hebben.\\\\
+Door deze functionaliteit is het mogelijk om bijvoorbeeld een mysql module te ontwikkelen waarmee je alles van een mysql server/client kan beheren, gaande van het aanmaken, wijzigen en verwijderen van databases, gebruikers en rechten tot de software-pakketten en configuraties van mysql. Vervolgens kan men deze module op een andere computer in de juiste map zetten en ze hergebruiken. Door deze functionaliteit kan men zeer snel en efficient veel voorkomende taken automatiseren, en kan men zich dus focussen op belangrijkere taken.\\\\
+Uiteraard zijn er voor de correcte werking en interoperability op verschillende systemen specificaties nodig die als richtlijnen fungeren om modules te bouwen. Zo is een correcte mappenstructuur een must, en als je die niet volgt zal je module dus ook niet werken. Allereerst heb je de root map van de module, deze word onder de 'puppet/modules' map geplaatst. Daarna heb je onderverdelingen voor manifests, templates en files. Last but not least heb je in de root map nog een README bestand staan, waarin word aangegeven wie deze module gemaakt heeft, hoe deze gebruikt dient te worden en onder welke licentie deze valt.\\\\
+\begin{samepage}
+Even een overzicht:\\\\
+\$MODULE\_PATH/
+	\begin{itemize}
+	\item mysql/
+		\begin{itemize}
+		\item files/
+		\item manifests/
+		\item templates/
+		\item README
+		\end{itemize}
+	\end{itemize}
+\end{samepage}
