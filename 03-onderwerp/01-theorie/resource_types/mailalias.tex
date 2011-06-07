@@ -1,22 +1,18 @@
-mailalias
+\section{Mailalias}
+Op een *NIX systeem word in een speciaal bestand mail-aliassen bijgehouden. Dit is bijvoorbeeld handig voor het uitgeven van tijdelijke mail-adressen aan personen of diensten waarvan je niet zeker bent. Op deze manier kan je na afloop doodeenvoudig de alias verwijderen en je hoeft je geen zorgen te maken daar ooit nog mail van te krijgen.
 
-Creates an email alias in the local alias database.
-Parameters
+\subsection{Functie}
+Het cre\"{e}ren van mail-aliassen in de lokale database.
+
+\subsection{Parameters}
 ensure
+Booleaanse waarde die specifi\"{e}ert of de alias aanwezig of net afwezig moet zijn.
 
-The basic property that the resource should be in. Valid values are present, absent.
 name
-
-The alias name.
-provider
-
-The specific backend for provider to use. You will seldom need to specify this — Puppet will usually discover the appropriate provider for your platform. Available providers are:
-
-    aliases:
+De naam voor de alias, bv: "jos".
 
 recipient
+Waar de mail naartoe gestuurd mag worden. Meerdere waardes kunnen doorgegeven worden door middel van een array.
 
-Where email should be sent. Multiple values should be specified as an array.
 target
-
-The file in which to store the aliases. Only used by those providers that write to disk.
+Welk bestand je wilt gebruiken om de aliassen op te slaan.
