@@ -36,30 +36,20 @@ In zijn geheel zorgt dit commando er dus voor dat de pakketten "puppet" en "pupp
 configuratie gebeurt aan de hand van manifests en modules. om even kort samen te vatten, modules zijn pakketjes modulaire manifests, die op een bepaalde manier in een map geplaatst worden, en daarna kunnen worden herbruikt door bijvoorbeeld andere mensen. Manifests zijn scriptjes waarin je declareert wat je wilt doen. Dit gaat van het beheren van bestanden, over mappen en links naar software pakketten en services.
 Ook kan je in manifests en modules onderlinge relaties vastleggen, bijvoorbeeld tussen een configuratiebestand van een webserver en de service van de webserver. Op deze manier kan de webserver automatisch herstart worden als dit bestand word aangepast, moest dit niet vanzelf gebeuren.
 
-
-\section{File Structure}
+\subsection{Mappenstructuur}
 Zoals alle andere programma's heeft ook puppet enkele configuratie-bestanden nodig. Deze bestanden vinden we voor puppet op de meeste linux-distributies terug in de map /etc/puppet. Hier worden niet enkel de configuraties van puppet zelf opgeslagen, maar ook de manifests die hij zal aanbieden aan clients. Per definitie zal puppet eerst zoeken naar een bestand genaamd site.pp . Dit bestand is het beginpunt van alle aangeboden manifests. vanuit dit bestand kan je ook andere bestanden aanhalen, zodat je een mooie, overzichtelijke mappenstructuur kan aanleggen waar je zelf nog aan uit kan.
 
-
-\section{Puppet}
-Puppet is de naam van het commando dat men gebruikt om puppetruns te maken. Dit wil zeggen dat deze applicatie geen verbinding maakt met een puppetmaster om zijn configuratie op te halen. Omdat het puppet programma geen verbinding maakt met een server om zijn configuratie op te halen, dien je wel als argument het pad naar een manifest mee te geven. Deze manifest heeft dezelfde opmaak als een gewone manifest, en word dan ook hetzelfde geïnterpreteerd.
-
-\section{Puppetd}
-Puppetd is de puppet daemon. daemon is de UNIX naam voor een service, en zoals verwacht is deze puppetd dan ook een service die op geregelde tijdstippen zijn configuratie binnenhaalt van een puppetmaster en uitvoert.
-
-\section{Puppetmaster}
-puppetmaster is de naam van de puppet-server daemon. Dit wil zeggen dat we hier te maken hebben met een service die als server een dienst aanbied. In dit geval is die dienst het aanbieden van manifests aan clients, en hierbij gebruik te maken van een beveiligd kanaal.
-Dit beveiligd kanaal word toegepast door een ssl-verbinding aan te leggen, meer info hierover later.
-
+\section{Uitvoering}
+In de laatste fase, namelijk de uitvoeringsfase, gaat men ook effectief de puppet manifests gebruiken om nodes te beheren. Hier kan je een aantal keuzes maken die de simpliciteit of complexiteit van je setup zullen be\"{\i}nvloeden. In deze sectie kijken we wat de mogelijkheden zijn, en vergelijken we enkele van de voor- en nadelen.
+Allereerst even een paar termen zodat men niet in de war geraakt en een goede onderscheiding kan maken tussen de verschillende tools/technieken die gebruikt zullen worden.
+%Dit kan men lokaal doen door de manifests op de node te plaatsen en een cronjob aan te maken om deze periodiek te draaien. Een andere manier is om de puppetd oftewel puppet-daemon te draaien in de achtergrond. Deze slaapt dan in de achtergrond totdat het tijd is een manifest uit te voeren. afhankelijk van de settings kan men dan lokaal of van een puppetmaster de manifests ophalen.
+ 
 \section{Voorbeelden}
-hier volgen een aantal voorbeelden van puppet manifests die ik heb geschreven, en die de mogelijkheid hebben om steeds een applicatie volledig te deployen.
-Het gaat hier dan om iets uitgebreidere applicaties, die meestal veel configuratie en aanpassingen vereisen alsook veel moeite om ze op te zetten.
+hier volgen een aantal voorbeelden van puppet manifests die ik heb geschreven, en die de mogelijkheid hebben om steeds een applicatie volledig te deployen. Het gaat hier dan om iets uitgebreidere applicaties, die meestal veel configuratie en aanpassingen vereisen alsook veel moeite om ze op te zetten.
 
 \subsection{Redmine}
 Dit is een voorbeeld van een puppet manifest die als doel heeft de web-applicatie redmine op te zetten. Redmine is een ruby on rails applicatie die vooral dient voor project management, waarmee je dus projecten kan aanmaken, opvolgen, taken toewijzen, bugs toewijzen, etc ..
 De manifests werken zowel op RedHat gebaseerde systemen als op Debian gebaseerde systemen.
 
-manifests/init.pp:
-modules/apache/manifests/init.pp:
-modules/mysql/init.pp:
-modules/redmine/manifests/init.pp:
+\subsection{OpenERP}
+Het volgende voorbeeld is OpenERP, een Enterprise Resource Management applicatie. Dit kan je gebruiken als backend voor je organisatie,
