@@ -6,6 +6,7 @@ It was made for the netwerkbeheerder course at Don Bosco [Wilrijk, Belgium]
 
 License
 -------
+
 Everything in here except what's in the src/ folder is licensed under the Creative-Commons Attribution Share-Alike License. [CC BY SA]
 
 In the src/ folder:
