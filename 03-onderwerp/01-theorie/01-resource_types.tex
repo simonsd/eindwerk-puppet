@@ -1,43 +1,21 @@
 \chapter{Resource Types}
-
-Er zijn een aantal ingebouwde resource types die men kan gebruiken om dingen te defini\"{e}ren in puppet manifests. Deze resource types vari\"{e}ren van het beheren van een bestand of map, tot het beheren van complete software-pakketten en services.\\
+Puppet bezit reeds een aantal ingebouwde resource types die je kan gebruiken om objecten te defini\"{e}ren in manifests. Deze resource types vari\"{e}ren van het beheren van een bestand of map, tot het beheren van complete software-pakketten en services.\\
 
 \section{Augeas}
-Augeas is strict genomen een configuratiebestandsparser, wat wil zeggen dat hij configuratiebestanden afloopt en kan deze op basis van bepaalde criteria veranderingen zal aanbrengen. Je hebt hiervoor naast puppet ook nog de pakketten augeas en ruby-augeas nodig.
+Augeas is strict genomen een configuratiebestandsparser, wat wil zeggen dat hij configuratiebestanden afloopt en op basis van bepaalde criteria veranderingen kan aanbrengen. Je hebt hiervoor naast puppet ook nog de pakketten augeas en ruby-augeas nodig.
 
-voorbeeld:
-\begin{lstlisting}
-augeas{"test1" :
-  context => "/files/etc/sysconfig/firstboot",
-  changes => "set RUN_FIRSTBOOT YES",
-  onlyif  => "match other_value size > 0",
-}
-\end{lstlisting}
-
-Sample usage with an array and custom lenses:
-
-\begin{lstlisting}
-augeas{"jboss_conf":
-  context => "/files",
-  changes => [
-    "set /etc/jbossas/jbossas.conf/JBOSS_IP $ipaddress",
-    "set /etc/jbossas/jbossas.conf/JAVA_HOME /usr"
-  ],
-  load_path => "$/usr/share/jbossas/lenses",
-}
-\end{lstlisting}
+\subsection{Functie}
 
 Features
-
     execute\_changes: Actually make the changes
     need\_to\_run?: If the command should run
     parse\_commands: Parse the command string
 
 Provider 	execute\_changes 	need\_to\_run? 	parse\_commands
-augeas 	X 	X 	X
-Parameters
-changes
+augeas		X 			X 		X
 
+\subsection{Parameters}
+changes
 The changes which should be applied to the filesystem. This can be either a string which contains a command or an array of commands. Commands supported are:
 
 set [PATH] [VALUE]            Sets the value VALUE at loction PATH
@@ -97,73 +75,83 @@ De folder van waar augeas al zijn bestanden laad.
 type\_check:\\
 Booleanse variabele waarmee je typechecking expliciet aan of uit kan zetten. Standaardwaarde is false.
 
+\subsection{Voorbeeld}
+\begin{lstlisting}
+augeas{"test1" :
+  context => "/files/etc/sysconfig/firstboot",
+  changes => "set RUN_FIRSTBOOT YES",
+  onlyif  => "match other_value size > 0",
+}
+\end{lstlisting}
+
+voorbeeld met zelfgemaakte lenses en een array statement:
+\begin{lstlisting}
+augeas{"jboss_conf":
+  context => "/files",
+  changes => [
+    "set /etc/jbossas/jbossas.conf/JBOSS_IP $ipaddress",
+    "set /etc/jbossas/jbossas.conf/JAVA_HOME /usr"
+  ],
+  load_path => "$/usr/share/jbossas/lenses",
+}
+\end{lstlisting}
+
 \section{Cron}
-Cron:\\
+Cron is de naam van het programma waarmee je op *NIX systemen op vooraf bepaalde tijdstippen een taak kan laten uitvoeren. Dit doet men door het programma als daemon in de achtergrond te laten draaien, en dan op bepaalde tijdstippen laten wakker worden om jobs uit te voeren.
+
 \subsection{Doel}
-Doel:\\
-	Het beheren van cron jobs, de manier om op *NIX systemen een taak op bepaalde tijdstippen te laten uitvoeren.\\
-	Hiermee heb je de mogelijkheid om bepaalde taken automatisch te laten uitvoeren op vooraf gedefini\"{e}erde tijdstippen.\\
-	Alle parameter met uizondering van de gebruiker en het uit te voeren commando zijn optioneel.\\
-
-	De naam die aan een cron job meegeeft heeft enkel als identificatie als doel, voor de rest is deze naam compleet zonder mening.\\
-	Als je bijvoorbeeld een tweede cron job specifieert die exact hetzelfde is als de eerste, dan zal puppet dit herkennen en deze twee namen simpelweg aan elkaar gelijkstellen zonder een tweede job toe te voegen.\\
-
-
+Het beheren van cron jobs aan de hand van een simpele resource type. Je kan zowel de job als de eigenaar, tijdstip, etc.. hiermee beheren. Alle parameters met uizondering van de gebruiker en het uit te voeren commando zijn optioneel. De naam die je aan een cron job meegeeft dient enkel ter identificatie, daarnaast is de naam compleet non-functioneel. Indien je via puppet meerdere jobs instelt waarvan enkele identiek zijn, zal puppet deze slechts \'{e}\'{e}n maal uitvoeren.
 
 \subsection{Parameters}
-Parameters:\\
+command:\\
+Deze parameter specifi\"{e}ert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vind.\\
+De 'PATH' variabele word niet vanzelf overgedragen van de gebruiker dus als je een bepaalde 'path' wilt specifi\"{e}ren dien je dit manueel te doen.\\
 
-		command:\\
-		Deze parameter specifi\"{e}ert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vind.\\
-		De 'PATH' variabele word niet vanzelf overgedragen van de gebruiker dus als je een bepaalde 'path' wilt specifi\"{e}ren dien je dit manueel te doen.\\
+ensure:\\
+Met deze parameter kan je specifi\"{e}ren of iets aanwezig moet zijn, mag zijn, of juist niet mag zijn.\\
+Aanvaardbare waardes zijn bv.: present of absent.\\
+Als je present specifi\"{e}ert zal de cron job aanwezig zijn, als je absent ingeeft zorgt puppet ervoor dat de cron job zeker niet aanwezig is.\\
 
-		ensure:\\
-		Met deze parameter kan je specifi\"{e}ren of iets aanwezig moet zijn, mag zijn, of juist niet mag zijn.\\
-		Aanvaardbare waardes zijn bv.: present of absent.\\
-		Als je present specifi\"{e}ert zal de cron job aanwezig zijn, als je absent ingeeft zorgt puppet ervoor dat de cron job zeker niet aanwezig is.\\
+environment:\\
+Met deze parameter kan je omgevingswaarden meegeven. Let wel dat puppet deze niet automatisch reset, dus zullen deze omgevingsvariablen behouden blijven totdat puppet afsluit.\\
 
-		environment:\\
-		Met deze parameter kan je omgevingswaarden meegeven. Let wel dat puppet deze niet automatisch reset, dus zullen deze omgevingsvariablen behouden blijven totdat puppet afsluit.\\
+hour:\\
+Het uur waarop de cron job dient te lopen.\\
+Aanvaardbare waardes: 1-23\\
 
-		hour:\\
-		Het uur waarop de cron job dient te lopen.\\
-		Aanvaardbare waardes: 1-23\\
+minute:\\
+De minuut waarop puppet de job zal starten.\\
+Aanvaardbare waardes: 1-59\\
 
-		minute:\\
-		De minuut waarop puppet de job zal starten.\\
-		Aanvaardbare waardes: 1-59\\
+weekday:\\
+De dag van de week waarop men het commando uitvoert.\\
+Aanvaardbare waardes: 0-7 of de dagnaam ( Tuesday, Friday ).\\
 
-		weekday:\\
-		De dag van de week waarop men het commando uitvoert.\\
-		Aanvaardbare waardes: 0-7 of de dagnaam ( Tuesday, Friday ).\\
+month:\\
+De maand waarop men het commando uitvoert.\\
+Aanvaardbare waardes: 1-12 of de maandnaam ( December, Januari )\\
 
-		month:\\
-		De maand waarop men het commando uitvoert.\\
-		Aanvaardbare waardes: 1-12 of de maandnaam ( December, Januari )\\
+monthday:\\
+De dag van de maand waarop het commando uitgevoerd zal worden.\\
+Aanvaardbare waardes: 1-31\\
 
-		monthday:\\
-		De dag van de maand waarop het commando uitgevoerd zal worden.\\
-		Aanvaardbare waardes: 1-31\\
+name:\\
+De symbolische naam voor de cron job.\\
+word enkel gebruikt zodat mensen snel kunnen herkennen om welke job het juist gaat.\\
 
-		name:\\
-		De symbolische naam voor de cron job.\\
-		word enkel gebruikt zodat mensen snel kunnen herkennen om welke job het juist gaat.\\
-		
-		provider:\\
-		Het gewenste programma dat gebruikt word.\\
-		Dit dient zelden gespecifi\"{e}erd te worden, puppet zal dit normaal gezien zelf herkennen.\\
+provider:\\
+Het gewenste programma dat gebruikt word.\\
+Dit dient zelden gespecifi\"{e}erd te worden, puppet zal dit normaal gezien zelf herkennen.\\
 
-		target:\\
-		Waar de cron job opgeslagen dient te worden.\\
-		Standaard is dit de crontab entry van de gebruiker zelf.\\
+target:\\
+Waar de cron job opgeslagen dient te worden.\\
+Standaard is dit de crontab entry van de gebruiker zelf.\\
 
-		user:\\
-		De gebruiker waarmee men het commando dient uit te voeren.\\
-		Deze valt terug op de huidige gebruiker indien geen gebruiker word meegegeven.\\
+user:\\
+De gebruiker waarmee men het commando dient uit te voeren.\\
+Deze valt terug op de huidige gebruiker indien geen gebruiker word meegegeven.\\
 
 \subsection{Voorbeelden}
-Voorbeelden:
-
 	cron \{ logrotate:\\
 		command => "/usr/sbin/logrotate",\\
 		user => root,\\
@@ -194,8 +182,7 @@ Voorbeelden:
 	Met dit laatste voorbeeld voer je wederom het commando '/usr/sbin/logrotate' uit, maar nu zowel om 2, 3 als 4u.\\
 
 \section{Exec}
-Exec:\\
-Doel:\\
+\subsection{Functie}
 	Het uitvoeren van externe commando's, wat zorgt voor een ongelofelijke flexibiliteit.\\
 	Het belangrijkste waarbij je hier moet opletten is dat zo'n commando elke keer word uitgevoerd wanneer puppet zijn manifests uitvoert, het is dus belangrijk dat men geen commando's specifi\"{e}ert die elkaar later overschrijven.\\
 	Uiteraard zijn er ook wel manieren om te zorgen dat een commando slechts word uitgevoerd indien aan een bepaalde conditie vvoldaan word.\\
@@ -217,7 +204,6 @@ Doel:\\
 
 
 \subsection{Parameters}
-Parameters:\\
 		command:
 		Het commando dat uitgevoerd moet worden.
 
@@ -315,20 +301,16 @@ Parameters:\\
 		De gebruiker die dit commando dient uit te voeren.
 
 \subsection{Voorbeelden}
-Voorbeelden:
 
 \section{File}
-File:\\
+
 \subsection{Doel}
-Doel:\\
 	Beheert locale bestanden, inclusief permissies, het cre\"{e}ren van zowel bestanden als mappen, en het downloaden van bestanden van remote servers.\\
 	Het is de bedoeling dat naarmate Puppet verder ontwikkeld, deze resource minder nodig zal zijn, en alles beheerd zal kunnenn worden met nieuwe resource types.\\
 
 	Wanneer Puppet de eigenaar en groep van het bestand ook beheerd, zal deze automatisch 'required' worden.\\
 
 \subsection{Parameters}
-	Parameters\\
-
 	backup:
 	Of er een backup van bestanden dient gemaakt te worden voordat ze vervangen worden. De voorkeur gaat hierbij uit naar het gebruiken van een filebucket.	De filebucket slaat bestanden op, herkent ze via hun md5-som, en zorgt voor een simpele overdraginsgmethode zonder de mappenstructuur in de war te brengen. Daarnaast kan je een waarde meegeven die begint met een ".". in dit geval zal de backup dit als extensie meekrijgen. Puppet cre\"{e}ert automatisch een lokale filebucket waarnaar backups zullen geschreven worden. Als je een andere filebucket wil gebruiken dien je dit in je manifests te specifi\"{e}ren.\\
 
