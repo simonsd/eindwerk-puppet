@@ -1,0 +1,84 @@
+\section{Cron}
+Cron is de naam van het programma waarmee je op *NIX systemen op vooraf bepaalde tijdstippen een taak kan laten uitvoeren. Dit doet men door het programma als daemon in de achtergrond te laten draaien, en dan op bepaalde tijdstippen laten wakker worden om jobs uit te voeren.
+
+\subsection{Doel}
+Het beheren van cron jobs aan de hand van een simpele resource type. Je kan zowel de job als de eigenaar, tijdstip, etc.. hiermee beheren. Alle parameters met uizondering van de gebruiker en het uit te voeren commando zijn optioneel. De naam die je aan een cron job meegeeft dient enkel ter identificatie, daarnaast is de naam compleet non-functioneel. Indien je via puppet meerdere jobs instelt waarvan enkele identiek zijn, zal puppet deze slechts \'{e}\'{e}n maal uitvoeren.
+
+\subsection{Parameters}
+command:\\
+Deze parameter specifi\"{e}ert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vind.\\
+De 'PATH' variabele word niet vanzelf overgedragen van de gebruiker dus als je een bepaalde 'path' wilt specifi\"{e}ren dien je dit manueel te doen.\\
+
+ensure:\\
+Met deze parameter kan je specifi\"{e}ren of iets aanwezig moet zijn, mag zijn, of juist niet mag zijn.\\
+Aanvaardbare waardes zijn bv.: present of absent.\\
+Als je present specifi\"{e}ert zal de cron job aanwezig zijn, als je absent ingeeft zorgt puppet ervoor dat de cron job zeker niet aanwezig is.\\
+
+environment:\\
+Met deze parameter kan je omgevingswaarden meegeven. Let wel dat puppet deze niet automatisch reset, dus zullen deze omgevingsvariablen behouden blijven totdat puppet afsluit.\\
+
+hour:\\
+Het uur waarop de cron job dient te lopen.\\
+Aanvaardbare waardes: 1-23\\
+
+minute:\\
+De minuut waarop puppet de job zal starten.\\
+Aanvaardbare waardes: 1-59\\
+
+weekday:\\
+De dag van de week waarop men het commando uitvoert.\\
+Aanvaardbare waardes: 0-7 of de dagnaam ( Tuesday, Friday ).\\
+
+month:\\
+De maand waarop men het commando uitvoert.\\
+Aanvaardbare waardes: 1-12 of de maandnaam ( December, Januari )\\
+
+monthday:\\
+De dag van de maand waarop het commando uitgevoerd zal worden.\\
+Aanvaardbare waardes: 1-31\\
+
+name:\\
+De symbolische naam voor de cron job.\\
+word enkel gebruikt zodat mensen snel kunnen herkennen om welke job het juist gaat.\\
+
+provider:\\
+Het gewenste programma dat gebruikt word.\\
+Dit dient zelden gespecifi\"{e}erd te worden, puppet zal dit normaal gezien zelf herkennen.\\
+
+target:\\
+Waar de cron job opgeslagen dient te worden.\\
+Standaard is dit de crontab entry van de gebruiker zelf.\\
+
+user:\\
+De gebruiker waarmee men het commando dient uit te voeren.\\
+Deze valt terug op de huidige gebruiker indien geen gebruiker word meegegeven.\\
+
+\subsection{Voorbeelden}
+	cron \{ logrotate:\\
+		command => "/usr/sbin/logrotate",\\
+		user => root,\\
+		hour => 2,\\
+		minute => 0\\
+	\}\\
+
+	Dit voorbeeld zou ervoor zorgen dat de gebruiker met naam 'root' om stipt 2u elke dag het commando '/usr/sbin/logrotate' uitvoert.\\
+	Als extraatje kan je ook meerdere waardes doorgeven, dit doe je door middel van een array.\\
+
+	cron \{ logrotate:\\
+		command => "/usr/sbin/logrotate",\\
+		user => root,\\
+		hour => [2, 4]\\
+	\}\\
+
+	Dit voorbeeld doet net hetzelfde als het vorige voorbeeld, met als enige verandering dat deze definitie zowel om 2 als om 4u het gespecifi\"{e}erde commando zal uitvoeren.\\
+	Meer dan twee waardes zijn ook geen probleem, zolang ze netjes gescheiden zijn door een comma en binnen de vierkante haakjes zitten.\\
+
+	Een laatste mogelijkheid om waardes mee te geven is via ranges, dit wil zeggen dat je alle waardes tussen waarde1 en waarde2 wil meegeven.\\
+
+	cron \{ logrotate:\\
+		command => "/usr/sbin/logrotate",\\
+		user => root,\\
+		hour => ['2-4'],\\
+	\}\\
+
+	Met dit laatste voorbeeld voer je wederom het commando '/usr/sbin/logrotate' uit, maar nu zowel om 2, 3 als 4u.\\

@@ -1,0 +1,94 @@
+\section{Augeas}
+Augeas is strict genomen een configuratiebestandsparser, wat wil zeggen dat hij configuratiebestanden afloopt en op basis van bepaalde criteria veranderingen kan aanbrengen. Je hebt hiervoor naast puppet ook nog de pakketten augeas en ruby-augeas nodig.
+
+\subsection{Functie}
+
+Features
+    execute\_changes: Actually make the changes
+    need\_to\_run?: If the command should run
+    parse\_commands: Parse the command string
+
+Provider 	execute\_changes 	need\_to\_run? 	parse\_commands
+augeas		X 			X 		X
+
+\subsection{Parameters}
+changes
+The changes which should be applied to the filesystem. This can be either a string which contains a command or an array of commands. Commands supported are:
+
+set [PATH] [VALUE]            Sets the value VALUE at loction PATH
+rm [PATH]                     Removes the node at location PATH
+remove [PATH]                 Synonym for rm
+clear [PATH]                  Keeps the node at PATH, but removes the value.
+ins [LABEL] [WHERE] [PATH]    Inserts an empty node LABEL either [WHERE={before|after}] PATH.
+insert [LABEL] [WHERE] [PATH] Synonym for ins
+
+If the parameter 'context' is set that value is prepended to PATH
+
+context
+Optional context path. This value is prepended to the paths of all changes if the path is relative. If INCL is set, defaults to '/files' + INCL, otherwise the empty string
+
+force
+Optional command to force the augeas type to execute even if it thinks changes will not be made. This does not overide the only setting. If onlyif is set, then the foce setting will not override that result
+
+incl
+Load only a specific file, e.g. /etc/hosts. When this parameter is set, you must also set the lens parameter to indicate which lens to use.
+
+lens
+Use a specific lens, e.g. Hosts.lns. When this parameter is set, you must also set the incl parameter to indicate which file to load. Only that file will be loaded, which greatly speeds up execution of the type
+
+load\_path
+Optional colon separated list of directories; these directories are searched for schema definitions
+
+name
+The name of this task. Used for uniqueness
+
+onlyif:\\
+Enkel als dit commando zonder problemen eindigt zal het gedefini\"{e}erde augeas commando uitgevoerd worden. De syntax voor dit commando verschilt van de gewoonlijke testen, omdat men gebruik kan maken van de ingebouwde augeas types.\\
+get [AUGEAS\_PATH] [COMPARATOR] [STRING]
+match [MATCH\_PATH] size [COMPARATOR] [INT]
+match [MATCH\_PATH] include [STRING]
+match [MATCH\_PATH] not\_include [STRING]
+match [MATCH\_PATH] == [AN\_ARRAY]
+match [MATCH\_PATH] != [AN\_ARRAY]
+
+waarbij:\\
+AUGEAS\_PATH een geldig pad in het bereik van de context
+MATCH\_PATH een geldig pad in het van de context
+COMPARATOR is in the set [> >= != == <= <]
+STRING is a string
+INT is a number
+AN\_ARRAY is in the form ['a string', 'another']
+
+provider:\\
+De specifieke provider die je wil gebruiken. Dit zal je zelden moeten specifi\"{e}ren, puppet ontdekt dit normaal gezien zelf. Beschikbare providers zijn momenteel:\\
+augeas: Supported features: execute\_changes, need\_to\_run?, parse\_commands.
+
+returns:\\
+De verwachte return code, waaraan je kan zien of een commando correct is uitgevoerd of niet. Dit zal normaal gezien 0 zijn als alles goed ging, return codes boven 0 zijn een teken van falen. Standaard is dit ingesteld op 0 en hoeft het dus niet expliciet vermeld te worden.
+
+root:\\
+De folder van waar augeas al zijn bestanden laad.
+
+type\_check:\\
+Booleanse variabele waarmee je typechecking expliciet aan of uit kan zetten. Standaardwaarde is false.
+
+\subsection{Voorbeeld}
+\begin{lstlisting}
+augeas{"test1" :
+  context => "/files/etc/sysconfig/firstboot",
+  changes => "set RUN_FIRSTBOOT YES",
+  onlyif  => "match other_value size > 0",
+}
+\end{lstlisting}
+
+voorbeeld met zelfgemaakte lenses en een array statement:
+\begin{lstlisting}
+augeas{"jboss_conf":
+  context => "/files",
+  changes => [
+    "set /etc/jbossas/jbossas.conf/JBOSS_IP $ipaddress",
+    "set /etc/jbossas/jbossas.conf/JAVA_HOME /usr"
+  ],
+  load_path => "$/usr/share/jbossas/lenses",
+}
+\end{lstlisting}

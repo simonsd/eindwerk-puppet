@@ -1,0 +1,120 @@
+\section{Exec}
+\subsection{Functie}
+	Het uitvoeren van externe commando's, wat zorgt voor een ongelofelijke flexibiliteit.\\
+	Het belangrijkste waarbij je hier moet opletten is dat zo'n commando elke keer word uitgevoerd wanneer puppet zijn manifests uitvoert, het is dus belangrijk dat men geen commando's specifi\"{e}ert die elkaar later overschrijven.\\
+	Uiteraard zijn er ook wel manieren om te zorgen dat een commando slechts word uitgevoerd indien aan een bepaalde conditie vvoldaan word.\\
+	Een andere manier om dit in te perken is de refreshonly parameter, die ervoor zorgt dat een commando enkel word uitgevoerd als reactie op een andere resource definitie binnen de manifests. Meer daarover later.\\
+
+	Zoals te verwachten is word de exec resource veelal gebruikt om dingen te doen die (nog) niet in puppet ingebakken zijn.\\
+	Alhoewel dit op korte termijn een vaak onoverkomelijk fenomeen zal zijn, word er toch sterk aangeraden om ge\"{e}ngageerd te geraken in de community rondom puppet en te helpen pushen voor een native resource type die de functies die jij nodig hebt kan uitvoeren.\\
+	Natuurlijk is een eigen contributie van code ook altijd welkom.\\
+
+	Je zal vaak bepaalde software-pakketten nodig hebben om commando's uit te voeren, en daar houd puppet rekening mee:\\
+	puppet zal indien je in een commando een programma aanroept, kijken of dat programma door jou beheerd word en dit automatisch 'requiren'.\\
+	Dit wil zeggen dat puppet bij het dynamisch opstellen van de volgorde waarin alles uitgevoerd word, rekening zal houden met het feit dat dit programma eerst geïnstalleerd moet worden en dan pas uitgevoerd kan worden.\\
+	Hetzelfde word gedaan voor bijvoorbeeld de gebruiker waarmee men het commando uitvoert:\\
+	Als deze door puppet beheerd word en nog niet bestaat, zorgt men ervoor dat deze gecre\"{e}erd word prior het commando uit te voeren.\\
+	Deze functionaliteit noemt men ook wel 'auto-require'.\\
+
+	Men kan ofwel de programma's aanroepen via hun absolute pad of een 'PATH' variable opgeven, die de paden bevat waarin puppet moet zoeken om het commando te vinden.\\
+	Als alles goed gaat en het commando uitgevoerd word zonder fouten zal de output van het commando op het normale log-level gelogd worden, indien er een fout optreed zal puppet echter een melding weergeven en de eventuele output voordat de fout optrad.\\
+
+
+\subsection{Parameters}
+		command:
+		Het commando dat uitgevoerd moet worden.
+
+		creates:
+		Een bestand dat door dit commando word gecre\"{e}erd.
+		Als hier een waarde opgegeven word zal het commando enkel uitgevoerd worden als dit bestand niet bestaat.
+
+			exec \{ "tar xf /my/tar/file.tar":
+				cwd => "/var/tmp",
+				creates => "/var/tmp/myfile",
+				path => ["/usr/bin", "/usr/sbin"]
+			\}
+
+		In dit voorbeeld word het commando 'tar xf /my/tar/file.tar' uitgevoerd.
+		Dit commando pakt een archief uit dat gecompresseerd is volgens het tar-protocol, in de map /var/tmp.
+		De inhoud van dit archief zal een bestand 'myfile' bevatten, en wanneer dit uitgepakt word zal dit bestand zich in de map '/var/tmp' bevinden.
+		Doordat puppet bij de volgende run gaat kijken of dit bestand bestaat zal het commando slechts één keer uitgevoerd worden, tenzij dit bestand verwijderd of verplaatst word.
+
+		cwd:
+		De map waarin het commando dient uitgevoerd te worden, als de map niet bestaat zal het commando falen.
+
+		environment:
+		Met deze parameter kan je omgevingsvariabelen meegeven aan het commando.
+
+		group:
+		De groep die gebruikt dient te worden om het commando uit te voeren.
+
+		logoutput:
+		Deze waarde specifi\"{e}ert of men de output dient te loggen, gebruik hier de waarde on\_failure om ervoor te zorgen dat er enkel gelogd word als het commando faalt.
+
+		onlyif:
+		Deze parameter kan men beschouwen als een test, indien de test slaagt zal het commando uitgevoerd worden, anders niet.
+		De waarde van deze parameter is ook steeds een commando, wat zorgt voor een grote keuze uit testmogelijkheden.
+
+			exec \{ "logrotate":
+				path => "/usr/bin:/usr/sbin:/bin",
+				onlyif => "test `du /var/log/messages | cut -f1` -gt 100000"
+			\}
+
+		Dit voorbeeld voert het commando logrotate uit, dat hij zal gaan zoeken in '/usr/bin:/usr/sbin:/bin', enkel als 'test `du /vara/log/messages|cut -f1` -gt 100000' waar is.
+		Dit wil zeggen dat dit commando kijkt of de centrale logmap groter is dan 100Mb en zal dan op basis daarvan beslissen of hij de logs gaat omwisselen of niet.
+
+		path:
+		Dit is de 'PATH' omgevingsvariable die gebruikt zal worden om te zoeken naar programma's, indien deze niet aanwezig is dient men bij een commando steeds de volledige padnaam naar een programma op te geven.
+
+		provider:
+		hiermee kan je specifi\"{e}ren hoe je commando's wil uitvoeren: rechtstreeks (posix) of via een shell zodat de ingebouwde commando's van de shell beschikbaar zijn.
+
+		refresh:
+		Deze parameter zorgt ervoor dat als de exec aangeroepen word vanuit een andere resource, terwijl de parameter refreshonly ook is toegevoegd, er eventueel een ander commando in de plaats uitgevoerd kan worden.
+		Normaal gezien zal het reguliere commando worden uitgevoerd, maar als hier een alternatief commando word opgegeven zal dit in de plaats worden gebruikt.
+
+		refreshonly:
+		Deze parameter zorgt ervoor dat het commando enkel uitgevoerd zal worden als een ander object waarvan dit object afhankelijk is verandert of uitgevoerd word.
+
+			file \{ "/etc/aliases":
+				source => "puppet://server/module/aliases"
+			\}
+
+			exec \{ newaliases:
+				path => ["/usr/bin", "/usr/sbin"],
+				subscribe => File["/etc/aliases"],
+				refreshonly => true
+			\}
+
+		In dit voorbeeld zie je dat door middel van een subscribe parameter (meer info hier over later) dit commando enkel zal uitvoeren wanneer het object '/etc/aliases' gewijzigd word.
+
+		returns:
+		Hier kan je opgeven wat de verwachte return codes van het commando zijn, waardoor je bijvoorbeeld bepaalde fouten kan filteren.
+		De standaardwaarde is enkel 0, dus enkel als een commando compleet foutloos uitgevoerd word.
+
+		timeout:
+		De maximum tijd die dit exec object in beslag zou mogen nemen.
+		Als het commando langer duurt word er vanuit gegaan dat het commando gefaald heeft en zal dus gestopt worden.
+
+		tries:
+		Het aantal keren dat men dient te proberen het commando uit te voeren, met als standaardwaarde 1.
+		Let wel dat de timeout parameter geld voor elk van deze tries apart, en dus niet als geheel.
+
+		try\_sleep:
+		De pauze tussen opvolgende 'tries'.
+
+		unless:
+		Het omgekeerde van onlyif, namelijk dat het exec object enkel uitgevoerd zal worden indien dit commando wel faalt.
+
+			exec \{ "/bin/echo root >> /usr/lib/cron/cron.allow":
+				path => "/usr/bin:/usr/sbin:/bin",
+				unless => "grep root /usr/lib/cron/cron.allow 2>/dev/null"
+			\}
+
+		Dit voorbeeld laat zien hoe je een unless parameter specifi\"{e}ert.
+		Het exec object dat in dit voorbeeld gehanteerd word zal root toevoegen aan het '/usr/lib/cron/cron.allow' tenzij het woord 'root' er al in teruggevonden werd.
+
+		user:
+		De gebruiker die dit commando dient uit te voeren.
+
+\subsection{Voorbeelden}
