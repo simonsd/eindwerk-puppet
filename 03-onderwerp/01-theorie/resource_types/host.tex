@@ -1,28 +1,27 @@
-host
+\section{Host}
+Op *NIX besturingssystemen heb je een zogenaamde hostsfile, meestal terug te vinden op "/etc/hosts", waarin je ip-adressen en namen kan associ\"{e}ren. Dit zorgt ervoor dat je bijvoorbeeld in je web-browser "localhost" kan intypen en op je eigen machine terechtkomen.
 
-Installs and manages host entries. For most systems, these entries will just be in /etc/hosts, but some systems (notably OS X) will have different solutions.
-Parameters
+\subsection{Functie}
+Het Cre\"{e}ren en beheren van host entries.
+
+\subsection{Parameters}
 comment
+Een annotatie in verband met de entry
 
-A comment that will be attached to the line with a # character
 ensure
+Boolean die specifi\"{e}ert of deze entry al dan niet aanwezig dient te zijn.
 
-The basic property that the resource should be in. Valid values are present, absent.
 host_aliases
+De namen die u zou willen meegeven aan deze entry, bijvoorbeeld "localhost" of "server". Indien je hier meerdere waardes wil meegeven dien je gebruik te maken van een array.
 
-Any aliases the host might have. Multiple values must be specified as an array.
 ip
+Het ip-adres van de node waaraan je deze entry wil toewijzen. Zowel ipv4 als ipv6 is reeds toegestaan.
 
-The host’s IP address, IPv4 or IPv6.
 name
+De host-naam.
 
-The host name.
 provider
-
-The specific backend for provider to use. You will seldom need to specify this — Puppet will usually discover the appropriate provider for your platform. Available providers are:
-
-    parsed:
+Het programma waarmee je dit zou willen beheren. Momenteel is enkel "parsed" beschikbaar, maar dit is meer dan voldoende voor het doel we hier wensen te bereiken.
 
 target
-
-The file in which to store service information. Only used by those providers that write to disk. On most systems this defaults to /etc/hosts.
+Welk bestand beheerd dient te worden. Standaard is dit "/etc/hosts", dus kan dit veilig worden weggelaten voor de meeste systemen.
