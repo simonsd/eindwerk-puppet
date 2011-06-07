@@ -9,5 +9,5 @@ License
 Everything in here except what's in the src/ folder is licensed under the Creative-Commons Attribution Share-Alike License. [CC BY SA]
 
 In the src/ folder:
-+ package_managers_[1-7].png are from distrowatch.org
-+ puppet_logo.png is from reductivelabs
+- package_managers_[1-7].png are from distrowatch.org
+- puppet_logo.png is from reductivelabs
