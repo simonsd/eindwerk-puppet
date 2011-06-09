@@ -4,9 +4,23 @@
 \usepackage[pdftex]{graphicx}
 \usepackage[T1]{fontenc}
 \usepackage{listings}
+\usepackage{tikz}
 %\usepackage{xmpincl}
 
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newenvironment{code}
+{
+\\\\\indent
+\begin{tikzpicture}
+	\node [fill=white!60!black,rounded corners=5pt]
+	\bgroup
+	\bgroup
+	\begin{tabular}{l}}
+	{\end{tabular}
+	\egroup
+	\egroup;
+\end{tikzpicture}\\\\
+}
 
 \begin{document}
 
