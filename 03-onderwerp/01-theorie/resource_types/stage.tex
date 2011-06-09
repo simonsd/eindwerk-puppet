@@ -1,17 +1,24 @@
-stage
-
-A resource type for specifying run stages. The actual stage should be specified on resources:
-
+\section{Stage}
+Puppet manifests worden steeds uitgevoerd in stages. Standaard word er enkel een "main" stage gemaakt, waarin alle objecten zich bevinden. Je kan deze stages een beetje bekijken als groepen, met deze functionaliteit kan je je objecten netjes opdelen in groepen en daarna kiezen welke groepen eerst dienen uitgevoerd te worden. In de meeste gevallen zul je dit niet echt nodig hebben, omdat je met "require" en "before" parameters net hetzelfde kan doen op gewoe objecten zelf, of op 'classes'. Aangezien classes ook al bruikbaar zijn om je objecten in groepen te verdelen, hangt het af hoe flexibel je je setup wil maken. Waar classes alle betreffende objecten verzamelen op \"e\"en centrale plaats, kan je met stages je objecten verspreiden ze includeren in de gewilde stage.
+%
+\begin{code}
+\begin{lstlisting}
 class { foo: stage => pre }
+\end{lstlisting}
+\end{code}
 
 And you must manually control stage order:
-
+%
+\begin{code}
+\begin{lstlisting}
 stage { pre: before => Stage[main] }
+\end{lstlisting}
+\end{code}
 
-You automatically get a ‘main’ stage created, and by default all resources get inserted into that stage.
+Puppet cre\"eert automatisch een 'main' stage, die standaard alle objecten omvat.
 
 You can only set stages on class resources, not normal builtin resources.
-Parameters
-name
 
-The name of the stage. This will be used as the ‘stage’ for each resource.
+\subsection{Parameters}
+name:\\
+De naam die je de stage wil geven.
