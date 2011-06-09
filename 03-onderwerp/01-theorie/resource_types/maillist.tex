@@ -1,31 +1,28 @@
-maillist
+\section{Maillist}
 
-Manage email lists. This resource type currently can only create and remove lists, it cannot reconfigure them.
-Parameters
-admin
+Het beheren van mailing lijsten. Momenteel enkel toevoegen en verwijderen mogelijk, herconfigureren moet nog ge\"implementeerd worden.
 
-The email address of the administrator.
-description
-
-The description of the mailing list.
-ensure
-
-The basic property that the resource should be in. Valid values are present, absent, purged.
-mailserver
-
-The name of the host handling email for the list.
-name
-
-The name of the email list.
-password
-
-The admin password.
-provider
-
-The specific backend for provider to use. You will seldom need to specify this — Puppet will usually discover the appropriate provider for your platform. Available providers are:
-
-    mailman: Required binaries: /usr/lib/mailman/mail/mailman, /usr/lib/mailman/bin/list_lists, /usr/lib/mailman/bin/rmlist, /usr/lib/mailman/bin/newlist.
-
-webserver
-
-The name of the host providing web archives and the administrative interface.
+\subsection{Parameters}
+admin:\\
+Het email-adres van de administrator.\\\\
+%
+description:\\
+Een beschrijving van de mailing lijst.\\\\
+%
+ensure:\\
+Boolean voor aan- en afwezigheid van de lijst.\\\\
+%
+mailserver:\\
+Naam van de host die de mail verstuurt voor de lijst.\\\\
+%
+name:\\
+Naam van de lijst.\\\\
+%
+password:\\
+Het admin paswoord.\\\\
+%
+provider:\\
+De specifieke provider om mailing lijsten te beheren.\\\\
+%
+webserver:\\
+Naam van de webserver die het webarchief beheert en de administratieve interface herbergt.\\\\
