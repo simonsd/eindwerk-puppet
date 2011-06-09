@@ -1,11 +1,74 @@
 \chapter{Templates}
 
-Templates zijn sjablonen die door middel van variabelen dynamisch aangepast kunnen worden. Door deze techniek toe te passen kan men bijvoorbeeld met \'{e}\'{e}n enkele template een volledige configuratie bouwen voor 20 of zelfs 500 verschillende machines, door simpelweg een aantal variabelen aan te passen.
-
-\section{Variabelen}
-
-\section{Voorbeelden}
-
-Enkele voorbeelden van templates:\\
-
-
+Puppet ondersteund templates en templating via ERB, een onderdeel van de standaard Ruby stack en ook door vele andere projecten, zoals bv.: Ruby On Rails, gebruikt word. Alhoewel het een Ruby-gebaseerd systeem betreft hoef je niet veel Ruby te kennen om gebruik te maken van ERB. Met templates kan je de inhoud van bestanden beheren, bijvoorbeeld bij configuratiebestanden waarvoor nog geen ingebouwde resource types voorhanden zijn. Dit kan bijvoorbeeld een configuratiebestand zijn van een Apache webserver, een Samba file share, etc.\\\\
+Templates kan je zeer gemakkelijk oproepen vanuit je manifests, namelijk:
+\begin{code}
+\begin{lstlisting}
+$variabele = template("mijn_template.erb")
+\end{lstlisting}
+\end{code}
+Je kan hierbij zowel het volledige pad naar de template opgeven, of je kan je templates in de voorziene template map verzamelen. Deze template map zal standaard '/etc/puppet/templates' zijn, maar om zeker te zijn kan je 'puppet --configprint templatedir' uitvoeren, waarna je te zien krijgt waar deze map zich op jouw systeem bevind. Als laatste en in principe ook beste manier, kan je je templates in de template map van je modules verzamelen. Meer daarover in het hoofdstuk modules.\\\\
+Ook handig om te weten is dat je templates steeds ge\"{e}valueerd worden door de server, en dus niet op de client. Dit zorgt ervoor dat als je je manifests aanbied via een puppetmaster, de templates enkel aanwezig dienen te zijn op de puppetmaster. De client ziet geen verschil tussen het verwerken van een template en het verwerken van een gewoon text-bestand. Voor men begint aan het parsen van de templates zal puppet er ook voor zorgen dat Facter eerst alle nodige gegevens (variabelen) ophaalt van de client, en die daarna gebruikt kunnen worden in de templates.\\\\
+Het is ook mogelijk dat je bijvoorbeeld meerdere templates samen wil gebruiken, dit kan je dan doen als volgt:
+\begin{code}
+\begin{lstlisting}
+template('/pad/naar/template1','/pad/naar/template2')
+\end{lstlisting}
+\end{code}
+\subsection{Variabelen}
+Met behulp van variabelen kan je kan je op een dynamisch manier waardes invullen in de template bestanden.
+\begin{code}
+\begin{lstlisting}
+myvariable = template('/var/puppet/template/myvar')
+\end{lstlisting}
+\end{code}
+\subsection{Voorwaardelijke opmaak}
+Het ERB templating systeem ondersteund ook voorwaardelijk opmaak, waarmee je snel en eenvoudig bepaalde content in een document kan opnemen of net weglaten. Beschouw even dit voorbeeld:
+\begin{code}
+\begin{lstlisting}
+<% if broadcast != "NONE" -%>
+	broadcast <%= broadcast %>
+<% end -%>
+\end{lstlisting}
+\end{code}
+Met dit voorbeeld zal je, indien de variabele broadcast niet gelijk is aan 'NONE', de constructie 'broadcast \$broadcast' toevoegen, waarbij \$broadcast een variabele is die je ergens anders hebt toegewezen. Indien de variabele w\'{e}l gelijk is aan 'NONE', zal deze zin simpelweg overgeslagen worden.
+\subsection{Standaardwaarden}
+Het kan wel eens voorkomen dat je graag een standaardwaarde aan een variabele wil toekennen, zodat je niet elke keer opnieuw dezelfde variabele met dezelfde waarde hoeft te defini\"eren. In dat geval kan je de variabele \'e\'en keer specifi\"eren en daarna simpelweg achterwege laten. Om dit resultaat te bekomen maken we gebruik van het 'if\_has\_variable?("variabelenaam")' construct. Hiermee kan je kijken of een variabele al dan niet gedefini\"eerd is en afhankelijk daarvan een actie uitvoeren. Om het te gebruiken kan je deze code in je templates gebruiken:
+\begin{code}
+\begin{lstlisting}
+<% if has_variable?("mijn_variabele") then %>
+	mijn_variabele has <%= mijn_variabele %> waarde
+<% end %>
+\end{lstlisting}
+\end{code}
+\subsection{Iteratie}
+puppet templates ondersteunen ook iteratie, waardoor je meerdere waarden in \'{e}\'{e}n variabele kan bewaren. Zo'n waarde noemen we dan een array, die je dan mits een loop kan gaan uitlezen. Om een array aan een variabele toe te wijzen doe je als volgt:
+\begin{code}
+\begin{lstlisting}
+$array = [waarde1, waarde2, waarde3]
+\end{lstlisting}
+\end{code}
+Als je daar dan een template achterzet:
+\begin{code}
+\begin{lstlisting}
+<% array.each do |waarde| -%>
+Een voorbeeld van <%= waarde %>
+<% end -%>
+\end{lstlisting}
+\end{code}
+Dit geeft als resultaat:
+\begin{code}
+\begin{lstlisting}
+Een voorbeeld van waarde1
+Een voorbeeld van waarde2
+Een voorbeeld van waarde3
+\end{lstlisting}
+\end{code}
+Interessant om te weten is dat lijnen waar enkel code op staat worden omgezet in een lege lijn. Dit komt doordat het ERB systeem standaard nieuwe lijnen cre\"{e}ert. Om dit te voorkomen dien je in de sluitingstag '-%>' te gebruiken in plaats van '%>'.
+\subsection{Syntax check}
+ERB templates zijn gemakkelijk na te kijken voor syntax fouten. Met behulp van volgend commando hoef je het zelfs niet manueel te doen! Als je template 'mijn\_template.erb' noemt, kan je dit voorbeeld gebruiken:
+\begin{code}
+\begin{lstlisting}
+erb -x -T '-' mijn\_template.erb | ruby -c
+\end{lstlisting}
+\end{code}
