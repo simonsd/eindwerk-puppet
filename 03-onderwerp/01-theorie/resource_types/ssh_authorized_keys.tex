@@ -1,0 +1,26 @@
+\section{Ssh\_authorized\_keys}
+
+Beheert toegestane SSH sleutels. Handig is dat als puppet de gebruikersaccount beheert waarin deze sleutel ge\"installeerd dient te worden, deze gebruiker automatisch ge-required zal worden.
+
+\subsection{Parameters}
+
+ensure:\\
+Boolean waarde voor de aan- of afwezigheid van de sleutel. Geldige waardes zijn 'present' en 'absent'.\\\\
+%
+key:\\
+De sleutel zelf; dit is meestal een lange string bestaande uit hexa-decimalen.\\\\
+%
+name:\\
+Een naam voor de sleutel. Namen moeten uniek zijn, aangezien de sleutels voor het hele systeem dienen.\\\\
+%
+options:\\
+Extra opties voor de sleutel. Meerdere waardes kan je specifi\"eren door middel van een array.\\\\
+%
+target:\\
+De absolute bestandsnaam waarin de sleutel opgeslagen moet worden. Deze optie is niet verpicht en dient enkel gebruikt te worden indien je je SSH-sleutels op een niet-standaard plaats wil bewaren (dit wil zeggen: niet in het standaard "~/.ssh/authorized\_keys" bestand).\\\\
+%
+type:\\
+Het type encryptie dat gebruikt word voor de sleutel, geldige waardes zijn: ssh-dss (ook wel dsa genoemd) en ssh-rsa (ook wel rsa genoemd).\\\\
+%
+user:\\
+De gebruikersaccount waarin deze sleutel dient te worden ge\"installeerd.\\\\
