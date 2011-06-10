@@ -8,10 +8,15 @@ atboot:\\
 Boolean die ervoor zorgt dat een filesystem gemount word bij het opstarten van het besturingssysteem. Niet alle platformen ondersteunen dit.\\\\
 %
 blockdevice:\\
-Welk apparaat dient gecontroleerd te worden bij een fsck (filesystem check). Deze parameter is enkel geldig op Solaris en zal in de meeste gevallen automatisch de juiste waarde aannemen.
+Welk apparaat dient gecontroleerd te worden bij een fsck (filesystem check). Deze parameter is enkel geldig op Solaris en zal in de meeste gevallen automatisch de juiste waarde aannemen.\\\\
 %
 device:\\
-Het apparaat dat het filesystem bevat dat gemount dient te worden. Geldige waardes zijn eender wat het platform aanvaard, zij het apparaat paden (/dev/sda1), UUID's (78c656dd-6c2a-48d0-a6c2-e7f3061e89e6), netwerk mount punten (http://192.168.1.1:21/share), etc.\\\\
+Het apparaat dat het filesystem bevat dat gemount dient te worden. Geldige waardes zijn afhankelijk van het platform, enkele voorbeelden:
+\begin{itemize}
+\item zij het apparaat paden (/dev/sda1)
+\item UUID's (78c656dd-6c2a-48d0-a6c2-e7f3061e89e6)
+\item netwerk mount punten (http://192.168.1.1:21/share)
+\end{itemize}
 %
 ensure:\\
 Hiermee kan je beheren wat je wil doen met deze mount, geldige waardes zijn mounted, defined (synoniem voor present), unmounted en absent. Bij de waarde mounted zal een entry worden toegevoegd in de fstab en het filesystem ook effectief gemount worden. Bij een waarde present of defined zal ervoor gezorgd worden dat het filesystem aanwezig is in de filesystem tabel maar word er verder niets veranderd aan de mount status. Het argument unmounted doet hetzelfde maar zorgt ervoor dat er w\'el naar de status word gekeken en eventueel het filesystem zal unmounten. Als laatste hebben we het argument absent, dat ervoor dat er geen entry in de filesystem tabel word aangemaakt/aanwezig is, en dat de status van het filesystem unmounted is.\\\\

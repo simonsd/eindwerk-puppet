@@ -1,11 +1,11 @@
 \section{File}
 
 \subsection{Doel}
-Het beheren van locale bestanden, inclusief permissies, het cre\"{e}ren van zowel bestanden als mappen, en het downloaden van bestanden van remote servers. Het is de bedoeling dat naarmate Puppet verder ontwikkeld, deze resource minder nodig zal zijn, en alles beheerd zal kunnenn worden met nieuwe resource types. Wanneer Puppet de eigenaar en groep van het bestand ook beheerd, zal deze automatisch 'required' worden.\\\\
+Het beheren van locale bestanden, inclusief permissies, het cre\"{e}ren van zowel bestanden als mappen, en het downloaden van bestanden van remote servers. Het is de bedoeling dat naarmate Puppet verder ontwikkeld, deze resource minder nodig zal zijn, en alles beheerd zal kunnen worden met nieuwe resource types. Wanneer Puppet de eigenaar en groep van het bestand ook beheerd, zal deze automatisch 'required' worden.\\\\
 %
 \subsection{Parameters}
 backup:\\
-Of er een backup van bestanden dient gemaakt te worden voordat ze vervangen worden. De voorkeur gaat hierbij uit naar het gebruiken van een filebucket.	De filebucket slaat bestanden op, herkent ze via hun md5-som, en zorgt voor een simpele overdraginsgmethode zonder de mappenstructuur in de war te brengen. Daarnaast kan je een waarde meegeven die begint met een ".". in dit geval zal de backup dit als extensie meekrijgen. Puppet cre\"{e}ert automatisch een lokale filebucket waarnaar backups zullen geschreven worden. Als je een andere filebucket wil gebruiken dien je dit in je manifests te specifi\"{e}ren.
+Of er een backup van bestanden dient gemaakt te worden voordat ze vervangen worden. De voorkeur gaat hierbij uit naar het gebruiken van een filebucket.	De filebucket slaat bestanden op, herkent ze via hun md5-som, en zorgt voor een simpele overdragingsmethode zonder de mappenstructuur in de war te brengen. Daarnaast kan je een waarde meegeven die begint met een ".". in dit geval zal de backup dit als extensie meekrijgen. Puppet cre\"{e}ert automatisch een lokale filebucket waarnaar backups zullen geschreven worden. Als je een andere filebucket wil gebruiken dien je dit in je manifests te specifi\"{e}ren.
 \begin{code}
 \begin{lstlisting}
 filebucket { main:

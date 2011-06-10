@@ -1,6 +1,6 @@
 \chapter{Templates}
 
-Puppet ondersteund templates en templating via ERB, een onderdeel van de standaard Ruby stack en ook door vele andere projecten, zoals bv.: Ruby On Rails, gebruikt word. Alhoewel het een Ruby-gebaseerd systeem betreft hoef je niet veel Ruby te kennen om gebruik te maken van ERB. Met templates kan je de inhoud van bestanden beheren, bijvoorbeeld bij configuratiebestanden waarvoor nog geen ingebouwde resource types voorhanden zijn. Dit kan bijvoorbeeld een configuratiebestand zijn van een Apache webserver, een Samba file share, etc.\\\\
+Puppet ondersteund templates en templating via ERB, een onderdeel van de standaard Ruby stack en ook door vele andere projecten, zoals bv.: Ruby On Rails, gebruikt wordt. Alhoewel het een Ruby-gebaseerd systeem betreft hoef je niet veel Ruby te kennen om gebruik te maken van ERB. Met templates kan je de inhoud van bestanden beheren, bijvoorbeeld bij configuratiebestanden waarvoor nog geen ingebouwde resource types voorhanden zijn. Dit kan bijvoorbeeld een configuratiebestand zijn van een Apache webserver, een Samba file share, etc.\\\\
 Templates kan je zeer gemakkelijk oproepen vanuit je manifests, namelijk:
 %
 \begin{code}
@@ -9,7 +9,7 @@ $variabele = template("mijn_template.erb")
 \end{lstlisting}
 \end{code}
 %
-Je kan hierbij zowel het volledige pad naar de template opgeven, of je kan je templates in de voorziene template map verzamelen. Deze template map zal standaard '/etc/puppet/templates' zijn, maar om zeker te zijn kan je 'puppet --configprint templatedir' uitvoeren, waarna je te zien krijgt waar deze map zich op jouw systeem bevind. Als laatste en in principe ook beste manier, kan je je templates in de template map van je modules verzamelen. Meer daarover in het hoofdstuk modules.\\\\
+Je kan hierbij zowel het volledige pad naar de template opgeven, of je kan je templates in de voorziene template map verzamelen. Deze template map zal standaard '/etc/puppet/templates' zijn, maar om zeker te zijn kan je 'puppet --configprint templatedir' uitvoeren, waarna je te zien krijgt waar deze map zich op jouw systeem bevindt. Als laatste en in principe ook beste manier, kan je je templates in de template map van je modules verzamelen. Meer daarover in het hoofdstuk modules.\\\\
 Ook handig om te weten is dat je templates steeds ge\"{e}valueerd worden door de server, en dus niet op de client. Dit zorgt ervoor dat als je je manifests aanbied via een puppetmaster, de templates enkel aanwezig dienen te zijn op de puppetmaster. De client ziet geen verschil tussen het verwerken van een template en het verwerken van een gewoon text-bestand. Voor men begint aan het parsen van de templates zal puppet er ook voor zorgen dat Facter eerst alle nodige gegevens (variabelen) ophaalt van de client, en die daarna gebruikt kunnen worden in de templates.\\\\
 Het is ook mogelijk dat je bijvoorbeeld meerdere templates samen wil gebruiken, dit kan je dan doen als volgt:
 %
@@ -30,7 +30,7 @@ myvariable = template('/var/puppet/template/myvar')
 %
 \subsection{Voorwaardelijke opmaak}
 %
-Het ERB templating systeem ondersteund ook voorwaardelijk opmaak, waarmee je snel en eenvoudig bepaalde content in een document kan opnemen of net weglaten. Beschouw even dit voorbeeld:
+Het ERB templating systeem ondersteundt ook voorwaardelijk opmaak, waarmee je snel en eenvoudig bepaalde content in een document kan opnemen of net weglaten. Bekijk even dit voorbeeld:
 \begin{code}
 \begin{lstlisting}
 <% if broadcast != "NONE" -%>
@@ -53,7 +53,7 @@ Het kan wel eens voorkomen dat je graag een standaardwaarde aan een variabele wi
 \end{code}
 %
 \subsection{Iteratie}
-puppet templates ondersteunen ook iteratie, waardoor je meerdere waarden in \'{e}\'{e}n variabele kan bewaren. Zo'n waarde noemen we dan een array, die je dan mits een loop kan gaan uitlezen. Om een array aan een variabele toe te wijzen doe je als volgt:
+Puppet templates ondersteunen ook iteratie, waardoor je meerdere waarden in \'{e}\'{e}n variabele kan bewaren. Zo'n waarde noemen we dan een array, die je dan mits een loop kan gaan uitlezen. Om een array aan een variabele toe te wijzen doe je als volgt:
 %
 \begin{code}
 \begin{lstlisting}
@@ -81,7 +81,7 @@ Een voorbeeld van waarde3
 \end{lstlisting}
 \end{code}
 %
-Interessant om te weten is dat lijnen waar enkel code op staat worden omgezet in een lege lijn. Dit komt doordat het ERB systeem standaard nieuwe lijnen cre\"{e}ert. Om dit te voorkomen dien je in de sluitingstag '-%>' te gebruiken in plaats van '%>'.
+Interessant om te weten is dat lijnen waar enkel code op staat worden omgezet in een lege lijn. Dit komt doordat het ERB systeem standaard nieuwe lijnen cre\"{e}ert. Om dit te voorkomen dien je in de sluitingstag '-\%>' te gebruiken in plaats van '\%>'.
 %
 \subsection{Syntax check}
 ERB templates zijn gemakkelijk na te kijken voor syntax fouten. Met behulp van volgend commando hoef je het zelfs niet manueel te doen! Als je template 'mijn\_template.erb' noemt, kan je dit voorbeeld gebruiken:

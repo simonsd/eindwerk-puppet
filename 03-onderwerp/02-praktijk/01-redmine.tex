@@ -71,7 +71,7 @@ Redmine
 \end{lstlisting}
 \end{code}
 %
-Zoals je ziet zit het grootste deel van het zware werk in de modules, maar aangezien je deze kan hergebruiken naar hartelust zou dit geen probleem mogen zijn. Je kan hierdoor \"e\"en keer een MySQL module maken en deze honderd keer opnieuw gebruiken, of gewoon even op het internet kijken of er al niet zulk een module bestaat. Als je geluk hebt kan je dan simpelweg een module downloaden en hergebruiken. Dan zien we dat er nog \"e\"en enkel bestand in de manifests map staat. Dit is in feite het allereerste bestand dat word nagekeken, het bestand waarin de nodes gedeini\"eerd staan. De inhoud van het bestand in ons geval is:
+Zoals je ziet zit het grootste deel van het zware werk in de modules, maar aangezien je deze kan hergebruiken naar hartelust zou dit geen probleem mogen zijn. Je kan hierdoor \'e\'en keer een MySQL module maken en deze honderd keer opnieuw gebruiken, of gewoon even op het internet kijken of er al niet zulk een module bestaat. Als je geluk hebt kan je dan simpelweg een module downloaden en hergebruiken. Dan zien we dat er nog \'e\'en enkel bestand in de manifests map staat. Dit is in feite het allereerste bestand dat word nagekeken, het bestand waarin de nodes gedefini\"eerd staan. De inhoud van het bestand in ons geval is:
 %
 \begin{code}
 \begin{lstlisting}
@@ -87,6 +87,6 @@ node redmine {
 \end{lstlisting}
 \end{code}
 %
-Hier zie je om te beginnen 'node redmine {'. Dit wil zeggen dat we hier gebruik maken van de resource type 'node', en als naam 'redmine' meegeven. Het haakje zorgt ervoor dat puppet weet dat alle text tot aan het volgende haakje, toebehoort aan dit object. Het aansluitende haakje vinden we in dit geval dan ook terug aan het einde van dit bestand. Zoals net gezegd is hoort alles tussen die twee haakjes bij het object 'node redmine'. Aangezien alles in modules georganiseerd is en er een nette onderverdeling is in classes, is dit stukje relatief kaal doch overzichtelijk. Zo zien we hier telkens een 'include' staan; dit zrgt ervoor dat de classes die erbij horen ingeladen en uitgevoerd worden. We zullen hier even bekijken wat deze classes allemaal inhouden, althans de classes die we daarnet nog niet hebben gezien in het hoofdstuk 'Modules'.
+Hier zie je om te beginnen 'node redmine {'. Dit wil zeggen dat we hier gebruik maken van de resource type 'node', en als naam 'redmine' meegeven. Het haakje zorgt ervoor dat puppet weet dat alle text tot aan het volgende haakje, toebehoort aan dit object. Het aansluitende haakje vinden we in dit geval dan ook terug aan het einde van dit bestand. Aangezien alles in modules georganiseerd is en er een nette onderverdeling is in classes, is dit stukje relatief kaal doch overzichtelijk. Zo zien we hier telkens een 'include' staan; dit zorgt ervoor dat de classes die erbij horen ingeladen en uitgevoerd worden. We zullen hier even bekijken wat deze classes allemaal inhouden, althans de classes die we daarnet nog niet hebben gezien in het hoofdstuk 'Modules'.
 
 Om te beginnen: de 'apache::packages' class. Deze werd in het hoofdstuk 'modules' reeds besproken en slaan we dus over.

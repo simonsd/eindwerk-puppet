@@ -6,7 +6,7 @@ Het beheren van cron jobs aan de hand van een simpele resource type. Je kan zowe
 
 \subsection{Parameters}
 command:\\
-Deze parameter specifi\"{e}ert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vind. De 'PATH' variabele word niet vanzelf overgedragen van de gebruiker dus als je een bepaalde 'path' wilt specifi\"{e}ren dien je dit manueel te doen.\\\\
+Deze parameter specifieert het uit te voeren commando, let wel dat je ofwel de absolute bestandsnaam moet opgeven, of een waarde aan 'path' moet meegeven zodat puppet het programma vindt. De 'PATH' variabele wordt niet vanzelf overgedragen van de gebruiker, dus als je een bepaald pad wil opgeven dien je dit manueel te doen.\\\\
 %
 ensure:\\
 Met deze parameter kan je specifi\"{e}ren of iets aanwezig moet zijn, mag zijn, of juist niet mag zijn. Aanvaardbare waardes zijn bv.: present of absent. Als je present specifi\"{e}ert zal de cron job aanwezig zijn, als je absent ingeeft zorgt puppet ervoor dat de cron job zeker niet aanwezig is.\\\\
@@ -18,7 +18,7 @@ hour:\\
 Het uur waarop de cron job dient te lopen. Aanvaardbare waardes: 1-23\\\\
 %
 minute:\\
-De minuut waarop puppet de job zal starten. Aanvaardbare waardes: 1-59\\\\
+De minuut waarop cron de job zal starten. Aanvaardbare waardes: 1-59\\\\
 %
 weekday:\\
 De dag van de week waarop men het commando uitvoert. Aanvaardbare waardes: 0-7, dagnamen (Tuesday, Friday) of een array.\\\\
@@ -39,14 +39,14 @@ target:\\
 Waar de cron job opgeslagen dient te worden. Standaard is dit de crontab entry van de gebruiker zelf.\\\\
 %
 user:\\
-De gebruiker waarmee men het commando dient uit te voeren. Deze valt terug op de huidige gebruiker indien geen gebruiker word meegegeven.\\\\
+De gebruiker waarmee men het commando dient uit te voeren. Deze valt terug op de huidige gebruiker indien geen gebruiker wordt meegegeven.\\\\
 
 \subsection{Voorbeelden}
 	cron \{ logrotate:\\
 		command => "/usr/sbin/logrotate",\\
 		user => root,\\
 		hour => 2,\\
-		minute => 0\\
+		minute => 0,\\
 	\}\\
 
 	Dit voorbeeld zou ervoor zorgen dat de gebruiker met naam 'root' om stipt 2u elke dag het commando '/usr/sbin/logrotate' uitvoert.\\
@@ -59,7 +59,7 @@ De gebruiker waarmee men het commando dient uit te voeren. Deze valt terug op de
 	\}\\
 
 	Dit voorbeeld doet net hetzelfde als het vorige voorbeeld, met als enige verandering dat deze definitie zowel om 2 als om 4u het gespecifi\"{e}erde commando zal uitvoeren.\\
-	Meer dan twee waardes zijn ook geen probleem, zolang ze netjes gescheiden zijn door een comma en binnen de vierkante haakjes zitten.\\
+	Meer dan twee waardes zijn ook geen probleem, zolang ze netjes gescheiden zijn door een komma en binnen de vierkante haakjes zitten.\\
 
 	Een laatste mogelijkheid om waardes mee te geven is via ranges, dit wil zeggen dat je alle waardes tussen waarde1 en waarde2 wil meegeven.\\
 
