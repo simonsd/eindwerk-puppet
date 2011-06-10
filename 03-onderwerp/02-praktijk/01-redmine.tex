@@ -1,0 +1,55 @@
+\subsection{Redmine}
+Redmine is een flexibele webapplicatie met het oog op projectbeheer, geschreven in Ruby on Rails. De applicatie is cross-platform en dus beschikbaar op zowel Linux, Mac als Windows. Daarnaast is Redmine ook cross-database bruikbaar en dus kan zowel MySQL, PostgreSQL als OracleDB, etc. als backend gebruikt worden.\\\\
+%
+Enkele mogelijkheden van Redmine:
+\begin{itemize}
+    \item Multiple projects support
+    \item Flexible role based access control
+    \item Flexible issue tracking system
+    \item Gantt chart and calendar
+    \item News, documents \& files management
+    \item Feeds \& email notifications
+    \item Per project wiki
+    \item Per project forums
+    \item Time tracking
+    \item Custom fields for issues, time-entries, projects and users
+    \item SCM integration (SVN, CVS, Git, Mercurial, Bazaar and Darcs)
+    \item Issue creation via email
+    \item Multiple LDAP authentication support
+    \item User self-registration support
+    \item Multilanguage support
+    \item Multiple databases support
+\end{itemize}
+
+\subsubsection{Setup}
+Hier zal ik de setup van Redmine bespreken aan de hand van de manifests, stap per stap. Even ter verduidelijking de mappenstructuur waarin de Redmine manifests zich bevinden:
+%
+\begin{code}
+\begin{lstlisting}
+Redmine
++--manifests
+  +--site.pp
++--modules
+  +--apache
+    +--manifests
+      +--init.pp
+  +--mysql
+    +--manifests
+      +--init.pp
+  +--redmine
+    +--classes
+      +--redmine.pp
+    +--files
+      +--redmine-1.1.3.tar.gz
+    +--manifests
+      +--init.pp
+    +--templates
+      +--database.yml.erb
+  +--repos
+    +--manifests
+      +--init.pp
+  +--ruby
+    +--manifests
+      +--init.pp
+\end{lstlisting}
+\end{code}
