@@ -33,12 +33,11 @@ Last but not least hebben we 'puppet puppet-server': Dit zijn simpelweg de namen
 
 In zijn geheel zorgt dit commando er dus voor dat de pakketten 'puppet' en 'puppet-server' geinstalleerd worden op jouw systeem zonder al te veel gemor over dependencies en dergelijke. Als het commando de command line terugkeert, zijn de pakketten geinstalleerd en kunnen we beginnen met de configuratie van de puppetmaster en daarna de puppet client.
 
-
 \section{Configuratie}
 configuratie gebeurt aan de hand van manifests en modules. om even kort samen te vatten, modules zijn pakketjes modulaire manifests, die op een bepaalde manier in een map geplaatst worden en daarna kunnen worden herbruikt door bijvoorbeeld andere mensen. Manifests zijn scriptjes waarin je declareert wat je wilt doen. Dit gaat van het beheren van bestanden, over mappen en links naar software pakketten en services.
 Ook kan je in manifests en modules onderlinge relaties vastleggen, bijvoorbeeld tussen een configuratiebestand van een webserver en de service van de webserver. Op deze manier kan de webserver automatisch herstart worden als dit bestand wordt aangepast, moest dit niet vanzelf gebeuren.
 
-\subsection{Mappenstructuur}
+\section{Mappenstructuur}
 Zoals alle andere programma's heeft ook puppet enkele configuratie-bestanden nodig. Deze bestanden vinden we voor puppet op de meeste linux-distributies terug in de map /etc/puppet. Hier worden niet enkel de configuraties van puppet zelf opgeslagen, maar ook de manifests die hij zal aanbieden aan clients. Per definitie zal puppet eerst zoeken naar een bestand genaamd site.pp . Dit bestand is het beginpunt van alle aangeboden manifests. vanuit dit bestand kan je ook andere bestanden aanhalen, zodat je een mooie, overzichtelijke mappenstructuur kan aanleggen waar je zelf nog aan uit kan.
 
 \section{Uitvoering}

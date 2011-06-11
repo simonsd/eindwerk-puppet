@@ -1,30 +1,9 @@
 \chapter{Modules}
 
-Modules zijn een soort packaging formaat voor puppet manifests, net zoals Perl CPAN heeft, Python eggs heeft en een besturingssyteem software-pakketten kan installeren om zijn functionaliteit uit te breiden. Dit houd in dat men de manifests, templates, files en alle benodigdheden voor een bepaald project/functie in \'{e}\'{e}n map steekt, en het vervolgens als 'addon' kan gebruiken op andere systemen die dezelfde functionaliteit nodig hebben.\\\\
-Door deze functionaliteit is het mogelijk om bijvoorbeeld een mysql module te ontwikkelen waarmee je alles van een mysql server/client kan beheren, gaande van het aanmaken, wijzigen en verwijderen van databases, gebruikers en rechten tot de software-pakketten en configuraties van mysql. Vervolgens kan men deze module op een andere computer in de juiste map zetten en ze hergebruiken. Door deze functionaliteit kan men zeer snel en efficient veel voorkomende taken automatiseren, en kan men zich dus focussen op belangrijkere taken.\\\\
-Uiteraard zijn er voor de correcte werking en interoperability op verschillende systemen specificaties nodig die als richtlijnen fungeren om modules te bouwen. Zo is een correcte mappenstructuur een must, en als je die niet volgt zal je module dus ook niet werken. Allereerst heb je de root map van de module, deze wordt onder de 'puppet/modules' map geplaatst. Daarna heb je onderverdelingen voor manifests, templates en files. Last but not least heb je in de root map nog een README bestand staan, waarin wordt aangegeven wie deze module gemaakt heeft, hoe deze gebruikt dient te worden en onder welke licentie deze valt.\\\\
-\begin{samepage}
-Even een overzicht:\\\\
-\$MODULE\_PATH/
-	\begin{itemize}
-	\item mysql/
-		\begin{itemize}
-		\item files/
-		\item manifests/
-		\item templates/
-		\item README
-		\end{itemize}
-	\end{itemize}
-\end{samepage}
-
-Een puppet module is een verzameling van resource types, classes, bestanden, defines en templates. Je kan bijvoorbeeld een module maken die een Ruby on Rails applicatie opzet, een Apache webserver of MySQL database. Modules zijn gemaakt om simpel te kunnen distribueren
-
-Modules are easily re-distributable. For example, this will enable you to have the default site configuration under /etc/puppet, with modules shipped by Puppet proper in /usr/share/puppet/. You could also have other directories containing a happy mix-and-match of version control checkouts in various states of development and production readiness.
-
-Modules are available in Puppet version 0.22.2 and later.
-Configuration
-
-There are two configuration settings that pertain to modules:
+Een puppet module is een verzameling van resource types, classes, bestanden, defines en templates. Je kan bijvoorbeeld een module maken die een Ruby on Rails applicatie opzet, een Apache webserver of MySQL database. Modules zijn gemaakt om simpel te kunnen herdistribueren, zodat je je werk met andere mensen kan delen. Modules zijn beschikbaar vanaf versie 0.22.2 (huidige versie is 2.6.7).
+%
+\section{Configuratie}
+Er zijn slechts twee instellingen die invloed hebben op modules, namelijk: de '\$MODULEPATH' variabele die je kan instellen in de [puppetmasterd] of [master]sectie van het configuratie-bestand.
 
     The search path for modules is defined with the modulepath setting in the [puppetmasterd] (pre-2.6) or [master] (post-2.6) section of the puppet master's config file, and it should be a colon-separated list of directories:
 
@@ -46,41 +25,43 @@ For some environments it might be worthwhile to consider extending the modulepat
 
 svn:file:///Volumes/svn/repos/management/master/puppet.testing/trunk
 
-Naming
-
-Module names should be restricted to lowercase alphanumeric characters and underscores, and should begin with a lowercase letter; that is, they should match the expression [a-z][a-z0-9\_]*. Note that these are the same restrictions that apply to class names, with the added restriction that module names cannot contain the namespace separator (::) as modules cannot be nested.
-
-Although some names that violate these restrictions currently work, using them is not recommended.
-
-The module name site is reserved for local use and should not be used in modules meant for distribution.
-Internal Organisation
-
-A Puppet module contains manifests, distributable files, plugins and templates arranged in a specific directory structure:
-
-%MODULE\_PATH/
-%+--downcased\_module\_name/
-   %+--files/
-   %+--manifests/
-   %|  +--init.pp
-   %|  +--foo.pp
-   %+--lib/
-   %|  +--puppet/
-   %|  |  +--parser/
-   %|  |  |  +--functions/
-   %|  |  +--provider/
-   %|  |  +--type/
-   %|  +--facter/
-   %+--templates/
-   %+--tests
-   %|  +--init.pp
-   %|  +--foo.pp
-   %+--README
-
-NOTE: In Puppet versions prior to 0.25.0 the lib directory was named plugins. Other directory names are unchanged.
-
-Each module must contain a init.pp manifest file at the specified location. This manifest file can contain all the classes associated with this module or additional .pp files can be added directly under the manifests folder. If adding additional .pp files, naming them after the class they define will allow auto lookup magic (explained further below in Module Lookup).
-
-One of the things to be accomplished with modules is code sharing. A module by nature should be self-contained: one should be able to get a module from somewhere and drop it into your module path and have it work.
+\section{Naamgeving}
+Modulenamen zijn beperkt tot kleine letters, cijfers en liggende streepjes en moeten beginnen met een letter. Dezelfde beperkingen gelden voor class-namen, met de bijkomende beperking dat modulenamen geen scheidingsteken (::) mogen bevatten aangezien modules niet genest kunnen worden. Alhoewel modulenamen die niet conform deze regels ontworpen zijn kunnen werken, is het gebruik ervan niet aan te raden.
+%
+\section{Structuur}
+Een puppet module bevat manifests, templates, plugins en bijbehorende bestanden, allemaal netjes geschikt in een voorgedefini\"eerde mappenstructuur:
+%
+\begin{code}
+\begin{lstlisting}
+MODULE\_PATH/
++--modulenaam/
+   +--bestanden
+   +--manifests
+   |  +--init.pp
+   |  +--foo.pp
+   |
+   +--lib
+   |  +--puppet
+   |  |  +--parser
+   |  |  |  +--functions
+   |  |  |
+   |  |  +--provider
+   |  |  +--type
+   |  |
+   |  +--facter
+   |
+   +--templates
+   +--tests
+   |  +--init.pp
+   |  +--foo.pp
+   |
+   +--README
+\end{lstlisting}
+\end{code}
+%
+Elke module moet een 'init.pp' manifest bevatten in de manifests folder. Dit manifest kan alle classes bevatten die gebruikt worden in de module, of er kunnen per class een apart bestand aangemaakt worden in de manifests folder. Indien je gebruik maakt van meerdere bestanden om alle classes in onder te brengen, kan je ervoor zorgen dat ze autmatisch herkend worden door de bestanden dezelfde namen mee te geven als de classes die ze herbergen. Dit noemt men 'auto lookup magic' (meer uitleg daarover in de sectie 'Zoeken').\\\\
+%
+Een van de belangrijkste principes waarop deze modules gebaseerd zijn is het delen van code. In het beste geval zou een module zelf-voorzienend moeten zijn en dus niet afhankelijk van andere modules. Op die manier kan je een module downloaden, ze op de juiste plaats zetten (in je '\$MODULE\_PATH'), en ze beginnen gebruiken zonder verder nog te iets te moeten aanpassen.\\\\
 
 There are cases, however, where the module depends on generic things that most people will already have defines or classes for in their regular manifests. Instead of adding these into the manifests of your module, add them to the depends folder (which is basically only documenting, it doesn't change how your module works) and mention these in your README, so people can at least see exactly what your module expects from these generic dependencies, and possibly integrate them into their own regular manifests.
 
@@ -105,19 +86,24 @@ class autofs {
 \end{code}
 %
 and have these files in the file system:
+%
+\begin{code}
+\begin{lstlisting}
+\$MODULE\_PATH
++--autofs
+   +--manifests
+   |  +--init.pp
+   +--files
+   |  +--auto.homes
+   +--templates
+      +--auto.master.erb
+\end{lstlisting}
+\end{code}
 
-MODULE\_PATH/
-  autofs/
-    manifests/
-      init.pp
-    files/
-      auto.homes
-    templates/
-      auto.master.erb
-
+Als we kijken naar de bestandsnaam die word doorgegeven aan de 'source' of 'content' parameters zie je dat deze veel veschillende vormen kan aannemen. Bij de source parameter wordt hier een bestandsnaam opgegeven die 'modules' bevat. Dit komt door het feit dat bestanden steeds uit modules worden gehaald. Dit is echter een recente toevoeging, bij vorige versies van puppet moest je dit bijvoorbeeld niet opgeven,
 Notice that the file source path includes a modules/ component. In Puppet version 0.25 and later, you must include this component in source paths in order to serve files from modules. Puppet 0.25 will still accept source paths without it, but it will warn you with a deprecation notice about 'Files found in modules without specifying 'modules' in file path'. In versions 0.24 and earlier, source paths should not include the modules/ component.
 
-Note also that you can still access files in modules when using puppet instead of puppetd; just leave off the server name and puppetd will fill in the server for you (using its configuration server as its file server) and puppet will use its module path:
+Ook merk je dat bij de 'source' parameter een hostnaam wordt meegegeven v\'o\'or de bestandsnaam. Dit verwijst naar de server die het bestand aanbied, je kan hier bijvoorbeeld ook een externe 'http://' URL voor opgeven (alhoewel dit best te vermijden is, aangezien bestanden op het web wel eens durven verhuizen). In dit geval verwijst men naar een machine die in de DNS-records bekend staat onder de naam 'puppet'. In de meeste gevallen zou dit de puppetmaster moeten zijn. Bij de 'content' parameter zie je dit niet, alhoewel deze dezelfde regels volgt. Hier wordt gekozen voor een bestandsnaam in de vorm van: [modulenaam]/[bestandsnaam], wat ervoor zorgt dat puppet nu enkel zal gaan kijken in zijn eigen modulepad.
 %
 \begin{code}
 \begin{lstlisting}
@@ -127,9 +113,8 @@ file { '/etc/auto.homes':
 \end{lstlisting}
 \end{code}
 %
-Module Lookup
-
-Since modules contain different subdirectories for different types of files, a little behind-the-scenes magic makes sure that the right file is accessed in the right context. All module searches are done within the modulepath, a colon-separated list of directories. In most cases, searching files in modules amounts to inserting one of manifest, files, or templates after the first component into a path, i.e. paths can be thought of as downcased\_module\_name/part\_path where part\_path is a path relative to one of the subdirectories of the module module\_name.
+\section{Zoeken}
+Aangezien modules submappen bevatten voor verschillende soorten bestanden, wordt er achter de schermen gezorgd dat het juiste bestand in de juiste context wordt geopend. Alle zoekopdrachten naar bestanden worden gedaan op basis van de '\$MODULEPATH' variabele. In de meeste gevallen zal hierdoor bij een zoekopdracht een manifest, bestand of template geleverd worden dat het dichtste bij de bestandsnaam zit en het meeste kans hebben dat het de juiste is. Als je een bestand wil gebruiken kan je dus een modulenaam opgeven met daarachter een bestandsnaam, ook al zit dit bestand in een submap van de module.
 
 For file references on the fileserver, a similar lookup is used so that a reference to puppet://\$servername/modules/autofs/auto.homes resolves to the file autofs/files/auto.homes in the module's path. (Note that this behavior will break if you have declared an explicit [autofs] mount in your fileserver.conf, so take care to avoid name collisions when assigning custom fileserver mount points outside of modules.)
 
@@ -187,58 +172,8 @@ If you decide to make your modules available to others (and please do!), then pl
 
 From Puppet version 0.24.7 you can generate automated documentation from resources, classes and modules using the puppetdoc tool. You can find more detail at the Puppet Manifest Documentation page.
 
-\subsection{Voorbeelden}
+\section{Voorbeelden}
 Hier bekijken we even enkele voorbeelden van echte modules. We maken gebruik van de exacte code die ik in het dagelijkse leven gebruik, maar wel met een hele hoop uitleg ertussen. Deze uitleg kan je herkennen aan de '\#' tekens ervoor (normaal gezien worden deze gebruikt om commentaar aan te duiden, dus een logische keuze). Let er op dat dit hoogst waarschijnlijk niet de beste modules zijn die je kan vinden, deze zijn ook slechts gebouwd met mijn beperkte kennis en zijn bijlange na niet feature-complete. In de toekomst zullen deze verder uitgebreid en verbeterd worden en ondertussen kan u gerust eens gaan kijken op de bovenvermelde website, waar u meer modules zal vinden.
 
-Als eerste voorbeeld een Apache module:
-%
-\begin{code}
-\begin{lstlisting}
-Apache
-+--manifests
-|	+--config.pp
-|	+--init.pp
-|	+--mod-php.pp
-|	+--packages.pp
-|	+--passenger.pp
-|	+--prefork.pp
-|	+--xsendfile.pp
-|
-+--templates
-	+--httpd.conf.erb
-\end{lstlisting}
-\end{code}
-%
-Dit is de basis mapstructuur voor deze module. Een aantal van de bestanden in de manifests map zijn niet strict noodzakelijk, maar vormen een mooie uitbreiding op het standaardaanbod aan ingebouwde modules voor Apache.
-\begin{code}
-\begin{lstlisting}
-class apache::packages {
-	package { apache:
-		ensure => installed,
-		name => $operatingsystem ? {
-			archlinux => 'apache',
-			/Debian|Ubuntu/ => 'apache2',
-			/Centos|Fedora/ => 'httpd',
-		},
-	}
-
-	service { apache_daemon:
-		ensure => running,
-		enable => true,
-		name => $operatingsystem ? {
-			/Debian|Ubuntu/ => 'apache2',
-			/Centos|Fedora/ => 'httpd',
-		},
-		require => Package['apache'],
-	}
-
-	package { 'apache-dev':
-		ensure => installed,
-		name => $operatingsystem ? {
-			/Debian|Ubuntu/ => 'apache2-threaded-dev',
-			/Centos|Fedora/ => 'httpd-devel',
-		},
-	}
-}
-\end{lstlisting}
-\end{code}
+\input{03-onderwerp/01-theorie/04-modules/apache.tex}
+\input{03-onderwerp/01-theorie/04-modules/mysql.tex}

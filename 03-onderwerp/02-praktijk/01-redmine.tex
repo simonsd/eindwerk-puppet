@@ -31,43 +31,10 @@ Redmine
 |  +--site.pp
 |
 +--modules
-    +--apache
-    |    +--manifests
-    |    | +--config.pp
-    |    | +--init.pp
-    |    | +--mod-php.pp
-    |    | +--packages.pp
-    |    | +--passenger.pp
-    |    | +--prefork.pp
-    |    | +--xsendfile.pp
-    |    |
-    |    +--templates
-    |      +--httpd.conf.erb
-    |
-    +--mysql
-    |    +--manifests
-    |      +--init.pp
-    |
-    +--redmine
-    |    +--classes
-    |    | +--redmine.pp
-    |    |
-    |    +--files
-    |    | +--redmine-1.1.3.tar.gz
-    |    |
-    |    +--manifests
-    |    | +--init.pp
-    |    |
-    |    +--templates
-    |      +--database.yml.erb
-    |
-    +--repos
-    |    +--manifests
-    |      +--init.pp
-    |
-    +--ruby
-	+--manifests
-	  +--init.pp
+   +--apache
+   +--mysql
+   +--redmine
+   +--repos
 \end{lstlisting}
 \end{code}
 %
@@ -90,3 +57,61 @@ node redmine {
 Hier zie je om te beginnen 'node redmine {'. Dit wil zeggen dat we hier gebruik maken van de resource type 'node', en als naam 'redmine' meegeven. Het haakje zorgt ervoor dat puppet weet dat alle text tot aan het volgende haakje, toebehoort aan dit object. Het aansluitende haakje vinden we in dit geval dan ook terug aan het einde van dit bestand. Aangezien alles in modules georganiseerd is en er een nette onderverdeling is in classes, is dit stukje relatief kaal doch overzichtelijk. Zo zien we hier telkens een 'include' staan; dit zorgt ervoor dat de classes die erbij horen ingeladen en uitgevoerd worden. We zullen hier even bekijken wat deze classes allemaal inhouden, althans de classes die we daarnet nog niet hebben gezien in het hoofdstuk 'Modules'.
 
 Om te beginnen: de 'apache::packages' class. Deze werd in het hoofdstuk 'modules' reeds besproken en slaan we dus over.
+%
+\begin{code}
+\begin{lstlisting}
++--apache
+   +--manifests
+   |  +--config.pp
+   |  +--init.pp
+   |  +--mod-php.pp
+   |  +--packages.pp
+   |  +--passenger.pp
+   |  +--prefork.pp
+   |  +--xsendfile.pp
+   |
+   +--templates
+     +--httpd.conf.erb
+\end{lstlisting}
+\end{code}
+%
+\begin{code}
+\begin{lstlisting}
++--mysql
+   +--manifests
+      +--init.pp
+\end{lstlisting}
+\end{code}
+%
+\begin{code}
+\begin{lstlisting}
++--redmine
+   +--classes
+   |  +--redmine.pp
+   |
+   +--files
+   |  +--redmine-1.1.3.tar.gz
+   |
+   +--manifests
+   |  +--init.pp
+   |
+   +--templates
+      +--database.yml.erb
+\end{lstlisting}
+\end{code}
+%
+\begin{code}
+\begin{lstlisting}
++--repos
+   +--manifests
+      +--init.pp
+\end{lstlisting}
+\end{code}
+%
+\begin{code}
+\begin{lstlisting}
++--ruby
+   +--manifests
+      +--init.pp
+\end{lstlisting}
+\end{code}

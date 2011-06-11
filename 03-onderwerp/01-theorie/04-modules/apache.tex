@@ -1,0 +1,70 @@
+\subsection{Apache}
+Als eerste voorbeeld een Apache module:
+%
+\begin{code}
+\begin{lstlisting}
+Apache
++--manifests
+|	+--config.pp
+|	+--init.pp
+|	+--mod-php.pp
+|	+--packages.pp
+|	+--passenger.pp
+|	+--prefork.pp
+|	+--xsendfile.pp
+|
++--templates
+	+--httpd.conf.erb
+\end{lstlisting}
+\end{code}
+%
+Dit is de basis mapstructuur voor deze module. Een aantal van de bestanden in de manifests map zijn niet strict noodzakelijk, maar vormen een mooie uitbreiding op het standaardaanbod aan ingebouwde modules voor Apache. We zullen nu per bestand bekijken wat er juist gebeurd, we doen dit niet op alfabetische volgorde maar op de volgorde die puppet normaal gezien ook zal volgen.
+%
+\subsubsection{init.pp}
+Als eerste manifest hebben we 'init.pp'. Dit is het eerste manifest dat puppet zal uitlezen en waarin je normaal gezien alle onderdelen gerust kan onderbrengen. In dit geval word het echter enkel gebruikt om de overige bestanden te laden, ook al is dit niet strict noodzakelijk. Als alles meezit zal puppet zelf de andere bestanden herkennen en ze includeren, indien puppet dit niet doet door bijvoorbeeld een systeemfout, een foute configuratie of een (zeer) verouderde versie van puppet, gebruiken we dit bestand om de anderen te includeren.
+\begin{code}
+\begin{lstlisting}
+include *.pp
+\end{lstlisting}
+\end{code}
+%
+\subsubsection{packages.pp}
+Als tweede manifest hebben we packages.pp. zoals je ziet noemt de class die dit manifest bevat 'apache::packages' en dus niet gewoon 'packages' zoals je zou verwachten. Dit verwijst naar de modulenaam (apache) met als subclass daarvan 'packages'. Indien je je classes op deze manier defini\"eert zal puppet met zijn 'auto lookup magic' de classes vinden en automatisch includeren.\\\\
+Allereerst zorgen we ervoor dat het pakket 'apache' ge\"installeerd is. De naam die we gebruiken om het pakket te installeren is afhankelijk van een variabele, die een verschillende naam zal doorgeven afhankelijk van de distributie waarop puppet het manifest uitvoert. In dit geval zijn de keuzemogelijkheden 'apache2' of 'httpd' indien we een distributie vinden die overeenkomt met een van de genoemden. Indien dit niet zo is zal puppet terugvallen op de naam die voorzien word door 'Default'. Er is uiteraard geen garantie dat deze van toepassing zal zijn op het huidige systeem, maar het biedt wel de mogelijkheid om bijvoorbeeld een standaardwaarde mee te geven.
+\begin{code}
+\begin{lstlisting}[tabsize=4]
+class apache::packages {
+	package { apache:
+		ensure => installed,
+		name => $operatingsystem ? {
+			/Debian|Ubuntu/ => 'apache2',
+			/Centos|Fedora/ => 'httpd',
+			Default => 'apache',
+		},
+	}
+\end{lstlisting}
+\end{code}
+%
+Hier zorgen we dat de service met als alias 'apache\_daemon' draait en dat deze gestart wordt als de machine opstart. Wederom zien we een aparte naam voor de service per distributie.
+\begin{code}
+\begin{lstlisting}
+	service { apache_daemon:
+		ensure => running,
+		enable => true,
+		name => $operatingsystem ? {
+			/Debian|Ubuntu/ => 'apache2',
+			/Centos|Fedora/ => 'httpd',
+		},
+		require => Package['apache'],
+	}
+
+	package { 'apache-dev':
+		ensure => installed,
+		name => $operatingsystem ? {
+			/Debian|Ubuntu/ => 'apache2-threaded-dev',
+			/Centos|Fedora/ => 'httpd-devel',
+		},
+	}
+}
+\end{lstlisting}
+\end{code}
