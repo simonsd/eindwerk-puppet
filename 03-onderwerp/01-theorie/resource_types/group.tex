@@ -1,62 +1,41 @@
 \section{Group}
 
 \subsection{Functie}
-Het beheren van groepen, zowel op besturingssysteem niveau als bijvoorbeeld in LDAP (Lightweight Directory Access Protocol). Op sommige besturingssystemen zoals Mac OS X, word het groep lidmaatschap niet geattribueerd aan gebruikers, maar aan groepen zelf. In dit geval moet de provider ondersteuning bieden voor de parameter 'manages\_members' voor het beheren van groep lidmaatschap. In de meeste gevallen is dit echter niet nodig en kan groepslidmaatschap beheerd worden op gebruikersbasis en dus via de 'user' resource type.
+Het beheren van groepen, zowel op besturingssysteem niveau als bijvoorbeeld in LDAP (Lightweight Directory Access Protocol). Op sommige besturingssystemen zoals Mac OS X, word lidmaatschap van groepen niet geattribueerd aan gebruikers, maar aan groepen zelf, in dit geval moet de provider ondersteuning bieden voor de parameter 'manages\_members'. In de meeste gevallen is dit echter niet nodig en kan groepslidmaatschap beheerd worden op gebruikersbasis en dus via de 'user' resource type.
 
 \subsection{Parameters}
 allowdupe:\\
-Duplicate GIDs (Group IDs) definities toestaan. Booleaanse waarde.\\\\
-%
-attribute\_membership:\\
-Whether specified attribute value pairs should be treated as the only attributes of the user or whether they should merely be treated as the minimum list. Valid values are inclusive, minimum.\\\\
-%
-attributes:\\
-Specify group AIX attributes in an array of keyvalue pairs Requires features manages\_aix\_lam.\\\\
+Duplicate GID (Group ID) definities toestaan. Booleaanse waarde.\\\\
 %
 auth\_membership:\\
-whether the provider is authoritative for group membership.\\\\
+Hiermee bepaal je of de 'provider' voor groepen ook gebruikt kan worden voor groep lidmaatschap.\\\\
 %
 ensure:\\
-Create or remove the group. Valid values are present, absent.\\\\
+Geldige waardes zijn 'present' en 'absent', waarmee je er respectievelijk voor zorgt dat de groep aan- of afwezig is.\\\\
 %
 gid:\\
-The group ID. Must be specified numerically. If not specified, a number will be picked, which can result in ID differences across systems and thus is not recommended. The GID is picked according to local system standards.\\\\
-%
-ia\_load\_module:\\
-The name of the I\&A module to use to manage this user Requires features manages\_aix\_lam.\\\\
+Het gewenste groep-ID. Deze moet numeriek opgegeven worden en zal indien niet opgegeven willekeurig gekozen worden. Dit is meestal niet wenselijk indien je een configuratie op meerdere systemen wil laten werken.\\\\
 %
 members:\\
-The members of the group. For directory services where group membership is stored in the group objects, not the users. Requires features manages\_members.\\\\
+De gebruikers die lid zijn van deze groep. Dit is enkel voor systemen waar het groep lidmaatschap bij de groeps-objecten bijgehouden wordt in plaats van bij de gebruikers-objecten. Dit vereist dat de 'provider' de functie 'manages\_members' ondersteund.\\\\
 %
 name:\\
-The group name. While naming limitations vary by system, it is advisable to keep the name to the degenerate limitations, which is a maximum of 8 characters beginning with a letter.\\\\
+De gewenste groepsnaam. Alhoewel de aanvaardbare namen verschillen per systeem, wordt meestal aangeraden om de namen te vormen aan de hand van volgende criteria:
+\begin{itemize}
+\item enkel alfanumerieke karakter
+\item maximum acht karakters
+\item begint met een kleine letter
+\end{itemize}
 %
 provider:\\
-The specific backend for provider to use. You will seldom need to specify this - Puppet will usually discover the appropriate provider for your platform. Available providers are:\\\\
-%
-    aix: Group management for AIX! Users are managed with mkgroup, rmgroup, lsgroup, chgroup Required binaries: /usr/sbin/lsgroup, /usr/sbin/rmgroup, /usr/bin/chgroup, /usr/bin/mkgroup. Default for operatingsystem == aix. Supported features: manages\_aix\_lam, manages\_members.
-
-    directoryservice: Group management using DirectoryService on OS X.
-
-    Required binaries: /usr/bin/dscl. Default for operatingsystem == darwin. Supported features: manages\_members.
-
-    groupadd: Group management via groupadd and its ilk.
-
-    The default for most platforms
-
-    Required binaries: groupdel, groupmod, groupadd. Supported features: system\_groups.
-
-    ldap: Group management via ldap.
-
-    This provider requires that you have valid values for all of the ldap-related settings, including ldapbase. You will also almost definitely need settings for ldapuser and ldappassword, so that your clients can write to ldap.
-
-    Note that this provider will automatically generate a GID for you if you do not specify one, but it is a potentially expensive operation, as it iterates across all existing groups to pick the appropriate next one.
-
-    pw: Group management via pw.
-
-    Only works on FreeBSD.
-
-    Required binaries: /usr/sbin/pw. Default for operatingsystem == freebsd.
+Welke 'provider' je wil gebruiken om groepen aan te maken. In de meeste gevallen zal puppet zelf ontdekken welke provider voor jouw systeem aangewezen is. Beschikbare providers zijn:
+\begin{itemize}
+\item aix: AIX groepsbeheer
+\item directoryservice: Mac OS X DirectoryService beheer
+\item groupadd: groepsbeheer via groupadd, beschikbaar op de meeste systemen
+\item ldap: LDAP beheer
+\item pw: groepsbeheer via het pw commando (werkt enkel op FreeBSD)
+\end{itemize}
 %
 system:\\
-Whether the group is a system group with lower GID. Valid values are true, false.\\\\
+Of de groep een lagere GID hoort te krijgen, wat aanduid dat hij een onderdeel van het systeem is en dus niet van een gebruiker. Geldige waardes zijn: 'true' of 'false'.
