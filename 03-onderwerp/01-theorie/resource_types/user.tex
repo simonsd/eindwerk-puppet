@@ -1,126 +1,68 @@
-user
-
-Manage users. This type is mostly built to manage system users, so it is lacking some features useful for managing normal users.
-
-This resource type uses the prescribed native tools for creating groups and generally uses POSIX APIs for retrieving information about them. It does not directly modify /etc/passwd or anything.
-
-Autorequires: If Puppet is managing the user’s primary group (as provided in the gid attribute), the user resource will autorequire that group. If Puppet is managing any role accounts corresponding to the user’s roles, the user resource will autorequire those role accounts.
-Features
-
-    allows_duplicates: The provider supports duplicate users with the same UID.
-    manages_aix_lam: The provider can manage AIX Loadable Authentication Module (LAM) system.
-    manages_expiry: The provider can manage the expiry date for a user.
-    manages_homedir: The provider can create and remove home directories.
-    manages_password_age: The provider can set age requirements and restrictions for passwords.
-    manages_passwords: The provider can modify user passwords, by accepting a password hash.
-    manages_solaris_rbac: The provider can manage roles and normal users
-    system_users: The provider allows you to create system users with lower UIDs.
-
-Provider 	allows_duplicates 	manages_aix_lam 	manages_expiry 	manages_homedir 	manages_password_age 	manages_passwords 	manages_solaris_rbac 	system_users
-aix 	  	X 	X 	X 	X 	X 	  	 
-directoryservice 	  	  	  	  	  	X 	  	 
-hpuxuseradd 	X 	  	  	X 	  	  	  	 
-ldap 	  	  	  	  	  	X 	  	 
-pw 	X 	  	  	X 	  	  	  	 
-user_role_add 	X 	  	  	X 	X 	X 	X 	 
-useradd 	X 	  	X 	X 	X 	X 	  	X
-Parameters
-allowdupe
-
-Whether to allow duplicate UIDs. Valid values are true, false.
-attribute_membership
-
-Whether specified attribute value pairs should be treated as the only attributes of the user or whether they should merely be treated as the minimum list. Valid values are inclusive, minimum.
-attributes
-
-Specify user AIX attributes in an array of keyvalue pairs Requires features manages_aix_lam.
-auth_membership
-
-Whether specified auths should be treated as the only auths of which the user is a member or whether they should merely be treated as the minimum membership list. Valid values are inclusive, minimum.
-auths
-
-The auths the user has. Multiple auths should be specified as an array. Requires features manages_solaris_rbac.
-comment
-
-A description of the user. Generally is a user’s full name.
-ensure
-
-The basic state that the object should be in. Valid values are present, absent, role.
-expiry
-
-The expiry date for this user. Must be provided in a zero padded YYYY-MM-DD format - e.g 2010-02-19. Requires features manages_expiry.
-gid
-
-The user’s primary group. Can be specified numerically or by name.
-groups
-
-The groups of which the user is a member. The primary group should not be listed. Multiple groups should be specified as an array.
-home
-
-The home directory of the user. The directory must be created separately and is not currently checked for existence.
-ia_load_module
-
-The name of the I&A module to use to manage this user Requires features manages_aix_lam.
-key_membership
-
-Whether specified key value pairs should be treated as the only attributes of the user or whether they should merely be treated as the minimum list. Valid values are inclusive, minimum.
-keys
-
-Specify user attributes in an array of keyvalue pairs Requires features manages_solaris_rbac.
-managehome
-
-Whether to manage the home directory when managing the user. Valid values are true, false.
-membership
-
-Whether specified groups should be treated as the only groups of which the user is a member or whether they should merely be treated as the minimum membership list. Valid values are inclusive, minimum.
-name
-
-User name. While limitations are determined for each operating system, it is generally a good idea to keep to the degenerate 8 characters, beginning with a letter.
-password
-
-The user’s password, in whatever encrypted format the local machine requires. Be sure to enclose any value that includes a dollar sign ($) in single quotes (‘). Requires features manages_passwords.
-password_max_age
-
-The maximum amount of time in days a password may be used before it must be changed Requires features manages_password_age.
-password_min_age
-
-The minimum amount of time in days a password must be used before it may be changed Requires features manages_password_age.
-profile_membership
-
-Whether specified roles should be treated as the only roles of which the user is a member or whether they should merely be treated as the minimum membership list. Valid values are inclusive, minimum.
-profiles
-
-The profiles the user has. Multiple profiles should be specified as an array. Requires features manages_solaris_rbac.
-project
-
-The name of the project associated with a user Requires features manages_solaris_rbac.
-provider
-
-The specific backend for provider to use. You will seldom need to specify this — Puppet will usually discover the appropriate provider for your platform. Available providers are:
-
-    aix: User management for AIX! Users are managed with mkuser, rmuser, chuser, lsuser Required binaries: /usr/sbin/lsgroup, /bin/chpasswd, /usr/sbin/lsuser, /usr/sbin/rmuser, /usr/bin/chuser, /usr/bin/mkuser. Default for operatingsystem == aix. Supported features: manages_aix_lam, manages_expiry, manages_homedir, manages_password_age, manages_passwords.
-    directoryservice: User management using DirectoryService on OS X. Required binaries: /usr/bin/dscl. Default for operatingsystem == darwin. Supported features: manages_passwords.
-    hpuxuseradd: User management for hp-ux! Undocumented switch to special usermod because HP-UX regular usermod is TOO STUPID to change stuff while the user is logged in. Required binaries: /usr/sam/lbin/userdel.sam, /usr/sam/lbin/usermod.sam, /usr/sbin/useradd. Default for operatingsystem == hp-ux. Supported features: allows_duplicates, manages_homedir.
-
-    ldap: User management via ldap. This provider requires that you have valid values for all of the ldap-related settings, including ldapbase. You will also almost definitely need settings for ldapuser and ldappassword, so that your clients can write to ldap.
-
-    Note that this provider will automatically generate a UID for you if you do not specify one, but it is a potentially expensive operation, as it iterates across all existing users to pick the appropriate next one. Supported features: manages_passwords.
-    pw: User management via pw on FreeBSD. Required binaries: pw. Default for operatingsystem == freebsd. Supported features: allows_duplicates, manages_homedir.
-    user_role_add: User management inherits useradd and adds logic to manage roles on Solaris using roleadd. Required binaries: roleadd, roledel, userdel, passwd, rolemod, usermod, useradd. Default for operatingsystem == solaris. Supported features: allows_duplicates, manages_homedir, manages_password_age, manages_passwords, manages_solaris_rbac.
-    useradd: User management via useradd and its ilk. Note that you will need to install the Shadow Password Ruby library often known as ruby-libshadow to manage user passwords. Required binaries: userdel, chage, usermod, useradd. Supported features: allows_duplicates, manages_expiry, manages_homedir, manages_password_age, manages_passwords, system_users.
-
-role_membership
-
-Whether specified roles should be treated as the only roles of which the user is a member or whether they should merely be treated as the minimum membership list. Valid values are inclusive, minimum.
-roles
-
-The roles the user has. Multiple roles should be specified as an array. Requires features manages_solaris_rbac.
-shell
-
-The user’s login shell. The shell must exist and be executable.
-system
-
-Whether the user is a system user with lower UID. Valid values are true, false.
-uid
-
-The user ID. Must be specified numerically. For new users being created, if no user ID is specified then one will be chosen automatically, which will likely result in the same user having different IDs on different systems, which is not recommended. This is especially noteworthy if you use Puppet to manage the same user on both Darwin and other platforms, since Puppet does the ID generation for you on Darwin, but the tools do so on other platforms.
+\section{User}
+%
+Het beheren van gebruikers. Dit is vooral bedoeld voor het beheren van systeemgebruikers en er zullen dus enkele mogelijkheden ontbreken die handig zijn bij het beheren van gewone gebruikers. Deze resource type maakt voornamelijk gebruik van mogelijkheden per besturingssysteem bij het beheren van gebruikers, in plaats van het rechtstreeks aanpassen van het '/etc/passwd' bestand of iets dergelijks. Ook hier is de puppet 'auto-require magic' aanwezig, waardoor je automatisch de opgegeven groep zal 'requiren' indien je deze ook beheert.
+%
+\subsection{Parameters}
+allowdupe:\\
+Duplicate UID (User ID) definities toestaan. Geldige waardes zijn 'true' en 'false'.\\\\
+%
+comment:\\
+Een beschrijving van de gebruiker, meestal de volledige naam van de persoon in kwestie.\\\\
+%
+ensure:\\
+De status waarin het object zich dient te bevinden. Geldige waardes zijn 'present' of 'absent'.\\\\
+%
+expiry:\\
+De vervaldatum voor de gebruiker. De datum wordt opgegeven in het YYYY-MM-DD formaat, aangevult met nullen waar nodig.\\\\
+%
+gid:\\
+De primaire groep voor de gebruiker. Geldige waardes zijn de GID of de groepsnaam.\\\\
+%
+groups:\\
+Een lijst met extra groepen waar de gebruiker lid van is. De primaire groep moet hier niet opgegeven worden. Indien je meerdere groepen wil opgeven kan je gebruik maken van een array.\\\\
+%
+home:\\
+De 'home' map van de gebruiker.\\\\
+%
+managehome:\\
+Of je de 'home' map van de gebruiker wil beheren of niet. Geldige waardes zijn hierbij 'true' of 'false'.\\\\
+%
+membership:\\
+Of de groepen dienen gezien te worden als de volledige lijst of slechts een minimum-lijst. Geldige waardes zijn 'inclusive' en 'minimum'.\\\\
+%
+name:\\
+De gewenste naam voor de gebruiker. Alhoewel beperkingen voor de gebruikersnamen verschillen per systeem is het een goed idee om je te houden aan volgende criteria:
+\begin{itemize}
+\item enkel kleine alfanumerieke karakters
+\item maximum acht karakters
+\item beginnend met een kleine letter
+\end{itemize}
+%
+password:\\
+Het paswoord voor de gebruiker, opgegeven in eender welk geencrypteerd formaat het lokale besturingssysteem vereist. Let erop dat indien een dollarteken (\$) wordt gebruikt, het volledige paswoord ingekapseld moet zijn met enkele quotes (').\\\\
+%
+password\_max\_age:\\
+Het maximum aantal dagen dat een opgegeven paswoord gebruikt mag worden voor het ongeldig wordt verklaard.\\\\
+%
+password\_min\_age:\\
+De minimumleeftijd voor een paswoord voor het veranderd mag worden.\\\\
+%
+provider:\\
+Welke provider je wil gebruiken bij het beheren van  gebruikers. In de meeste gevallen zal puppet dit zelf ontdekken en instellen, dit is enkel nuttig voor het overschrijven van de standaardkeuze. Beschikbare providers zijn:
+\begin{itemize}
+\item aix: standaard gebruikersbeheer voor AIX
+\item directoryservice: gebruikersbeheer met behulp van DirectoryService op OS X
+\item hpuxuseradd: standaard gebruikersbeheer voor HP-UX
+\item ldap: gebruikersbeheer via ldap
+\item pw: gebruikersbeheer met het 'pw' programma op FreeBSD
+\item useradd: gebruikersbeheer met useradd, beschikbaar op een veelvoud aan systemen
+\end{itemize}
+%
+shell:\\
+De standaard login shell voor de gebruiker. De shell mmoet zowel aanwezig als uitvoerbaar zijn.\\\\
+%
+system:\\
+Bepaal of de gebruiker een systeemgebruiker is, met een UID onder een bepaalde waarde. Geldige waardes zijn: 'true' en 'false'.\\\\
+%
+uid:\\
+De gewenste gebruikers-ID. Deze moet numeriek worden opgegeven en zal indien afwezig willekeurig gekozen worden. Dit is meestal niet wenselijk indien je een configuratie op meerdere systemen wil laten werken.\\\\
