@@ -1,18 +1,30 @@
 \chapter{Configuration Management}
-
-De keuze voor mijn eindwerk is gevallen op puppet, een configuration management tool. Configuration management omvat het centraal beheren van configuraties en deze distribueren van je server naar een of meerdere clients.
-
+\section{Concept}
+Het concept van configuration management is in weze simpel: het centraal bewaren en beheren van configuraties zodat deze herbruikt kunnen worden door meerdere clients. Stel het je maar eens voor, je bent een operator en je job bestaat uit het beheren van een netwerk of zelfs meerdere netwerken van machines. Dit kan gaan over een simpel thuisnetwerk ( 5-10 pc's ), over een iets geavanceerder kmo-netwerk ( 50-100 pc's ), tot zelfs een bedrijfsnetwerk van een multinational ( +1000 pc's ). Wat als jij de enige beheerder bent van zulk een netwerk? Er komt een nieuwe software-update uit voor een missie-kritieke applicatie of een kwetsbaarheid in je besturingssysteem en het is jouw job om te verzekeren dat elke computer binnen het netwerk deze update krijgt. Met wat geluk kan je dit automatiseren, ervan uitgaande dat dit altijd goed verloopt. Indien dit niet het geval is is de enige resterende optie manuele installatie van de update op elke computer. Tegen de tijd dat je rond bent kan je opnieuw beginnen en dan hebben we het enkel over onderhoud, de rest van je job dient dan ook nog gedaan te worden.\\\\
 
 \section{Geschiedenis}
-
 De geschiedenis van configuration management kan men traceren naar de jaren '50, toen het ontwikkeld werd door de Amerikaanse luchtmacht als een inventaris systeem, zodat ze konden bijhouden waar bepaalde onderdelen zich bevonden. Mettertijd is dit getransformeerd in iets aanzienlijk groter dan slechts een inventaris systeem, namelijk een systeem om niet alleen bij te houden waar objecten zich bevinden en in welke staat ze verkeren, maar om dit ook centraal te beheren.\\\\
-Sommige mensen durven wel eens te discussi\"{e}ren dat configuration management nog steeds enkel het inventariseren van objecten omvat en dat het controleren en manipuleren van configuraties een compleet andere discipline is, zoals bv.: change management. Uiteraard zijn dit allemaal slechts een hoop marketing termen die verder niet veel betekenis hebben. De term configuration management omvat op de dag van vandaag zowel het inventariseren als het aanpassen van configuraties, met name op computersystemen.\\\\
-Oorspronkelijk werd configuration management manueel gedaan, later begon men software tools te schrijven om dit meer te kunnen automatiseren.\\
+Sommige mensen durven wel eens te discussi\"{e}ren dat configuration management enkel het inventariseren van objecten omvat en dat het controleren en manipuleren van configuraties een compleet andere discipline is, zoals bv.: change management. Uiteraard zijn dit allemaal slechts een hoop marketing termen die verder niet veel betekenis hebben.
+
+\section{Hedendaags}
+De term configuration management omvat tegenwoordig zowel het inventariseren als het aanpassen van configuraties, met name op computersystemen. De dag van vandaag wordt configuration management vooral gebruikt voor het implementeren van nieuwe systemen en het onderhoud ervan. Oorspronkelijk werd configuration management manueel gedaan, later begon men software tools te schrijven om dit meer te kunnen automatiseren.\\
 Enkele voorbeelden van zulke tools zijn:
 \begin{itemize}
 \item cfengine
+\item bcfg2
 \item chef
 \item puppet
 \end{itemize}
-\section{Concept}
-Het concept van configuration management is in weze simpel: het centraal bewaren en beheren van configuraties zodat deze herbruikt kunnen worden door meerdere clients. Stel het je maar eens voor, je bent een operator en je job bestaat uit het beheren van een netwerk of zelfs meerdere netwerken van machines. Dit kan gaan over een simpel thuisnetwerk ( 5-10 pc's ), over een iets geavanceerder kmo-netwerk ( 50-100 pc's ), tot zelfs een bedrijfsnetwerk van een multinational ( +1000 pc's ). Wat als jij de enige beheerder bent van zulk een netwerk? Er komt een nieuwe software-update uit voor een missie-kritieke applicatie of een kwetsbaarheid in je besturingssysteem en het is jouw job om te verzekeren dat elke computer binnen het netwerk deze update krijgt. Met wat geluk kan je dit automatiseren, ervan uitgaande dat dit altijd goed verloopt. Indien dit niet het geval is is de enige resterende optie manuele installatie van de update op elke computer. Tegen de tijd dat je rond bent kan je opnieuw beginnen en dan hebben we het enkel over onderhoud, de rest van je job dient dan ook nog gedaan te worden.\\\\
+Uiteraard hebben al deze tools hun eigen voor- en nadelen, we bekijken ze even:
+%
+\subsection{Cfengine}
+Cfengine is veruit de oudste, deze is namelijk ontwikkeld door Mark Burgess in 1993. Cfengine is opgebouwd in de programmeertaal 'C' en is daardoor zeer snel bij het uitvoeren, maar zeer moeilijk om te ontwikkelen. De grootste nadelen aan cfengine zijn het gebrek aan high-level structuren, wat wil zeggen dat enkel bestanden beheert kunnen worden. In principe is het mogelijk alles te configureren via bestanden, maar high-level structuren maken dit veel simpeler. Een ander nadeel is de syntax van cfengine, deze is namelijk niet zo eenvoudig.
+%
+\subsection{Bcfg2}
+Bcfg2 is een project dat ontwikkeld is aan de wiskunde en computerwetenschaps-divisie van de Argonne National Laboratory, het alleerste offici\"ele onderzoeksinstituut in Amerika. De tool is geschreven in Python en wordt aangeboden onder een BSD licentie. De allereerste versie kwam uit in 2004 en wordt nog steeds actief ontwikkeld.
+%
+\subsection{Chef}
+Chef is veruit de jongste, ontwikkeld in 2009 en opgebouwd in Ruby. Chef wordt aangeboden onder de Apache licentie, wat het makkelijk en flexibel maakt om op veel verschillende platformen aan te bieden.
+%
+\subsection{Puppet}
+Als laatste voorbeeld nemen we puppet, waar we in dit eindwerk veel dieper op zullen ingaan. Puppet is oorspronkelijk ontwikkeld in 2005 en is eveneens opgebouwd in Ruby. Puppet maakt het mogelijk om op een snelle en simpele manier, grote projecten uit te rollen. Deze simpliciteit en kracht heeft ervoor gezorgd dat we er bij Inuits zeer veel gebruik van maken, waardoor ik ook de kans kreeg puppet onder handen te nemen. In dit eindwerk zullen we puppet bekijken als configuration management systeem, zowel in theorie als in praktijk.
