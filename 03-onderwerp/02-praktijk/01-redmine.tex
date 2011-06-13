@@ -1,7 +1,7 @@
 \subsection{Redmine}
 Redmine is een flexibele webapplicatie met het oog op projectbeheer, geschreven in Ruby on Rails. De applicatie is cross-platform en dus beschikbaar op zowel Linux, Mac als Windows. Daarnaast is Redmine ook cross-database bruikbaar en dus kan zowel MySQL, PostgreSQL als OracleDB, etc. als backend gebruikt worden.\\\\
 %
-Enkele mogelijkheden van Redmine:
+Enkele mogelijkheden van Redmine, volgens hun offici\"ele website:
 \begin{itemize}
     \item Multiple projects support
     \item Flexible role based access control
@@ -38,7 +38,7 @@ Redmine
 \end{lstlisting}
 \end{code}
 %
-Zoals je ziet zit het grootste deel van het zware werk in de modules, maar aangezien je deze kan hergebruiken naar hartelust zou dit geen probleem mogen zijn. Je kan hierdoor \'e\'en keer een MySQL module maken en deze honderd keer opnieuw gebruiken, of gewoon even op het internet kijken of er al niet zulk een module bestaat. Als je geluk hebt kan je dan simpelweg een module downloaden en hergebruiken. Dan zien we dat er nog \'e\'en enkel bestand in de manifests map staat. Dit is in feite het allereerste bestand dat word nagekeken, het bestand waarin de nodes gedefini\"eerd staan. De inhoud van het bestand in ons geval is:
+Zoals je ziet zit het grootste deel van het zware werk in de modules. In de manifests map is slechts \'e\'en enkel bestand aanwezig. Dit is in feite het allereerste bestand dat word nagekeken, het bestand waarin de nodes gedefini\"eerd staan. De inhoud van het bestand in ons geval is:
 %
 \begin{code}
 \begin{lstlisting}
@@ -54,64 +54,308 @@ node redmine {
 \end{lstlisting}
 \end{code}
 %
-Hier zie je om te beginnen 'node redmine {'. Dit wil zeggen dat we hier gebruik maken van de resource type 'node', en als naam 'redmine' meegeven. Het haakje zorgt ervoor dat puppet weet dat alle text tot aan het volgende haakje, toebehoort aan dit object. Het aansluitende haakje vinden we in dit geval dan ook terug aan het einde van dit bestand. Aangezien alles in modules georganiseerd is en er een nette onderverdeling is in classes, is dit stukje relatief kaal doch overzichtelijk. Zo zien we hier telkens een 'include' staan; dit zorgt ervoor dat de classes die erbij horen ingeladen en uitgevoerd worden. We zullen hier even bekijken wat deze classes allemaal inhouden, althans de classes die we daarnet nog niet hebben gezien in het hoofdstuk 'Modules'.
-
-Om te beginnen: de 'apache::packages' class. Deze werd in het hoofdstuk 'modules' reeds besproken en slaan we dus over.
+Aangezien alles in modules georganiseerd is en er een nette onderverdeling is in classes, is dit stukje relatief kaal doch overzichtelijk. Zo zien we hier telkens een 'include' staan; dit zorgt ervoor dat de classes die erbij horen ingeladen en uitgevoerd worden.
 %
-\begin{code}
-\begin{lstlisting}
-+--apache
-   +--manifests
-   |  +--config.pp
-   |  +--init.pp
-   |  +--mod-php.pp
-   |  +--packages.pp
-   |  +--passenger.pp
-   |  +--prefork.pp
-   |  +--xsendfile.pp
-   |
-   +--templates
-     +--httpd.conf.erb
-\end{lstlisting}
-\end{code}
-%
-\begin{code}
-\begin{lstlisting}
-+--mysql
-   +--manifests
-      +--init.pp
-\end{lstlisting}
-\end{code}
+Een overzicht van de redmine module:
 %
 \begin{code}
 \begin{lstlisting}
 +--redmine
-   +--classes
-   |  +--redmine.pp
-   |
    +--files
    |  +--redmine-1.1.3.tar.gz
    |
    +--manifests
+   |  +--centos.pp
+   |  +--config.pp
+   |  +--debian.pp
    |  +--init.pp
+   |  +--install.pp
    |
    +--templates
       +--database.yml.erb
 \end{lstlisting}
 \end{code}
 %
-\begin{code}
-\begin{lstlisting}
-+--repos
-   +--manifests
-      +--init.pp
-\end{lstlisting}
-\end{code}
+\subsubsection{install.pp}
+Installatie van de benodigde packages en de groep en gebruiker voor redmine aanmaken:
 %
 \begin{code}
 \begin{lstlisting}
-+--ruby
-   +--manifests
-      +--init.pp
+class redmine::install {
+	case $operatingsystem {
+		Centos: { include redmine_install_centos }
+		Debian: { include redmine_install_debian }
+	}
+
+	$redmine_id = $operatingsystem ? {
+		/Debian|Ubuntu/ => 'www-data',
+		/Centos|Fedora/ => 'apache',
+	}
+
+	group { redmine:
+		ensure => present,
+		name => $redmine_id,
+	}	
 \end{lstlisting}
 \end{code}
+%
+Vervolg van het install.pp bestand:\\*
+\begin{code}
+\begin{lstlisting}
+	user { redmine:
+		ensure => present,
+		name => $redmine_id,
+		gid => $redmine_id,
+		require => Group["$redmine_id"],
+	}
+
+	package { redmine:
+		ensure => installed,
+		name => $operatingsystem ? {
+			Centos => 'redmine_client',
+			Debian => 'redmine',
+		},
+		provider => $operatingsystem ? {
+			Centos => "gem",
+			Debian => "apt",
+		},
+		before => Exec["config_redmine_mysql_bootstrap"],
+		require => [ User['redmine'], Class['apache_packages', 'mysql_packages'] ],
+	}
+}
+\end{lstlisting}
+\end{code}
+%
+\subsubsection{debian.pp}
+Een stuk specifiek voor Debian-gebaseerde besturingssystemen:
+%
+\begin{code}
+\begin{lstlisting}
+class redmine::debian {
+	package { 'redmine-mysql':
+		ensure => installed,
+		require => Package['redmine'],
+	}
+
+	file { '/etc/apache2/sites-available/redmine':
+		ensure => present,
+		owner => root,
+		group => root,
+		mode => 0644,
+		content => 'RailsBaseURI /redmine',
+		require => Package['redmine'],
+	}
+
+	exec { 'config_redmine_link_apache':
+		command => '/usr/sbin/a2ensite redmine',
+		require => File['/etc/apache2/sites-available/redmine'],
+		unless => '/usr/bin/test -f /etc/apache2/sites-enabled/redmine',
+	}
+}
+\end{lstlisting}
+\end{code}
+%
+\subsubsection{centos.pp}
+Een stuk specifiek voor CentOS-gebaseerde systemen:
+%
+\begin{code}
+\begin{lstlisting}
+class redmine::centos {
+	file { '$HOME/.netrc':
+		content => 'machine ftp.ruby-lang.org login anonymous password anonymous\nmacdef init\nprompt\ncd /pub/ruby\nget ruby-1.8.7-p334.tar.gz\nbye',
+	}
+
+	file { '/usr/share/redmine-1.1.3.tar.gz':
+		ensure => present,
+		source => 'puppet:///modules/redmine/redmine.tar.gz',
+	}
+
+	exec { 'extract_redmine':
+		path => '/bin:/usr/bin',
+		command => 'cd /usr/share && tar xzvf redmine-1.1.3.tar.gz redmine && touch /usr/share/redmine/redmine.puppet',
+		require => File['/usr/share/redmine-1.1.3.tar.gz'],
+		unless => '/usr/bin/test -f /usr/share/redmine/redmine.puppet',
+	}
+\end{lstlisting}
+\end{code}
+%
+Vervolg van het centos.pp bestand:
+%
+\begin{code}
+\begin{lstlisting}
+	file { '/etc/redmine':
+		ensure => directory,
+		owner => root,
+		group => root,
+		mode => 0755,
+		before => File['/etc/redmine/default'],
+	}
+
+	file { '/etc/redmine/default':
+		ensure => directory,
+		owner => $redmine_id,
+		group => $redmine_id,
+		mode => 0755,
+		before => Class['redmine_config'],
+		require => Exec['redmine_centos'],
+	}
+
+	package { 'gem_i18n':
+		ensure => '0.4.2',
+		provider => gem,
+		before => Package['gem_rails'],
+	}
+
+	package { 'gem_mysql':
+		ensure => installed,
+		name => mysql,
+		provider => gem,
+		require => Package['gem_i18n'],
+	}
+
+	package { 'gem_rack':
+		ensure => '1.0.1',
+		name => 'rack',
+		provider => gem,
+		before => Package['gem_rails'],
+	}
+
+	package { 'gem_hoe':
+		ensure => installed,
+		name => 'hoe',
+		provider => gem,
+		before => Package['gem_rails'],
+	}
+\end{lstlisting}
+\end{code}
+%
+Vervolg van het centos.pp bestand:
+%
+\begin{code}
+\begin{lstlisting}
+	package { 'gem_rails':
+		ensure => installed,
+		name => 'rails',
+		provider => gem,
+		before => Exec['config_redmine_mysql_bootstrap'],
+	}
+
+	exec { 'build_passenger_modules':
+		path => '/bin:/usr/bin:/opt/ruby/bin',
+		command => 'passenger-install-apache2-module -a',
+		require => Package['$package_apache_mod_passenger'],
+		unless => 'test -f /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so',
+	}
+
+	exec { 'selinux_disable':
+		path => '/bin:/usr/bin',
+		command => 'system-config-securitylevel-tui -q --selinux="disabled"',
+		unless => 'cat /etc/selinux/config|grep "SELINUX=disabled"',
+		before => Service['apache'],
+		notify => Service['apache'],
+	}
+
+	exec { 'session_store':
+		path => '/bin:/usr/bin:/opt/ruby/bin',
+		command => '/bin/sh -c "cd /usr/share/redmine/public && rake generate_session_store"',
+		require => Package['gem_rails'],
+	}
+
+	file { '/etc/httpd/conf.d/redmine.conf':
+		ensure => present,
+		content => '<VirtualHost *:80>\n\tDocumentRoot /usr/share/redmine/public\n\tErrorLog logs/redmine_error_log\n</VirtualHost>',
+		notify => Service['apache'],
+	}
+
+	exec { 'apache_modules':
+		path => '/bin:/usr/bin',
+		command => 'echo -e "LoadModule passenger_module /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so\nPassengerRoot /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7\nPassengerRuby /opt/ruby/bin/ruby" >> /etc/httpd/conf/httpd.conf',
+		unless => 'cat /etc/httpd/conf/httpd.conf|grep "LoadModule passenger_module"',
+		require => Class['apache_mod_passenger', 'rubygems'],
+		notify => Service['apache'],
+	}
+}
+\end{lstlisting}
+\end{code}
+%
+\subsubsection{config.pp}
+Configuratie van de redmine applicatie, de mysql backend en de apache instellingen:
+%
+\begin{code}
+\begin{lstlisting}
+class redmine::config {
+	file { '/var/www/redmine':
+		ensure => link,
+		target => '/usr/share/redmine/public',
+		owner => $redmine_id,
+		group => $redmine_id,
+		require => Package['redmine'],
+	}
+
+	exec { 'config_redmine_mysql_db':
+		command =>  '/usr/bin/mysqladmin -uroot create redmine',
+		unless => '/bin/echo "show databases"|mysql -uroot|grep redmine',
+		require => Class['mysql_packages'],
+	}
+
+	exec { 'config_redmine_mysql_user':
+		command =>  '/bin/echo "create user \'redmine\'@\'localhost\' identified by \'redmine\'"|mysql -uroot',
+		unless => '/bin/echo "select user from mysql.user where user=\'redmine\'"|mysql -uroot|grep redmine',
+		require => Exec['config_redmine_mysql_db'],
+	}
+
+	exec { 'config_redmine_mysql_permissions':
+		command => '/bin/echo "grant all on redmine.* to \'redmine\'@\'localhost\'"|mysql -uroot',
+		require =>  Exec["config_redmine_mysql_user"],
+	}
+
+	exec { 'config_redmine_mysql_bootstrap':
+		environment => 'RAILS_ENV=production',
+		path => '/usr:/usr/bin:/opt/ruby/bin',
+		command => '/bin/sh -c "cd /usr/share/redmine && sudo /opt/ruby/bin/rake db:migrate"',
+		require => Exec['config_redmine_mysql_permissions'],
+	}
+\end{lstlisting}
+\end{code}
+%
+Vervolg van het config.pp bestand:
+\begin{code}
+\begin{lstlisting}
+	exec { 'config_redmine_reload':
+		command => $operatingsystem ? {
+			Debian => '/etc/init.d/apache2 reload',
+			Centos => '/etc/init.d/httpd reload',
+		},
+		require => Exec['config_redmine_mysql_bootstrap'],
+		notify => Service['apache'],
+	}
+}
+\end{lstlisting}
+\end{code}
+%
+\subsubsection{database.yml.erb}
+%
+Een template voor de database configuratie van redmine:
+%
+\begin{code}
+\begin{lstlisting}
+production:
+  adapter: mysql
+  database: <%= production_db =%>
+  username: <%= redmine_db_user =%>
+  password: <%= redmine_db_pass =%>
+  host: localhost
+  encoding: utf8
+
+development:
+  adapter: mysql
+  database: <%= development_db =%>
+  username: <%= redmine_db_user =%>
+  password: <%= redmine_db_pass =%>
+  host: localhost
+  encoding: utf8
+\end{lstlisting}
+\end{code}
+%
+\subsubsection{finish}
+Na het uitvoeren van deze manifests, samen met alle modules, zal de redmine applicatie volledig werkende zijn. Zo kan je een reproduceerbare installatie-procedure ontwikkelen die je toestaat tegelijkertijd aan andere projecten voort te werken.
