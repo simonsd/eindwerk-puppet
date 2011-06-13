@@ -19,7 +19,7 @@ template('/pad/naar/template1','/pad/naar/template2')
 \end{lstlisting}
 \end{code}
 %
-\subsection{Variabelen}
+\section{Variabelen}
 Met behulp van variabelen kan je kan je op een dynamisch manier waardes invullen in de template bestanden.
 %
 \begin{code}
@@ -28,7 +28,7 @@ myvariable = template('/var/puppet/template/myvar')
 \end{lstlisting}
 \end{code}
 %
-\subsection{Voorwaardelijke opmaak}
+\section{Voorwaardelijke opmaak}
 %
 Het ERB templating systeem ondersteundt ook voorwaardelijk opmaak, waarmee je snel en eenvoudig bepaalde content in een document kan opnemen of net weglaten. Bekijk even dit voorbeeld:
 \begin{code}
@@ -41,7 +41,7 @@ Het ERB templating systeem ondersteundt ook voorwaardelijk opmaak, waarmee je sn
 %
 Met dit voorbeeld zal je, indien de variabele broadcast niet gelijk is aan 'NONE', de constructie 'broadcast \$broadcast' toevoegen, waarbij \$broadcast een variabele is die je ergens anders hebt toegewezen. Indien de variabele w\'{e}l gelijk is aan 'NONE', zal deze zin simpelweg overgeslagen worden.
 %
-\subsection{Standaardwaarden}
+\section{Standaardwaarden}
 Het kan wel eens voorkomen dat je graag een standaardwaarde aan een variabele wil toekennen, zodat je niet elke keer opnieuw dezelfde variabele met dezelfde waarde hoeft te defini\"eren. In dat geval kan je de variabele \'e\'en keer specifi\"eren en daarna simpelweg achterwege laten. Om dit resultaat te bekomen maken we gebruik van het 'if\_has\_variable?("variabelenaam")' construct. Hiermee kan je kijken of een variabele al dan niet gedefini\"eerd is en afhankelijk daarvan een actie uitvoeren. Om het te gebruiken kan je deze code in je templates gebruiken:
 %
 \begin{code}
@@ -52,7 +52,7 @@ Het kan wel eens voorkomen dat je graag een standaardwaarde aan een variabele wi
 \end{lstlisting}
 \end{code}
 %
-\subsection{Iteratie}
+\section{Iteratie}
 Puppet templates ondersteunen ook iteratie, waardoor je meerdere waarden in \'{e}\'{e}n variabele kan bewaren. Zo'n waarde noemen we dan een array, die je dan mits een loop kan gaan uitlezen. Om een array aan een variabele toe te wijzen doe je als volgt:
 %
 \begin{code}
@@ -83,7 +83,7 @@ Een voorbeeld van waarde3
 %
 Interessant om te weten is dat lijnen waar enkel code op staat worden omgezet in een lege lijn. Dit komt doordat het ERB systeem standaard nieuwe lijnen cre\"{e}ert. Om dit te voorkomen dien je in de sluitingstag '-\%>' te gebruiken in plaats van '\%>'.
 %
-\subsection{Syntax check}
+\section{Syntax check}
 ERB templates zijn gemakkelijk na te kijken voor syntax fouten. Met behulp van volgend commando hoef je het zelfs niet manueel te doen! Als je template 'mijn\_template.erb' noemt, kan je dit voorbeeld gebruiken:
 %
 \begin{code}

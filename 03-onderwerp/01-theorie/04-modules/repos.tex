@@ -1,0 +1,55 @@
+\subsection{Repos}
+Dit is de repos module, een zeer basale module voor het beheren van enkele (voorlopig alleen centos) repositories.
+%
+\begin{code}
+\begin{lstlisting}
+repos
++--manifests
+   +--centos.pp
+   +--init.pp
+\end{lstlisting}
+\end{code}
+%
+\subsubsection{init.pp}
+Zoals bij de meeste modules zien we hier weer een 'catchall' definitie voor de bijbehorende manifests.
+%
+\begin{code}
+\begin{lstlisting}
+include *.pp
+\end{lstlisting}
+\end{code}
+%
+\subsubsection{centos.pp}
+Die is waar de centos repositories gespecifi\"eerd staan.
+\begin{code}
+\begin{lstlisting}
+class repos::centos {
+	yumrepo { 'rpmforge':
+		baseurl => 'http://apt.sw.be/redhat/el5/en/i386/rpmforge/RPMS/rpmforge-release-0.3.6-1.el5.rf.i386.rpm',
+		descr => 'rpmforge repo',
+		enabled => true,
+	}
+
+	yumrepo { 'epel':
+		baseurl => 'http://be.mirror.eurid.eu/epel',
+		descr => 'epel',
+		enabled => 1,
+	}
+
+	yumrepo { "psql":
+		baseurl => "http://yum.pgrpms.org/8.4/redhat/rhel-5-x86_64",
+		descr => "postgresql yum repo",
+		enabled => 1,
+		gpgcheck => 0,
+		require => Exec["exclude_pgsql_from_base"],
+	}
+
+	yumrepo { "inuits":
+		baseurl => "http://repo.inuits.be/centos/5/os",
+		descr => "inuits internal repo",	
+		enabled => 1,
+		gpgcheck => 0,
+	}
+}
+\end{lstlisting}
+\end{code}
