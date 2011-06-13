@@ -33,17 +33,26 @@ Last but not least hebben we 'puppet puppet-server': Dit zijn simpelweg de namen
 
 In zijn geheel zorgt dit commando er dus voor dat de pakketten 'puppet' en 'puppet-server' geinstalleerd worden op jouw systeem zonder al te veel gemor over dependencies en dergelijke. Als het commando de command line terugkeert, zijn de pakketten geinstalleerd en kunnen we beginnen met de configuratie van de puppetmaster en daarna de puppet client.
 
-\section{Configuratie}
-configuratie gebeurt aan de hand van manifests en modules. om even kort samen te vatten, modules zijn pakketjes modulaire manifests, die op een bepaalde manier in een map geplaatst worden en daarna kunnen worden herbruikt door bijvoorbeeld andere mensen. Manifests zijn scriptjes waarin je declareert wat je wilt doen. Dit gaat van het beheren van bestanden, over mappen en links naar software pakketten en services.
-Ook kan je in manifests en modules onderlinge relaties vastleggen, bijvoorbeeld tussen een configuratiebestand van een webserver en de service van de webserver. Op deze manier kan de webserver automatisch herstart worden als dit bestand wordt aangepast, moest dit niet vanzelf gebeuren.
+\input{03-onderwerp/02-praktijk/config.tex}
 
 \section{Mappenstructuur}
 Zoals alle andere programma's heeft ook puppet enkele configuratie-bestanden nodig. Deze bestanden vinden we voor puppet op de meeste linux-distributies terug in de map /etc/puppet. Hier worden niet enkel de configuraties van puppet zelf opgeslagen, maar ook de manifests die hij zal aanbieden aan clients. Per definitie zal puppet eerst zoeken naar een bestand genaamd site.pp . Dit bestand is het beginpunt van alle aangeboden manifests. vanuit dit bestand kan je ook andere bestanden aanhalen, zodat je een mooie, overzichtelijke mappenstructuur kan aanleggen waar je zelf nog aan uit kan.
 
 \section{Uitvoering}
-In de laatste fase gaat men ook effectief de puppet manifests gebruiken om nodes te beheren. Hier kan je een aantal keuzes maken die de simpliciteit of complexiteit van je setup zullen be\"{\i}nvloeden. In deze sectie kijken we wat de mogelijkheden zijn en vergelijken we enkele van de voor- en nadelen.
-Allereerst even een paar termen zodat men niet in de war geraakt en een goede onderscheiding kan maken tussen de verschillende tools/technieken die gebruikt zullen worden.
-%Dit kan men lokaal doen door de manifests op de node te plaatsen en een cronjob aan te maken om deze periodiek te draaien. Een andere manier is om de puppetd oftewel puppet-daemon te draaien in de achtergrond. Deze slaapt dan in de achtergrond totdat het tijd is een manifest uit te voeren. afhankelijk van de settings kan men dan lokaal of van een puppetmaster de manifests ophalen.
- 
+Het uitvoeren van puppet manifests kan je op een aantal verschillende manieren aanpakken, afhankelijk van wat het beste werkt in jouw omgeving. Enkele mogelijkheden zijn:
+\begin{itemize}
+\item puppet agent
+\item puppet cron job
+\item manuele uitvoering
+\end{itemize}
+\subsection{Puppet agent}
+In deze configuratie laat je de puppet daemon applicatie steevast op de achtergrond slapen, alwaar ze periodiek zal ontwaken en manifests zal ophalen van de opgegeven locatie (lokaal of via een puppetmaster). Dit is een zeer eenvoudige setup aangezien je enkel de puppet daemon hoeft te starten, waarna alles automatisch verloopt.
+%
+\subsection{Puppet cron job}
+In deze opstelling laat je middels het cron programma op geregelde tijdstippen de puppet applicatie uitvoeren. De puppet applicatie zal dan afhankelijk van de configuratie lokaal of via de puppetmaster manifests ophalen. Het voordeel van deze methode ten opzichte van de puppet agent, is dat de puppet agent steeds op de achtergrond aanwezig moet zijn, terwijl deze manier dit niet vereist. Dit zorgt voor minder verspilling van systeembronnen.
+% 
+\subsection{Manuele uitvoering}
+Deze manier is vooral handig voor het uittesten van manifests. Het is geen automatische oplossing, aangezien je elke keer manueel de puppet applicatie moet uitvoeren, maar komt zeer goed van pas bij het ontwikkelen van nieuwe configuraties voor hosts.
+%
 \section{Voorbeelden}
 hier volgen een aantal voorbeelden van puppet manifests die ik heb geschreven en die de mogelijkheid hebben om steeds een applicatie volledig te uit te rollen. Het gaat hier dan om iets uitgebreidere applicaties, die meestal veel configuratie en aanpassingen vereisen alsook veel moeite om ze op te zetten.

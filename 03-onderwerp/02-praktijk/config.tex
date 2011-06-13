@@ -1,0 +1,113 @@
+\section{Configuratie}
+
+\subsection{Configuratiebestanden}
+De eerste mogelijkheid is het configureren van puppet via de configuratiebestanden die je terugvind in de configuratiemap. De configuratiemap is afhankelijk van de gebruiker die puppet uitvoert, voor de root gebruiker zal de standaardlocatie '/etc/puppet' zijn, voor een andere gebruiker zal dit '\$HOME/.puppet' zijn. In elk geval wordt er steeds gezocht naar het bestand 'puppet.conf', dat de configuratie van zowel de puppetmaster, puppet en puppetd bevat. Parameters die in de '[main]' sectie worden opgegeven zullen gebruikt worden door alle programma's, terwijl ook afzonderlijke secties beschikbaar zijn voor 'master' en 'agent' programma's. Enkel de puppetmaster zal gebruik maken van de '[master]' sectie, waar de andere applicaties gebruik zullen maken van de '[agent]' sectie. Het bestand zelf wordt opgesteld in init-stijl. Even een voorbeeld van een zeer simplistisch 'puppet.conf' bestand:
+\begin{code}
+\begin{lstlisting}
+[main]
+  confdir = /private/puppet
+  storeconfigs = true
+  vardir = /new/vardir {owner = root, mode = 644}
+\end{lstlisting}
+\end{code}
+%
+Indien je puppet voor de eerste keer gebruikt kan het wenselijk zijn om de gebruikte applicatie een configuratie voor je te laten genereren. Dit kan je doen door de '--genconfig' parameter mee te geven aan het programma, waardoor een volledige standaardconfiguratie naar de standard output (je scherm in dit geval) geschreven wordt. Deze kan je dan laten opvangen in een bestand, door na het commando een '>' teken te specifi\'eren met een padnaam. Op het opgegeven pad zal een bestand gecre\"eerd worden met als inhoud de configuratie die daarvoor naar het scherm werd gestuurd. Even een voorbeeld:
+\begin{code}
+\begin{lstlisting}
+puppet agent --genconfig > /etc/puppet/puppet.conf
+\end{lstlisting}
+\end{code}
+Dit commando zorgt ervoor dat een werkende configuratie wordt weggeschreven naar het '/etc/puppet/puppet.conf' bestand, wat in de meeste gevallen als standaard configuratiebestand aanschouwt wordt. Let er wel op dat dit commando de huidige inhoud van het bestand compleet overschrijft, dus maak best even een backup of gebruik '>>' in plaats van '>', om de gegenereerde configuratie te laten toevoegen aan het bestand. Een interessante functie van puppet is de mogelijkheid om zijn eigen gebruiker en bijbehorende groep aan te maken. Je kan het gebruiken als volgt:
+\begin{code}
+\begin{lstlisting}
+puppet master --mkusers
+\end{lstlisting}
+\end{code}
+
+\subsection{Parameters}
+Hier geven we een kort overzicht van enkele van de parameters die je kan gebruiken in de configuratiebestanden. Een volledige lijst kan je terugvinden op: 'http://docs.puppetlabs.com/references/latest/configuration.html'.\\\\
+%
+autosign:\\
+Of je certificate requests automatisch wil laten tekenen of niet. Geldige waardes zijn hierbij 'true' (zorgt ervoor dat eender welke aanvraag goedgekeurd wordt en is meestal een zeer slecht idee), 'false' (weigert alle requests) en een pad naar een bestand. In dit geval zal de inhoud van het bestand bepalen welke requests automatisch goedgekeurd mogen worden en welke niet. De standaardwaarde is hierbij '\$CONFDIR/autosign.conf'.\\\\
+%
+confdir:\\
+Instellen van de '\$CONFDIR' variabele, waarmee je een alternatieve waarde opgeeft voor de map die de configuratie van puppet bevat.\\\\
+%
+configtimeout:\\
+Hoe lang puppet mag wachten op een configuratie. Als er na deze periode nog steeds geen configuratie ontvangen is zal puppet falen.\\\\
+%
+daemonize:\\
+Of je de applicatie op de achtergrond wil draaien of niet.\\\\
+%
+dbadapter:\\
+Het type database dat je wenst te gebruiken.\\\\
+%
+dbconnections:\\
+Het maximum aantal verbindingen naar de database, indien deze niet lokaal is.\\\\
+%
+dbname:\\
+De databasenaam die je wenst te gebruiken.\\\\
+%
+dbpassword:\\
+Het paswoord dat je wil gebruiken voor de database.\\\\
+%
+dbport:\\
+De poortnummer waarop je de database wil benaderen.\\\\
+%
+dbserver:\\
+Met welke database server je wil verbinden.\\\\
+%
+dbuser:\\
+Welke database gebruiker je wil gebruiken voor het uitvoeren van opdrachten.\\\\
+%
+group:\\
+De groepsnaam waaronder je puppet wil uitvoeren.\\\\
+%
+ignorecache:\\
+Zorg ervoor dat nieuwe configuraties worden binnengehaald, vooral bedoeld voor het forceren van updates van de manifests.\\\\
+%
+logdir:\\
+De standaard map waarnaar je wil loggen.\\\\
+%
+manifestdir:\\
+Stel de '\$MANIFESTDIR' variabele in.
+%
+masterport:\\
+Op welke poort de puppetmaster dient te luisteren voor binnenkomende verbindingen.\\\\
+%
+modulepath:\\
+Instelling voor de '\$MODULEPATH' variabele.\\\\
+%
+postrun\_command:\\
+Geef een commando op dat je wil uitvoeren na elke puppet agent run.\\\\
+%
+prerun\_command:\\
+Geef een commando op dat je wil uitvoeren voor elke puppet agent run.\\\\
+%
+runinterval:\\
+Hoe vaak de puppet agent de configuraties toepast, uitgedrukt in seconden.\\\\
+%
+server:\\
+Met welke server puppet agent verbinding dient te maken.\\\\
+%
+templatedir:\\
+Instelling voor de '\$TEMPLATEDIR' variabele.\\\\
+%
+user:\\
+De gebruiker waarmee je het programma wil uitvoeren.\\\\
+%
+\subsection{Command line}
+Elk puppet commando aanvaard ook elk van deze opties op de command line, alhoewel deze niet altijd even bruikbaar zullen zijn voor elk programma.
+\begin{code}
+\begin{lstlisting}
+puppet agent --confdir=/private/puppet
+\end{lstlisting}
+\end{code}
+%
+Voor boolean waardes dien je enkel de parameter op te geven, zonder argument. Indien je een negatieve waarde wil meegeven, dien je simpelweg 'no-' voor de optie te zetten.
+\begin{code}
+\begin{lstlisting}
+$ puppet agent --storeconfigs
+$ puppet agent --no-storeconfigs
+\end{lstlisting}
+\end{code}

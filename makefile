@@ -10,6 +10,9 @@ pres:
 	pdflatex presentatie_puppet.tex
 	apvlv presentatie_puppet.pdf
 
+list:
+	cat checklist|egrep -v '[X]|^$|^#'
+
 clean:
 	rm -f *.aux
 	rm -f *.lof

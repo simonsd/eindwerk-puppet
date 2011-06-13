@@ -7,18 +7,14 @@ Apache
 +--manifests
 |	+--config.pp
 |	+--init.pp
-|	+--mod-php.pp
 |	+--packages.pp
-|	+--passenger.pp
-|	+--prefork.pp
-|	+--xsendfile.pp
 |
 +--templates
 	+--httpd.conf.erb
 \end{lstlisting}
 \end{code}
 %
-Dit is de basis mapstructuur voor deze module. Een aantal van de bestanden in de manifests map zijn niet strict noodzakelijk, maar vormen een mooie uitbreiding op het standaardaanbod aan ingebouwde modules voor Apache. We zullen nu per bestand bekijken wat er juist gebeurd, we doen dit niet op alfabetische volgorde maar op de volgorde die puppet normaal gezien ook zal volgen.
+Dit is de basis mapstructuur voor deze module. We zullen nu per bestand bekijken wat er juist gebeurt, we doen dit niet op alfabetische volgorde maar op de meest logische volgorde die puppet normaal gezien ook zal volgen.
 %
 \subsubsection{init.pp}
 Als eerste manifest hebben we 'init.pp'. Dit is het eerste manifest dat puppet zal uitlezen en waarin je normaal gezien alle onderdelen gerust kan onderbrengen. In dit geval word het echter enkel gebruikt om de overige bestanden te laden, ook al is dit niet strict noodzakelijk. Als alles meezit zal puppet zelf de andere bestanden herkennen en ze includeren, indien puppet dit niet doet door bijvoorbeeld een systeemfout, een foute configuratie of een (zeer) verouderde versie van puppet, gebruiken we dit bestand om de anderen te includeren.
@@ -100,21 +96,16 @@ class apache::config {
 Zoals je ziet wordt de configuratie gedaan via \'e\'en enkel bestand, dat afhankelijk van het besturingssysteem op een andere plaats te vinden is. We zorgen met deze definitie dat het bestand aanwezig is, zowel als eigenaar als groep aan 'root' toebehoort en als mode '0644' meekrijgt. Het effectieve bestand halen we uit de template map van de apache module en heet 'httpd.conf'. Tot slot zorgen we ervoor dat de service 'apache' wordt herstart telkens er een wijziging aan dit bestand wordt aangebracht.
 %
 \subsubsection{httpd.conf}
-Dit is een template, geschikt om te dienen als basis apache configuratie bestand. Op sommige plaatsen zie je '<\%= variabelenaam \%>' constructs staan, dit zijn variabelen die je kan doorgeven via je manifest.
+Dit is een template, geschikt om te dienen als basis apache configuratie bestand. Op sommige plaatsen zie je '<\%= variabelenaam \%>' constructs staan, dit zijn variabelen die je kan doorgeven via je manifest. Aangezien dit niet bij puppet hoort, maar bij Apache, zullen we dit configuratie-bestand niet ontleden. Weet alleen dat je met dit bestand een basis-webserver kan opzetten, aan de hand van een aantal veilige standaardwaardes.
 \begin{code}
 \begin{lstlisting}
 ServerTokens OS
-
 ServerRoot "/etc/httpd"
-
 PidFile run/httpd.pid
 
 Timeout 60
-
 KeepAlive Off
-
 MaxKeepAliveRequests 100
-
 KeepAliveTimeout 5
 
 <IfModule prefork.c>
@@ -134,7 +125,12 @@ MaxSpareThreads     75
 ThreadsPerChild     25
 MaxRequestsPerChild  0
 </IfModule>
-
+\end{lstlisting}
+\end{code}
+\begin{samepage}
+Vervolg van het 'httpd.conf' bestand
+\begin{code}
+\begin{lstlisting}
 Listen 80
 
 LoadModule auth_basic_module modules/mod_auth_basic.so
@@ -178,6 +174,12 @@ LoadModule userdir_module modules/mod_userdir.so
 LoadModule alias_module modules/mod_alias.so
 LoadModule substitute_module modules/mod_substitute.so
 LoadModule rewrite_module modules/mod_rewrite.so
+\end{lstlisting}
+\end{code}
+\end{samepage}
+Vervolg van het 'httpd.conf' bestand
+\begin{code}
+\begin{lstlisting}
 LoadModule proxy_module modules/mod_proxy.so
 LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
 LoadModule proxy_ftp_module modules/mod_proxy_ftp.so
@@ -191,14 +193,10 @@ LoadModule cgi_module modules/mod_cgi.so
 LoadModule version_module modules/mod_version.so
 
 Include conf.d/*.conf
-
 User apache
 Group apache
-
 ServerAdmin root@localhost
-
 UseCanonicalName Off
-
 DocumentRoot "/var/www/html"
 
 <Directory />
@@ -218,7 +216,6 @@ DocumentRoot "/var/www/html"
 </IfModule>
 
 DirectoryIndex index.html index.html.var
-
 AccessFileName .htaccess
 
 <Files ~ "^\.ht">
@@ -228,17 +225,18 @@ AccessFileName .htaccess
 </Files>
 
 TypesConfig /etc/mime.types
-
 DefaultType text/plain
 
 <IfModule mod_mime_magic.c>
     MIMEMagicFile conf/magic
 </IfModule>
-
+\end{lstlisting}
+\end{code}
+Vervolg van het 'httpd.conf' bestand
+\begin{code}
+\begin{lstlisting}
 HostnameLookups Off
-
 ErrorLog logs/error_log
-
 LogLevel warn
 
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
@@ -247,9 +245,7 @@ LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent
 
 CustomLog logs/access_log combined
-
 ServerSignature On
-
 Alias /icons/ "/var/www/icons/"
 
 <Directory "/var/www/icons">
@@ -302,10 +298,8 @@ AddIcon /icons/folder.gif ^^DIRECTORY^^
 AddIcon /icons/blank.gif ^^BLANKICON^^
 
 DefaultIcon /icons/unknown.gif
-
 ReadmeName README.html
 HeaderName HEADER.html
-
 IndexIgnore .??* *~ *# HEADER* README* RCS CVS *,v *,t
 
 AddLanguage ca .ca
@@ -336,7 +330,6 @@ AddLanguage zh-CN .zh-cn
 AddLanguage zh-TW .zh-tw
 LanguagePriority en ca cs da de el eo es et fr he hr it ja ko ltz nl nn no pl pt pt-BR ru sv zh-CN zh-TW
 ForceLanguagePriority Prefer Fallback
-
 AddDefaultCharset UTF-8
 
 AddType application/x-compress .Z
@@ -346,7 +339,6 @@ AddType application/x-pkcs7-crl    .crl
 AddHandler type-map var
 AddType text/html .shtml
 AddOutputFilter INCLUDES .shtml
-
 Alias /error/ "/var/www/error/"
 
 <IfModule mod_negotiation.c>
