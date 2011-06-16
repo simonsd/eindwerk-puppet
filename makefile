@@ -2,7 +2,7 @@ all:
 	pdflatex 00-eindwerk.tex
 
 pres:
-	pdflatex presentatie_puppet.tex
+	pdflatex presentatie.tex
 
 clean:
 	rm -f *.aux
