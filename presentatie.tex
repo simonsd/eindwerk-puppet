@@ -26,263 +26,155 @@
 %------------------------
 \begin{frame}
 \frametitle{Geschiedenis}
-\begin{columns}[c]
+\begin{columns}[t]
 \column{.5\textwidth}
-\begin{block}{}
+\begin{block}{Concept}
 \begin{itemize}
-\item Cfengine
-\item Bcfg2
-\item Puppet
-\item Chef
+	\item centraal beheer
+	\item automatisatie
+	\item herbruik
+\end{itemize}
+\end{block}
+\column{.5\textwidth}
+\begin{block}{Voorbeelden}
+\begin{itemize}
+	\item Cfengine
+	\item Bcfg2
+	\item Puppet
+	\item Chef
 \end{itemize}
 \end{block}
 \end{columns}
 \end{frame}
 %------------------------
 
+%------------------------
+\begin{frame}
+\frametitle{Puppet}
+\begin{columns}[c]
+\column{.65\textwidth}
+\begin{block}{Ontwerp}
+\begin{itemize}
+	\item geschreven in Ruby
+	\item client-server model
+	\item declaratieve DSL
+	\item andere implementaties mogelijk (Git)
+\end{itemize}
+\end{block}
+%\column{.4\textwidth}
+\begin{block}{Onderdelen}
+\begin{itemize}
+	\item Puppet master
+	\item Puppet agent
+	\item Puppet apply
+	\item Puppet resource
+	\item Facter
+\end{itemize}
+\end{block}
+\end{columns}
+\end{frame}
+%------------------------
 
 %------------------------
 \begin{frame}
 \frametitle{Resource Types}
-\begin{columns}[c]
-\column{.5\textwidth}
-	\begin{itemize}
+\begin{block}{Voorbeelden}
+\begin{columns}[t]
+\column{.3\textwidth}
+\begin{itemize}
 	\item cron
 	\item exec
 	\item file
 	\item group
+\end{itemize}
+\column{.3\textwidth}
+\begin{itemize}
 	\item host
 	\item mount
 	\item notify
 	\item package
+\end{itemize}
+\column{.3\textwidth}
+\begin{itemize}
 	\item service
 	\item user
 	\item yumrepo
-	\end{itemize}
-%\column{.5\textwidth}
+\end{itemize}
+%\begin{block}{Templates}
+%\begin{itemize}
+	%\item Variabelen
+	%\item flow control
+	%\item standaardwaardes
+%\end{itemize}
 \end{columns}
+\end{block}
 \end{frame}
 %------------------------
 
-
 %------------------------
 \begin{frame}
-\frametitle{Wandeling}
-\begin{columns}[c]
-\column{.5\textwidth}
+\frametitle{Modules}
 \begin{block}{}
 \begin{itemize}
-\item Station
-\item Leuvense Vaart
-\item Brussel Poort
-\item Hoogstraat
-\item Korenmarkt
-\item Ijzeren leen
-\item Grote Markt
-\item Rombouts-toren
-\item Keizerlijk Paleis
-\item Gemeentehuis
-\item Bruul
+	\item Naamgeving
+	\item Structuur
+	\item Zoeken
+	\item Autoloading
 \end{itemize}
 \end{block}
-\end{columns}
 \end{frame}
 %------------------------
 
-
 %------------------------
 \begin{frame}
-\frametitle{Cultuur}
+\frametitle{Installatie}
 \begin{columns}[c]
 \column{.55\textwidth}
-\begin{block}{Fatiboombastic}
+\begin{block}{mogelijkheden}
 \begin{itemize}
-\item gratis
-\item 45 minuten
-\item verschillende soorten drums
-\item repititie lokaal \& wandelend
-\item covers \& eigen creaties
-\item majorettes
+	\item source
+	\item gem
+	\item distro packages
+\end{itemize}
+\end{block}
+\begin{block}{configuratie}
+\begin{itemize}
+	\item gewone tekst-bestanden
+	\item centrale configuratie
+	\item beheerbaar
+	\item command line parameters
 \end{itemize}
 \end{block}
 \end{columns}
 \end{frame}
 %------------------------
 
-
 %------------------------
 \begin{frame}
-\frametitle{Bibliotheek}
-\begin{columns}
-\column{.6\textwidth}
-\begin{block}{info}
-\begin{itemize}
-\item Volwassenen en kinderen afdelingen
-\item leentermijn 3 weken
-\item max 3 maal verlengen
-\item elke dag 10u - 16u30
-\end{itemize}
-\end{block}
-\pause
-\column{.4\textwidth}
-\begin{block}{Aanbod}
-\begin{itemize}
-\item boeken
-\pause
-\item cd's
-\item dvd's
-\pause
-\item computertoegang
-\pause
-\item kranten
-\item tijdschriften
-\pause
-\item bladmuziek
-\item toneelstukken
-\end{itemize}
-\end{block}
-\end{columns}
-\end{frame}
-%------------------------
-
-
-%------------------------
-\begin{frame}
-\frametitle{Voorzieningen}
+\frametitle{Uitvoering}
 \begin{columns}[c]
-\column{.65\textwidth}
-\begin{block}{}
+\column{.3\textwidth}
+\begin{block}{puppet agent}
 \begin{itemize}
-\item Kringloopwinkel Het Ateljeetje
-\item Atelier Recyclee
-\item MGW (Mechels Goedkoop Wonen)
-\item De Lage Drempel
-\item Start People
-\item OCMW
+	\item automatisch
+	\item achtergrond
+	\item geheugengebruik
 \end{itemize}
 \end{block}
-\end{columns}
-\end{frame}
-%------------------------
-
-
-%------------------------
-\begin{frame}
-\frametitle{Vacatures}
-\begin{columns}
-\column{.4\textwidth}
-\begin{block}{ICT Deskundige}
-hard- en software, netwerkbeheer in een homogene (Linux \& Windows) omgeving
+\column{.3\textwidth}
+\begin{block}{cron job}
 \begin{itemize}
-\item mail
-\item backups
-\item databases
-\item anti-virus
-\item domain control (DNS,DHCP,etc..)
+	\item automatisch
+	\item geen RAM-gebruik
+	\item snel vergeten
 \end{itemize}
 \end{block}
-\pause
-\column{.6\textwidth}
-\begin{block}{Jobstudent Bouwdienst}
-Het verwerken van binnenkomende dossiers en voorbereiden van voorbeelddossiers
+\column{.3\textwidth}
+\begin{block}{manueel}
 \begin{itemize}
-\item minimum 18 jaar
-\item student 2010-2011
-\item attestering
-\item verkavelingsplannen
-\item administratieve input
-\item stratenklassement
-\item tevredenheidsenqu\'{e}te
-\end{itemize}
-\end{block}
-\end{columns}
-\end{frame}
-%------------------------
-
-
-%------------------------
-\begin{frame}
-\frametitle{Actua}
-\begin{block}{Maanrock blijft even straf}
-10\% minder budget dan voorzien, geen verandering in spektakel
-\end{block}
-\begin{block}{Stroompanne}
-Zwartzustersvest 45 minuten zonder stroom door schade aan kabel
-\end{block}
-\begin{block}{Symbolische Boete}
-Man krijgt symbolische boete voor fout parkeren
-\end{block}
-\end{frame}
-%------------------------
-
-
-%------------------------
-\begin{frame}
-\frametitle{Beleid in Tisselt}
-\begin{block}{}
-\begin{itemize}
-\item Deelgemeente van Willebroek
-\item Burgemeester Marc De Laet
-\item 6 schepenen + gemeentesecretaris
-\item coalitie sp.a en CD\&V/NV-A
-\item gemeenteraad 23 leden
-\end{itemize}
-\end{block}
-\end{frame}
-%------------------------
-
-
-%------------------------
-\begin{frame}
-\frametitle{Beleid in Belgi\"{e}}
-\begin{columns}
-\column{.5\textwidth}
-\begin{block}{}
-\begin{itemize}
-\item democratie
-\item Scheiding van machten
-\begin{itemize}
-\item Wetgevende
-\item Uitvoerende
-\item Rechtelijke
-\end{itemize}
-\end{itemize}
-\end{block}
-\begin{block}{}
-\begin{itemize}
-\item Provincies
-\begin{itemize}
-\item 10 in Belgi\"{e}
-\item raad, deputatie, gouverneurs
-\end{itemize}
-\item Gemeenten
-\begin{itemize}
-\item 589 in Belgi\"{e}
-\item raad, schepenen, burgemeester, college
-\end{itemize}
-\end{itemize}
-\end{block}
-\column{.5\textwidth}
-\begin{block}{}
-\begin{itemize}
-\item Federaal
-	\begin{itemize}
-	\item Overheid
-	\item Regering
-	\item Parlement
-	\end{itemize}
-\item Gewesten
-	\begin{itemize}
-	\item Vlaams
-	\item Waals
-	\item Brussels hoofdstedelijk
-	\end{itemize}
-\item Gemeenschappen
-	\begin{itemize}
-	\item Vlaamse
-	\item Franse
-	\item Duitstalige
-	\end{itemize}
+	\item niet automatisch
+	\item handig voor testen
+	\item geen daemon nodig
 \end{itemize}
 \end{block}
 \end{columns}
