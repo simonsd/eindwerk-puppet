@@ -18,24 +18,26 @@
 \author[D. Simons]{Dave Simons}
 \institute{Don Bosco Wilrijk}
 \date{2011}
-%\includegraphics[scale=0.5]{src/mechelen.jpg}
 \maketitle
+%\begin{picture}(0,0)
+%	\put(20,30){\includegraphics[scale=0.5]{src/puppet_logo.png}}
+%\end{picture}
 %------------------------
 
 
 %------------------------
 \begin{frame}
-\frametitle{Geschiedenis}
-\begin{columns}[t]
-\column{.5\textwidth}
+\frametitle{Inleiding}
+\begin{columns}[c]
+\column{.37\textwidth}
 \begin{block}{Concept}
 \begin{itemize}
 	\item centraal beheer
 	\item automatisatie
-	\item herbruik
+	\item herbruikbaar
+	\item schaalbaar
 \end{itemize}
 \end{block}
-\column{.5\textwidth}
 \begin{block}{Voorbeelden}
 \begin{itemize}
 	\item Cfengine
@@ -56,18 +58,18 @@
 \begin{block}{Ontwerp}
 \begin{itemize}
 	\item geschreven in Ruby
-	\item client-server model
 	\item declaratieve DSL
+	\item client-server model
 	\item andere implementaties mogelijk (Git)
 \end{itemize}
 \end{block}
 %\column{.4\textwidth}
 \begin{block}{Onderdelen}
 \begin{itemize}
-	\item Puppet master
-	\item Puppet agent
-	\item Puppet apply
-	\item Puppet resource
+	\item puppet master
+	\item puppet agent
+	\item puppet apply
+	\item puppet resource
 	\item Facter
 \end{itemize}
 \end{block}
@@ -78,8 +80,19 @@
 %------------------------
 \begin{frame}
 \frametitle{Resource Types}
-\begin{block}{Voorbeelden}
 \begin{columns}[t]
+\column{.5\textwidth}
+\begin{block}{}
+\begin{itemize}
+	\item bouwstenen voor manifests
+	\item voorgedefini\"eerd
+	\item veel keuze
+	\item uitbreidbaar
+\end{itemize}
+\end{block}
+\end{columns}
+\begin{block}{Voorbeelden}
+\begin{columns}[b]
 \column{.3\textwidth}
 \begin{itemize}
 	\item cron
@@ -97,15 +110,10 @@
 \column{.3\textwidth}
 \begin{itemize}
 	\item service
+	\item stage
 	\item user
 	\item yumrepo
 \end{itemize}
-%\begin{block}{Templates}
-%\begin{itemize}
-	%\item Variabelen
-	%\item flow control
-	%\item standaardwaardes
-%\end{itemize}
 \end{columns}
 \end{block}
 \end{frame}
@@ -113,15 +121,27 @@
 
 %------------------------
 \begin{frame}
-\frametitle{Modules}
-\begin{block}{}
+\frametitle{Uitgebreide mogelijkheden}
+\begin{columns}[c]
+\column{.5\textwidth}
+\begin{block}{Templates}
 \begin{itemize}
-	\item Naamgeving
-	\item Structuur
-	\item Zoeken
-	\item Autoloading
+	\item ERB templating system
+	\item variabelen
+	\item flow control
+	\item standaardwaardes
 \end{itemize}
 \end{block}
+%\column{.5\textwidth}
+\begin{block}{Modules}
+\begin{itemize}
+	\item naamgeving
+	\item structuur
+	\item zoeken
+	\item autoloading
+\end{itemize}
+\end{block}
+\end{columns}
 \end{frame}
 %------------------------
 
@@ -153,29 +173,49 @@
 \begin{frame}
 \frametitle{Uitvoering}
 \begin{columns}[c]
-\column{.3\textwidth}
-\begin{block}{puppet agent}
-\begin{itemize}
-	\item automatisch
-	\item achtergrond
-	\item geheugengebruik
-\end{itemize}
-\end{block}
-\column{.3\textwidth}
-\begin{block}{cron job}
-\begin{itemize}
-	\item automatisch
-	\item geen RAM-gebruik
-	\item snel vergeten
-\end{itemize}
-\end{block}
-\column{.3\textwidth}
-\begin{block}{manueel}
-\begin{itemize}
-	\item niet automatisch
-	\item handig voor testen
-	\item geen daemon nodig
-\end{itemize}
+\column{.805\textwidth}
+%\column{.33\textwidth}
+%\begin{block}{puppet agent}
+%\begin{itemize}
+	%\item automatisch
+	%\item achtergrond
+	%\item geheugengebruik
+%\end{itemize}
+%\end{block}
+%\column{.33\textwidth}
+%\begin{block}{cron job}
+%\begin{itemize}
+	%\item automatisch
+	%\item geen RAM-gebruik
+	%\item snel vergeten
+%\end{itemize}
+%\end{block}
+%\column{.33\textwidth}
+%\begin{block}{manueel}
+%\begin{itemize}
+	%\item niet automatisch
+	%\item handig voor testen
+	%\item geen daemon nodig
+%\end{itemize}
+%\end{block}
+\begin{block}{Mogelijkheden}
+\begin{tabular}{|r|c|c|}\hline
+& pro & con \\ \hline
+\hline
+puppet agent & automatisch & geheugengebruik \\
+& daemon & \\
+& & \\
+\hline
+cron job & automatisch & snel vergeten \\
+& geheugengebruik & \\
+& & \\
+\hline
+manueel & handig bij testen & niet automatisch \\
+& geen daemon & \\
+& geheugengebruik & \\
+& & \\
+\hline
+\end{tabular}
 \end{block}
 \end{columns}
 \end{frame}
